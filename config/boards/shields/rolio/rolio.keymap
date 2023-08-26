@@ -1,0 +1,314 @@
+/*
+ * Copyright (c) 2020 The ZMK Contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/outputs.h>
+#include <dt-bindings/zmk/backlight.h>
+
+
+#define MACOS     0
+#define FKEYS     1
+#define NUMBERS   2
+#define WINDOWS   3
+#define W_FKEYS   4
+#define W_NUMBERS 5
+#define MATHS     6
+#define KB_CONFIG 7
+
+
+/ {
+
+    conditional_layers {
+        compatible = "zmk,conditional-layers";
+        win_fkeys {
+            if-layers = <WINDOWS FKEYS>;
+            then-layer = <W_FKEYS>;
+        };
+        win_numbers {
+            if-layers = <WINDOWS NUMBERS>;
+            then-layer = <W_NUMBERS>;
+        };
+    };
+
+
+    behaviors {
+        // Toggle F-Keys Layer
+        td0: tap_dance_0 {
+            compatible = "zmk,behavior-tap-dance";
+            label = "TAP_DANCE_0";
+            #binding-cells = <0>;
+            tapping-term-ms = <300>;
+            bindings = <&mo FKEYS>, <&tog FKEYS>, <&tog KB_CONFIG>;
+        };
+        // Toggle Numbers layer
+        td1: tap_dance_1 {
+            compatible = "zmk,behavior-tap-dance";
+            label = "TAP_DANCE_1";
+            #binding-cells = <0>;
+            tapping-term-ms = <300>;
+            bindings = <&mo NUMBERS>, <&tog MATHS>, <&tog NUMBERS>;
+        };
+        // Toggle capsword left
+        td2: tap_dance_2 {
+            compatible = "zmk,behavior-tap-dance";
+            label = "TAP_DANCE_2";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&kp LSHFT>, <&caps_word>;
+        };
+        // Toggle capsword right
+        td3: tap_dance_3 {
+            compatible = "zmk,behavior-tap-dance";
+            label = "TAP_DANCE_3";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&kp RSHFT>, <&caps_word>;
+        };
+        // Toggle Windows layer
+        td4: tap_dance_4 {
+            compatible = "zmk,behavior-tap-dance";
+            label = "TAP_DANCE_4";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&kp LGUI>, <&tog WINDOWS>;
+        };
+        // Toggle Windows layer
+        td5: tap_dance_5 {
+            compatible = "zmk,behavior-tap-dance";
+            label = "TAP_DANCE_5";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&kp RGUI>, <&tog WINDOWS>;
+        };
+    };
+
+
+    macros {
+        lstart: lstart {
+            label = "Line_Start";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LGUI>
+                , <&macro_tap &kp LEFT>
+                , <&macro_release &kp LGUI>
+                ;
+        };
+        lend: lend {
+            label = "Line_End";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LGUI>
+                , <&macro_tap &kp RIGHT>
+                , <&macro_release &kp LGUI>
+                ;
+        };
+        scrsh: scrsh {
+            label = "Screenshot";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LGUI>
+                , <&macro_press &kp LSHIFT>
+                , <&macro_tap &kp N3>
+                , <&macro_release &kp LSHFT>
+                , <&macro_release &kp LGUI>
+                ;
+        };
+        scrcr: scrcr {
+            label = "Screen_Crop";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LGUI>
+                , <&macro_press &kp LSHIFT>
+                , <&macro_tap &kp N4>
+                , <&macro_release &kp LSHFT>
+                , <&macro_release &kp LGUI>
+                ;
+        };
+        wscrcr: wscrcr {
+            label = "Windows_Screen_Crop";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LGUI>
+                , <&macro_press &kp LSHIFT>
+                , <&macro_tap &kp S>
+                , <&macro_release &kp LSHFT>
+                , <&macro_release &kp LGUI>
+                ;
+        };
+        pal: pal {
+            label = "Pallette";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LGUI>
+                , <&macro_press &kp LCTRL>
+                , <&macro_tap &kp SPACE>
+                , <&macro_release &kp LCTRL>
+                , <&macro_release &kp LGUI>
+                ;
+        };
+        wpal: wpal {
+            label = "W_Pallette";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LGUI>
+                , <&macro_tap &kp DOT>
+                , <&macro_release &kp LGUI>
+                ;
+        };
+    };
+
+
+    keymap {
+        compatible = "zmk,keymap";
+
+        default_layer {
+            label = "Mac OS";
+            sensor-bindings = <&inc_dec_kp UP DOWN &inc_dec_kp LEFT RIGHT>;
+            bindings = <
+//---------------------------------------------------------------+                            +---------------------------------------------------------------//
+//          |         |          |           |          |        |                            |       |       |           |         |          |           // 
+  &kp GRAVE   &kp Q     &kp W      &kp E        &kp R     &kp T                                 &kp Y   &kp U     &kp I      &kp O     &kp P     &kp BSPC
+//          |         |          |           |          |        |                            |       |       |           |         |          |           //
+  &kp TAB     &kp A     &kp S      &kp D        &kp F     &kp G                                 &kp H   &kp J     &kp K      &kp L    &kp SEMI    &kp SQT
+//          |         |          |           |          |        +-----------+    +-----------|       |       |           |         |          |           //
+    &td2      &kp Z     &kp X      &kp C        &kp V     &kp B     &kp F15          &kp F14    &kp N   &kp M   &kp COMMA   &kp DOT    &kp FSLH     &td3
+//--------------------|          |           |          |        |           |    |           |       |       |           |--------------------------------//  
+                        &kp LALT   &kp LCTRL     &td4     &td0     &kp ENTER        &kp SPACE   &td1    &td5    &kp RCTRL   &kp DEL
+//                    +----------|-----------|----------|--------------------+    +-----------|-------|--------|-----------|---------+                      //
+            >;
+        };
+
+        f_keys_layer {
+            label = "F Keys";
+            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PLUS MINUS>;
+            bindings = <
+//-------------------------------------------------------------------------------+                           +-------------------------------------------------------------------//
+//          |            |            |              |            |              |                           |          |          |           |         |           |           // 
+  &kp ESCAPE    &kp F1      &kp F2       &kp F3          &kp F4        &kp F5                                   &kp F6    &kp F7      &kp F8     &kp F9    &kp F10     &kp F11
+//          |            |            |              |            |              |                           |          |          |           |         |           |           // 
+    &trans    &bt BT_PRV   &bt BT_NXT   &kp C_PREV     &kp C_PP     &kp C_NEXT                                 &lstart     &kp UP     &lend      &scrsh    &kp PG_UP   &kp F12
+//          |            |            |              |            |              +-------------+    +--------+          |          |           |         |           |           // 
+    &trans    &bl BL_TOG  &bl BL_SET 2  &kp C_VOL_DN   &kp C_MUTE   &kp C_VOL_UP    &kp C_MUTE       &kp F16   &kp LEFT   &kp DOWN   &kp RIGHT   &scrcr    &kp PG_DN   &kp F13
+//-----------------------|            |              |            |              |             |    |        |          |          |           |         |-----------------------//  
+                            &trans         &trans       &trans        &trans        &trans            &trans    &trans    &trans      &trans     &trans
+//                       +------------|--------------|------------|--------------|-------------+    +--------|----------|----------|-----------|---------+                       //
+            >;
+
+        };
+
+        numbers_layer {
+            label = "Numbers";
+            sensor-bindings = <&inc_dec_kp UP DOWN &inc_dec_kp LEFT RIGHT>;
+            bindings = <
+//-------------------------------------------------------------------------------+                      +----------------------------------------------------------------------------//
+//          |          |                |                 |          |           |                      |           |               |          |          |               |          // 
+  &kp UNDER    &kp N1        &kp N2           &kp N3         &kp N4     &kp N5                             &kp N6        &kp N7        &kp N8     &kp N9       &kp N0        &trans
+//          |          |                |                 |          |           |                      |           |               |          |          |               |          // 
+    &trans    &kp EXCL       &kp AT          &kp HASH       &kp DLLR   &kp PRCNT                          &kp CARET   &kp AMPERSAND   &kp STAR   &kp LPAR     &kp RPAR      &kp FSLH
+//          |          |                |                 |          |           +--------+     +-------|           |               |                     |               |          // 
+   &trans       &pal     &kp LEFT_BRACE   &kp RIGHT_BRACE   &kp PIPE   &kp EQUAL   &trans        &trans   &kp MINUS     &kp PLUS      &kp LBKT   &kp RBKT   &kp BACKSLASH   &kp DOT
+//---------------------|                |                 |          |           |        |    |                    |               |          |          |--------------------------//
+                            &trans            &trans         &trans     &trans     &trans        &trans    &trans       &trans         &trans     &trans
+//                     +----------------|-----------------|----------|-----------|--------+    +--------|----------|----------------|----------|----------+                          //
+            >;
+        };
+
+        windows_default_layer {
+            label = "Windows";
+            sensor-bindings = <&inc_dec_kp UP DOWN &inc_dec_kp LEFT RIGHT>;
+            bindings = <
+//-----------------------------------------------------------------+                        +------------------------------------------------------------------//
+//          |          |          |          |          |          |                        |          |          |          |          |          |           // 
+    &trans     &trans     &trans     &trans     &trans     &trans                              &trans     &trans     &trans     &trans     &trans     &trans
+//          |          |          |          |          |          |                        |          |          |          |          |          |           //
+    &trans     &trans     &trans     &trans     &trans     &trans                              &trans     &trans     &trans     &trans     &trans     &trans
+//          |          |          |          |          |          +--------+     +---------|          |          |          |          |          |           // 
+    &trans     &trans     &trans     &trans     &trans     &trans    &trans         &trans     &trans     &trans     &trans     &trans     &trans     &trans
+//---------------------|          |          |          |          |        |     |         |          |          |          |          |----------------------//
+                          &trans     &trans     &trans     &trans    &trans         &trans     &trans     &trans     &trans     &trans
+//                     +----------|----------|----------|----------|--------+     +----------|---------|----------|----------|----------+                      //
+            >;
+        };
+
+        windows_fkeys_layer {
+            label = "F Keys";
+            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PLUS MINUS>;
+            bindings = <
+//-----------------------------------------------------------------+                        +------------------------------------------------------------------//
+//          |          |          |          |          |          |                        |          |          |          |          |          |           // 
+    &trans     &trans     &trans     &trans     &trans     &trans                              &trans     &trans     &trans     &trans     &trans     &trans
+//          |          |          |          |          |          |                        |          |          |          |          |          |           //
+    &trans     &trans     &trans     &trans     &trans     &trans                             &kp HOME    &trans     &kp END  &kp PSCRN    &trans     &trans
+//          |          |          |          |          |          +--------+     +---------|          |          |          |          |          |           // 
+    &trans     &trans     &trans     &trans     &trans     &trans    &trans         &trans     &trans     &trans     &trans     &wscrcr    &trans     &trans
+//---------------------|          |          |          |          |        |     |         |          |          |          |          |----------------------//
+                          &trans     &trans     &trans     &trans    &trans         &trans     &trans     &trans     &trans     &trans
+//                     +----------|----------|----------|----------|--------+     +----------|---------|----------|----------|----------+                      //
+            >;
+        };
+
+        windows_numbers_layer {
+            label = "Numbers";
+            sensor-bindings = <&inc_dec_kp UP DOWN &inc_dec_kp LEFT RIGHT>;
+            bindings = <
+//-----------------------------------------------------------------+                        +------------------------------------------------------------------//
+//          |          |          |          |          |          |                        |          |          |          |          |          |           // 
+    &trans     &trans     &trans     &trans     &trans     &trans                              &trans     &trans     &trans     &trans     &trans     &trans
+//          |          |          |          |          |          |                        |          |          |          |          |          |           //
+    &trans     &trans     &trans     &trans     &trans     &trans                              &trans     &trans     &trans     &trans     &trans     &trans
+//          |          |          |          |          |          +--------+     +---------|          |          |          |          |          |           // 
+    &trans     &wpal      &trans     &trans     &trans     &trans    &trans         &trans     &trans     &trans     &trans     &trans     &trans     &trans
+//---------------------|          |          |          |          |        |     |         |          |          |          |          |----------------------//
+                          &trans     &trans     &trans     &trans    &trans         &trans     &trans     &trans     &trans     &trans
+//                     +----------|----------|----------|----------|--------+     +---------|----------|----------|----------|----------+                      //
+            >;
+        };
+
+        maths_layer {
+            label = "Maths";
+            sensor-bindings = <&inc_dec_kp UP DOWN &inc_dec_kp LEFT RIGHT>;
+            bindings = <
+//-----------------------------------------------------------------+                        +----------------------------------------------------------------------------//
+//          |          |          |          |          |          |                        |           |               |          |          |               |          // 
+  &kp UNDER    &kp N1     &kp N2     &kp N3     &kp N4     &kp N5                              &kp N6        &kp N7        &kp N8     &kp N9       &kp N0        &trans
+//          |          |          |          |          |          |                        |           |               |          |          |               |          // 
+    &trans    &kp EXCL    &trans     &trans     &trans   &kp PRCNT                            &kp CARET   &kp AMPERSAND   &kp STAR   &kp LPAR     &kp RPAR      &kp FSLH
+//          |          |          |          |          |          +--------+     +---------|           |               |          |          |               |          // 
+    &trans     &wpal      &trans     &trans     &trans   &kp EQUAL   &trans         &trans    &kp MINUS      &kp PLUS      &trans     &trans       &trans       &kp DOT
+//---------------------|          |          |          |          |        |     |         |           |               |          |          |--------------------------//
+                          &trans     &trans     &trans     &trans    &trans         &trans   &tog MATHS        &trans       &trans     &trans
+//                     +----------|----------|----------|----------|--------+     +---------|-----------|---------------|----------|----------+                          //
+            >;
+      };
+
+        settings_layer {
+            label = "Settings";
+            sensor-bindings = <&inc_dec_kp UP DOWN &inc_dec_kp LEFT RIGHT>;
+            bindings = <
+//---------------------------------------------------------------------------------------+                        +------------------------------------------------------------------//
+//          |              |              |              |              |                |                        |          |          |          |          |          |           // 
+ &out OUT_TOG &bt BT_SEL 0   &bt BT_SEL 1   &bt BT_SEL 2   &bt BT_SEL 3    &bt BT_SEL 4                              &trans     &trans     &trans     &trans     &trans     &trans
+//          |              |              |              |              |                |                        |          |          |          |          |          |           // 
+    &trans     &bt BT_PRV     &bt BT_NXT       &trans         &trans         &trans                                  &trans     &trans     &trans     &trans     &trans     &trans
+//          |              |              |              |              |                +--------+     +---------|          |          |          |          |          |           // 
+    &trans       &trans       &bt BT_CLR     &bl BL_DEC    &bl BL_TOG      &bl BL_INC      &trans         &trans     &trans     &trans     &trans     &trans     &trans     &trans
+//-------------------------|              |              |              |                |        |     |         |          |          |          |          |----------------------//
+                               &trans          &trans         &trans      &tog KB_CONFIG   &trans         &trans     &trans     &trans     &trans     &trans
+//                         +--------------|--------------|--------------|----------------|--------+     +----------|---------|----------|----------|----------+                      //
+            >;
+        };
+
+    };
+};
