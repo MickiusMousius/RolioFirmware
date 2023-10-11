@@ -85,10 +85,53 @@
             tapping-term-ms = <200>;
             bindings = <&kp RGUI>, <&tog WINDOWS>;
         };
+        // Backspace a whole word when holding backspace
+        backspace_word: backspace_word {
+            compatible = "zmk,behavior-hold-tap";
+            label = "BACKSPACE_WORD";
+            #binding-cells = <2>;
+            tapping_term_ms = <135>;
+            quick_tap_ms = <0>;
+            flavor = "tap-preferred";
+            bindings = <&bsp_word>, <&kp>;
+        };
+        w_backspace_word: w_backspace_word {
+            compatible = "zmk,behavior-hold-tap";
+            label = "WINDOWS_BACKSPACE_WORD";
+            #binding-cells = <2>;
+            tapping_term_ms = <135>;
+            quick_tap_ms = <0>;
+            flavor = "tap-preferred";
+            bindings = <&w_bsp_word>, <&kp>;
+        };
+        //Mac OS Zoom
+        mac_zoom: mac_zoom {
+            compatible = "zmk,behavior-sensor-rotate";
+            label = "MAC_ZOOM";
+            #sensor-binding-cells = <0>;
+            bindings = <&zoom_in>, <&zoom_out>;
+        };
+        //Windows OS Zoom
+        win_zoom: win_zoom {
+            compatible = "zmk,behavior-sensor-rotate";
+            label = "WINDOWS_ZOOM";
+            #sensor-binding-cells = <0>;
+            bindings = <&w_zoom_in>, <&w_zoom_out>;
+        };
     };
 
 
     macros {
+        unindent: unindent {
+            label = "UNINDENT";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LSHIFT>
+                , <&macro_tap &kp TAB>
+                , <&macro_release &kp LSHIFT>
+                ;
+        };
         lstart: lstart {
             label = "Line_Start";
             compatible = "zmk,behavior-macro";
@@ -167,6 +210,89 @@
                 , <&macro_release &kp LGUI>
                 ;
         };
+        // Word backspace macros
+        bsp_word: bsp_word {
+            label = "BSP_WORD";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LALT>
+                , <&macro_tap &kp BSPC>
+                , <&macro_release &kp LALT>
+                ;
+        };
+        w_bsp_word: w_bsp_word {
+            label = "W_BSP_WORD";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LCTRL>
+                , <&macro_tap &kp BSPC>
+                , <&macro_release &kp LCTRL>
+                ;
+        };
+        // Zoom macros
+        zoom_in: zoom_in {
+            label = "ZOOM_IN";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LGUI>
+                , <&macro_tap &kp EQUAL>
+                , <&macro_release &kp LGUI>
+                ;
+        };
+        zoom_out: zoom_out {
+            label = "ZOOM_OUT";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LGUI>
+                , <&macro_tap &kp MINUS>
+                , <&macro_release &kp LGUI>
+                ;
+        };
+        reset_zoom: reset_zoom {
+            label = "RESET_ZOOM";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LGUI>
+                , <&macro_tap &kp N0>
+                , <&macro_release &kp LGUI>
+                ;
+        };
+        w_zoom_in: w_zoom_in {
+            label = "WINDOWS_ZOOM_IN";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LCTRL>
+                , <&macro_tap &kp EQUAL>
+                , <&macro_release &kp LCTRL>
+                ;
+        };
+        w_zoom_out: w_zoom_out {
+            label = "WINDOWS_ZOOM_OUT";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LCTRL>
+                , <&macro_tap &kp MINUS>
+                , <&macro_release &kp LCTRL>
+                ;
+        };
+        w_reset_zoom: w_reset_zoom {
+            label = "WINDOWS_RESET_ZOOM";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LCTRL>
+                , <&macro_tap &kp N0>
+                , <&macro_release &kp LCTRL>
+                ;
+        };
+
     };
 
 
@@ -179,11 +305,11 @@
             bindings = <
 //---------------------------------------------------------------+                            +---------------------------------------------------------------//
 //          |         |          |           |          |        |                            |       |       |           |         |          |           // 
-  &kp GRAVE   &kp Q     &kp W      &kp E        &kp R     &kp T                                 &kp Y   &kp U     &kp I      &kp O     &kp P     &kp BSPC
+  &kp GRAVE   &kp Q     &kp W      &kp E        &kp R     &kp T                                 &kp Y   &kp U     &kp I      &kp O     &kp P     &backspace_word 0 BSPC
 //          |         |          |           |          |        |                            |       |       |           |         |          |           //
   &kp TAB     &kp A     &kp S      &kp D        &kp F     &kp G                                 &kp H   &kp J     &kp K      &kp L    &kp SEMI    &kp SQT
 //          |         |          |           |          |        +-----------+    +-----------|       |       |           |         |          |           //
-    &td2      &kp Z     &kp X      &kp C        &kp V     &kp B     &kp F15          &kp F14    &kp N   &kp M   &kp COMMA   &kp DOT    &kp FSLH     &td3
+    &td2      &kp Z     &kp X      &kp C        &kp V     &kp B     &kp F16          &kp F17    &kp N   &kp M   &kp COMMA   &kp DOT    &kp FSLH     &td3
 //--------------------|          |           |          |        |           |    |           |       |       |           |--------------------------------//  
                         &kp LALT   &kp LCTRL     &td4     &td0     &kp ENTER        &kp SPACE   &td1    &td5    &kp RCTRL   &kp DEL
 //                    +----------|-----------|----------|--------------------+    +-----------|-------|--------|-----------|---------+                      //
@@ -192,15 +318,15 @@
 
         f_keys_layer {
             label = "F Keys";
-            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PLUS MINUS>;
+            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &mac_zoom>;
             bindings = <
 //-------------------------------------------------------------------------------+                           +-------------------------------------------------------------------//
 //          |            |            |              |            |              |                           |          |          |           |         |           |           // 
   &kp ESCAPE    &kp F1      &kp F2       &kp F3          &kp F4        &kp F5                                   &kp F6    &kp F7      &kp F8     &kp F9    &kp F10     &kp F11
 //          |            |            |              |            |              |                           |          |          |           |         |           |           // 
-    &trans    &bt BT_PRV   &bt BT_NXT   &kp C_PREV     &kp C_PP     &kp C_NEXT                                 &lstart     &kp UP     &lend      &scrsh    &kp PG_UP   &kp F12
+  &unindent   &bt BT_PRV   &bt BT_NXT   &kp C_PREV     &kp C_PP     &kp C_NEXT                                 &lstart     &kp UP     &lend      &scrsh    &kp PG_UP   &kp F12
 //          |            |            |              |            |              +-------------+    +--------+          |          |           |         |           |           // 
-    &trans    &bl BL_TOG  &bl BL_SET 2  &kp C_VOL_DN   &kp C_MUTE   &kp C_VOL_UP    &kp C_MUTE       &kp F16   &kp LEFT   &kp DOWN   &kp RIGHT   &scrcr    &kp PG_DN   &kp F13
+    &trans    &bl BL_TOG  &bl BL_SET 2  &kp C_VOL_DN   &kp C_MUTE   &kp C_VOL_UP    &kp C_MUTE     &reset_zoom &kp LEFT   &kp DOWN   &kp RIGHT   &scrcr    &kp PG_DN   &kp F13
 //-----------------------|            |              |            |              |             |    |        |          |          |           |         |-----------------------//  
                             &trans         &trans       &trans        &trans        &trans            &trans    &trans    &trans      &trans     &trans
 //                       +------------|--------------|------------|--------------|-------------+    +--------|----------|----------|-----------|---------+                       //
@@ -231,7 +357,7 @@
             bindings = <
 //-----------------------------------------------------------------+                        +------------------------------------------------------------------//
 //          |          |          |          |          |          |                        |          |          |          |          |          |           // 
-    &trans     &trans     &trans     &trans     &trans     &trans                              &trans     &trans     &trans     &trans     &trans     &trans
+    &trans     &trans     &trans     &trans     &trans     &trans                              &trans     &trans     &trans     &trans     &trans     &w_backspace_word 0 BSPC
 //          |          |          |          |          |          |                        |          |          |          |          |          |           //
     &trans     &trans     &trans     &trans     &trans     &trans                              &trans     &trans     &trans     &trans     &trans     &trans
 //          |          |          |          |          |          +--------+     +---------|          |          |          |          |          |           // 
@@ -244,7 +370,7 @@
 
         windows_fkeys_layer {
             label = "F Keys";
-            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PLUS MINUS>;
+            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &win_zoom>;
             bindings = <
 //-----------------------------------------------------------------+                        +------------------------------------------------------------------//
 //          |          |          |          |          |          |                        |          |          |          |          |          |           // 
@@ -252,7 +378,7 @@
 //          |          |          |          |          |          |                        |          |          |          |          |          |           //
     &trans     &trans     &trans     &trans     &trans     &trans                             &kp HOME    &trans     &kp END  &kp PSCRN    &trans     &trans
 //          |          |          |          |          |          +--------+     +---------|          |          |          |          |          |           // 
-    &trans     &trans     &trans     &trans     &trans     &trans    &trans         &trans     &trans     &trans     &trans     &wscrcr    &trans     &trans
+    &trans     &trans     &trans     &trans     &trans     &trans    &trans      &w_reset_zoom &trans     &trans     &trans     &wscrcr    &trans     &trans
 //---------------------|          |          |          |          |        |     |         |          |          |          |          |----------------------//
                           &trans     &trans     &trans     &trans    &trans         &trans     &trans     &trans     &trans     &trans
 //                     +----------|----------|----------|----------|--------+     +----------|---------|----------|----------|----------+                      //
