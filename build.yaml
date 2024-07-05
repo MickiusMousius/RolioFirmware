@@ -14,6 +14,10 @@
 ---
 include:
   - board: nice_nano_v2
+    shield: rolio_left nice_view_adapter vista508
+  - board: nice_nano_v2
+    shield: rolio_right nice_view_adapter vista508
+  - board: nice_nano_v2
     shield: rolio_left nice_view_adapter nice_view
   - board: nice_nano_v2
     shield: rolio_right nice_view_adapter nice_view
