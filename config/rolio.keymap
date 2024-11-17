@@ -344,19 +344,19 @@
             label = "default";
             sensor-bindings = <&inc_dec_kp UP DOWN &inc_dec_kp LEFT RIGHT>;
             bindings = <
-&kp TAB     &kp Q  &kp W     &kp E     &kp R             &kp T                            &kp Y      &kp U  &kp I      &kp O      &kp P     &backspace_word 0 BSPC
-&kp ESCAPE  &kp A  &kp S     &kp D     &kp F             &kp G                            &kp H      &kp J  &kp K      &kp L      &kp SEMI  &kp SQT
-&td2        &kp Z  &kp X     &kp C     &kp V             &kp B      &soft_off  &soft_off  &kp N      &kp M  &kp COMMA  &kp DOT    &kp FSLH  &td3
-                   &kp LGUI  &kp LALT  &kp LEFT_CONTROL  &kp SPACE  &mo 2      &mo 1      &kp SPACE  &none  &none      &kp ENTER
+&kp TAB     &kp Q  &kp W     &kp E     &kp R             &kp T                    &kp Y      &kp U  &kp I      &kp O      &kp P     &backspace_word 0 BSPC
+&kp ESCAPE  &kp A  &kp S     &kp D     &kp F             &kp G                    &kp H      &kp J  &kp K      &kp L      &kp SEMI  &kp SQT
+&td2        &kp Z  &kp X     &kp C     &kp V             &kp B      &none  &none  &kp N      &kp M  &kp COMMA  &kp DOT    &kp FSLH  &td3
+                   &kp LGUI  &kp LALT  &kp LEFT_CONTROL  &kp SPACE  &mo 2  &mo 1  &kp SPACE  &none  &none      &kp ENTER
             >;
         };
 
         Function {
             bindings = <
-&trans  &trans      &trans      &trans  &trans  &trans                  &trans  &kp HOME  &kp UP    &kp END    &trans  &trans
-&trans  &bt BT_PRV  &bt BT_NXT  &trans  &trans  &trans                  &trans  &kp LEFT  &kp DOWN  &kp RIGHT  &trans  &trans
-&trans  &bt BT_CLR  &trans      &trans  &trans  &trans  &trans  &trans  &trans  &trans    &trans    &trans     &trans  &trans
-                    &trans      &trans  &trans  &trans  &trans  &trans  &trans  &trans    &trans    &trans
+&trans     &trans      &trans      &trans  &trans  &trans                  &trans  &kp HOME  &kp UP    &kp END    &trans  &trans
+&trans     &bt BT_PRV  &bt BT_NXT  &trans  &trans  &trans                  &trans  &kp LEFT  &kp DOWN  &kp RIGHT  &trans  &trans
+&soft_off  &bt BT_CLR  &trans      &trans  &trans  &trans  &trans  &trans  &trans  &trans    &trans    &trans     &trans  &soft_off
+                       &trans      &trans  &trans  &trans  &trans  &trans  &trans  &trans    &trans    &trans
             >;
 
             label = "function";
@@ -364,10 +364,10 @@
 
         Numbers {
             bindings = <
-&kp N1  &kp N2  &kp N3  &kp N4  &kp N5  &kp N6                  &kp N7  &kp N8   &kp N9  &kp N0  &kp MINUS  &kp EQUAL
-&trans  &trans  &trans  &trans  &trans  &trans                  &kp N4  &kp N5   &kp N6  &trans  &trans     &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &kp N1  &kp N2   &kp N3  &trans  &trans     &trans
-                &trans  &trans  &trans  &trans  &trans  &trans  &kp N0  &kp DOT  &trans  &trans
+&kp N1     &kp N2  &kp N3  &kp N4  &kp N5  &kp N6                  &kp N7  &kp N8   &kp N9  &kp N0  &kp MINUS  &kp EQUAL
+&trans     &trans  &trans  &trans  &trans  &trans                  &kp N4  &kp N5   &kp N6  &trans  &trans     &trans
+&soft_off  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &kp N1  &kp N2   &kp N3  &trans  &trans     &soft_off
+                   &trans  &trans  &trans  &trans  &trans  &trans  &kp N0  &kp DOT  &trans  &trans
             >;
 
             label = "numbers";
