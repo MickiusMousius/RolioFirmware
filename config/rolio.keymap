@@ -344,10 +344,10 @@
             label = "default";
             sensor-bindings = <&inc_dec_kp UP DOWN &inc_dec_kp LEFT RIGHT>;
             bindings = <
-&kp TAB     &kp Q  &kp W     &kp E     &kp R             &kp T                    &kp Y      &kp U  &kp I      &kp O      &kp P     &backspace_word 0 BSPC
-&kp ESCAPE  &kp A  &kp S     &kp D     &kp F             &kp G                    &kp H      &kp J  &kp K      &kp L      &kp SEMI  &kp SQT
-&td2        &kp Z  &kp X     &kp C     &kp V             &kp B      &none  &to 3  &kp N      &kp M  &kp COMMA  &kp DOT    &kp FSLH  &td3
-                   &kp LGUI  &kp LALT  &kp LEFT_CONTROL  &kp SPACE  &mo 2  &mo 1  &kp SPACE  &none  &none      &kp ENTER
+&kp TAB     &kp Q  &kp W     &kp E     &kp R             &kp T                            &kp Y      &kp U  &kp I      &kp O      &kp P     &backspace_word 0 BSPC
+&kp ESCAPE  &kp A  &kp S     &kp D     &kp F             &kp G                            &kp H      &kp J  &kp K      &kp L      &kp SEMI  &kp SQT
+&td2        &kp Z  &kp X     &kp C     &kp V             &kp B      &soft_off  &soft_off  &kp N      &kp M  &kp COMMA  &kp DOT    &kp FSLH  &td3
+                   &kp LGUI  &kp LALT  &kp LEFT_CONTROL  &kp SPACE  &mo 2      &mo 1      &kp SPACE  &none  &none      &kp ENTER
             >;
         };
 
@@ -371,17 +371,6 @@
             >;
 
             label = "numbers";
-        };
-
-        custom {
-            bindings = <
-&kp Q  &kp W  &kp E      &kp R     &kp T      &none                      &none  &kp Y      &kp U  &kp I  &kp O      &kp P
-&kp A  &kp S  &kp D      &kp F     &kp G      &none                      &none  &kp H      &kp J  &kp K  &kp L      &kp SQT
-&none  &kp Z  &kp X      &kp C     &kp V      &none  &none    &to 0      &none  &kp B      &kp N  &kp M  &kp COMMA  &kp DOT
-              &kp LCTRL  &kp LALT  &kp SPACE  &none  &kp TAB  &kp ENTER  &none  &kp SPACE  &none  &none
-            >;
-
-            label = "custom";
         };
     };
 };
