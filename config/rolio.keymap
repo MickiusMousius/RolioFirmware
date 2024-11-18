@@ -103,6 +103,16 @@
             bindings = <&w_bsp_word>, <&kp>;
         };
 
+        spacelayer: spacelayer {
+            compatible = "zmk,behavior-hold-tap";
+            label = "SPACELAYER";
+            bindings = <&kp>, <&mo>;
+
+            #binding-cells = <2>;
+            tapping-term-ms = <200>;
+            flavor = "tap-preferred";
+        };
+
         //Mac OS Zoom
         //Windows OS Zoom
     };
@@ -344,10 +354,10 @@
             label = "default";
             sensor-bindings = <&inc_dec_kp UP DOWN &inc_dec_kp LEFT RIGHT>;
             bindings = <
-&kp TAB     &kp Q  &kp W     &kp E     &kp R             &kp T                    &kp Y      &kp U  &kp I      &kp O      &kp P     &backspace_word 0 BSPC
-&kp ESCAPE  &kp A  &kp S     &kp D     &kp F             &kp G                    &kp H      &kp J  &kp K      &kp L      &kp SEMI  &kp SQT
-&td2        &kp Z  &kp X     &kp C     &kp V             &kp B      &none  &none  &kp N      &kp M  &kp COMMA  &kp DOT    &kp FSLH  &td3
-                   &kp LGUI  &kp LALT  &kp LEFT_CONTROL  &kp SPACE  &mo 2  &mo 1  &kp SPACE  &none  &none      &kp ENTER
+&kp TAB     &kp Q  &kp W      &kp E     &kp R     &kp T                    &kp Y                &kp U  &kp I      &kp O      &kp P     &kp BACKSPACE
+&kp ESCAPE  &kp A  &kp S      &kp D     &kp F     &kp G                    &kp H                &kp J  &kp K      &kp L      &kp SEMI  &kp SQT
+&kp LSHFT   &kp Z  &kp X      &kp C     &kp V     &kp B      &none  &none  &kp N                &kp M  &kp COMMA  &kp DOT    &kp FSLH  &kp RSHFT
+                   &kp LCTRL  &kp LGUI  &kp LALT  &kp SPACE  &mo 2  &mo 1  &spacelayer SPACE 1  &mo 3  &none      &kp ENTER
             >;
         };
 
@@ -364,13 +374,24 @@
 
         Numbers {
             bindings = <
-&kp N1     &kp N2  &kp N3  &kp N4  &kp N5  &kp N6                  &kp N7  &kp N8   &kp N9  &kp N0  &kp MINUS  &kp EQUAL
-&trans     &trans  &trans  &trans  &trans  &trans                  &kp N4  &kp N5   &kp N6  &trans  &trans     &trans
-&soft_off  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &kp N1  &kp N2   &kp N3  &trans  &trans     &soft_off
+&kp N1     &kp N2  &kp N3  &kp N4  &kp N5  &kp N6                  &kp N7  &kp N8   &kp N9  &kp N0  &trans  &trans
+&trans     &trans  &trans  &trans  &trans  &trans                  &kp N4  &kp N5   &kp N6  &trans  &trans  &trans
+&soft_off  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &kp N1  &kp N2   &kp N3  &trans  &trans  &soft_off
                    &trans  &trans  &trans  &trans  &trans  &trans  &kp N0  &kp DOT  &trans  &trans
             >;
 
             label = "numbers";
+        };
+
+        Symbols {
+            bindings = <
+&none  &none  &none  &none  &none  &none                &none  &none  &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &none  &none
+&none  &none  &none  &none  &none  &none                &none  &none  &kp LEFT_BRACKET      &kp RBKT               &none  &none
+&none  &none  &none  &none  &none  &none  &none  &none  &none  &none  &none                 &none                  &none  &none
+              &none  &none  &none  &none  &none  &none  &none  &none  &none                 &none
+            >;
+
+            label = "symbols";
         };
     };
 };
