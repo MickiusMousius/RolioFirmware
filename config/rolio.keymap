@@ -354,19 +354,19 @@
             label = "default";
             sensor-bindings = <&inc_dec_kp UP DOWN &inc_dec_kp LEFT RIGHT>;
             bindings = <
-&kp TAB     &kp Q  &kp W  &kp E      &kp R     &kp T                            &kp Y                &kp U  &kp I      &kp O      &kp P     &kp BACKSPACE
-&kp ESCAPE  &kp A  &kp S  &kp D      &kp F     &kp G                            &kp H                &kp J  &kp K      &kp L      &kp SEMI  &kp SQT
-&kp LSHFT   &kp Z  &kp X  &kp C      &kp V     &kp B      &to 5  &to 3          &kp N                &kp M  &kp COMMA  &kp DOT    &kp FSLH  &kp RSHFT
-                   &none  &kp LCTRL  &kp LALT  &kp SPACE  &mo 1  &kp BACKSPACE  &spacelayer 3 SPACE  &mo 2  &none      &kp ENTER
+&kp TAB     &kp Q  &kp W     &kp E  &kp R      &kp T                            &kp Y      &kp U  &kp I      &kp O      &kp P     &kp BACKSPACE
+&kp ESCAPE  &kp A  &kp S     &kp D  &kp F      &kp G                            &kp H      &kp J  &kp K      &kp L      &kp SEMI  &kp SQT
+&kp LSHFT   &kp Z  &kp X     &kp C  &kp V      &kp B      &to 5  &to 3          &kp N      &kp M  &kp COMMA  &kp DOT    &kp FSLH  &kp RSHFT
+                   &kp LALT  &none  &kp LCTRL  &kp SPACE  &mo 1  &kp BACKSPACE  &kp SPACE  &mo 3  &mo 2      &kp ENTER
             >;
         };
 
         Numbers {
             bindings = <
-&kp N1  &kp N2  &kp N3  &kp N4  &kp N5  &kp N6                  &kp N7  &kp N8   &kp N9  &kp N0  &none  &trans
-&none   &none   &none   &none   &none   &none                   &kp N4  &kp N5   &kp N6  &none   &none  &none
-&trans  &none   &none   &none   &none   &none   &none   &none   &kp N1  &kp N2   &kp N3  &none   &none  &trans
-                &none   &none   &none   &none   &trans  &trans  &kp N0  &kp DOT  &none   &none
+&kp N1  &kp N2  &kp N3  &kp N4  &kp N5  &kp N6                     &kp N7  &kp N8   &kp N9  &kp N0  &none  &trans
+&none   &none   &none   &none   &none   &none                      &kp N4  &kp N5   &kp N6  &none   &none  &none
+&trans  &none   &none   &none   &none   &none   &none   &none      &kp N1  &kp N2   &kp N3  &none   &none  &trans
+                &none   &none   &none   &none   &trans  &kp SPACE  &kp N0  &kp DOT  &none   &trans
             >;
 
             label = "numbers";
