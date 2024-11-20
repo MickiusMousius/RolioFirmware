@@ -353,10 +353,10 @@
             label = "default";
             sensor-bindings = <&inc_dec_kp UP DOWN &inc_dec_kp LEFT RIGHT>;
             bindings = <
-&kp TAB     &kp Q  &kp W  &kp E      &kp R     &kp T                    &kp Y      &kp U  &kp I      &kp O      &kp P     &kp BACKSPACE
-&kp ESCAPE  &kp A  &kp S  &kp D      &kp F     &kp G                    &kp H      &kp J  &kp K      &kp L      &kp SEMI  &kp SQT
-&kp LSHFT   &kp Z  &kp X  &kp C      &kp V     &kp B      &to 5  &to 3  &kp N      &kp M  &kp COMMA  &kp DOT    &kp FSLH  &kp RSHFT
-                   &mo 2  &kp LCTRL  &kp LALT  &kp SPACE  &mo 1  &mo 3  &kp SPACE  &none  &none      &kp ENTER
+&kp TAB       &kp Q  &kp W  &kp E     &kp R      &kp T                    &kp Y        &kp U  &kp I      &kp O      &kp P     &kp BACKSPACE
+&kp LSHFT     &kp A  &kp S  &kp D     &kp F      &kp G                    &kp H        &kp J  &kp K      &kp L      &kp SEMI  &kp SQT
+&lt 3 ESCAPE  &kp Z  &kp X  &kp C     &kp V      &kp B      &to 5  &to 3  &kp N        &kp M  &kp COMMA  &kp DOT    &kp FSLH  &kp RSHFT
+                     &mo 2  &kp LALT  &kp LCTRL  &kp SPACE  &mo 1  &none  &lt 3 SPACE  &none  &none      &kp ENTER
             >;
         };
 
