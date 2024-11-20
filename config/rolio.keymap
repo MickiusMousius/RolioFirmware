@@ -103,15 +103,6 @@
             bindings = <&w_bsp_word>, <&kp>;
         };
 
-        layer_space: layer_space {
-            compatible = "zmk,behavior-hold-tap";
-            label = "LAYER_SPACE";
-            bindings = <&mo>, <&kp>;
-
-            #binding-cells = <2>;
-            tapping-term-ms = <200>;
-        };
-
         //Mac OS Zoom
         //Windows OS Zoom
     };
@@ -353,19 +344,19 @@
             label = "default";
             sensor-bindings = <&inc_dec_kp UP DOWN &inc_dec_kp LEFT RIGHT>;
             bindings = <
-&kp TAB       &kp Q  &kp W  &kp E     &kp R      &kp T                    &kp Y        &kp U  &kp I      &kp O      &kp P     &kp BACKSPACE
-&kp LSHFT     &kp A  &kp S  &kp D     &kp F      &kp G                    &kp H        &kp J  &kp K      &kp L      &kp SEMI  &kp SQT
-&lt 3 ESCAPE  &kp Z  &kp X  &kp C     &kp V      &kp B      &to 5  &to 3  &kp N        &kp M  &kp COMMA  &kp DOT    &kp FSLH  &kp RSHFT
-                     &mo 2  &kp LALT  &kp LCTRL  &kp SPACE  &mo 1  &none  &lt 3 SPACE  &none  &none      &kp ENTER
+&kp TAB       &kp Q  &kp W  &kp E     &kp R      &kp T                               &kp Y        &kp U  &kp I      &kp O      &kp P     &kp BACKSPACE
+&kp LSHFT     &kp A  &kp S  &kp D     &kp F      &kp G                               &kp H        &kp J  &kp K      &kp L      &kp SEMI  &kp SQT
+&lt 3 ESCAPE  &kp Z  &kp X  &kp C     &kp V      &kp B                 &to 5  &to 3  &kp N        &kp M  &kp COMMA  &kp DOT    &kp FSLH  &kp RSHFT
+                     &mo 2  &kp LALT  &kp LCTRL  &mt LEFT_SHIFT SPACE  &mo 1  &none  &lt 3 SPACE  &none  &none      &kp ENTER
             >;
         };
 
         Numbers {
             bindings = <
-&kp N1  &kp N2  &kp N3  &kp N4  &kp N5  &kp N6                     &kp N7  &kp N8   &kp N9  &kp N0  &none  &trans
-&none   &none   &none   &none   &none   &none                      &kp N4  &kp N5   &kp N6  &none   &none  &none
-&trans  &none   &none   &none   &none   &none   &none   &none      &kp N1  &kp N2   &kp N3  &none   &none  &trans
-                &none   &none   &none   &none   &trans  &kp SPACE  &kp N0  &kp DOT  &none   &trans
+&kp N1  &kp N2  &kp N3  &kp N4  &kp N5  &kp N6                     &kp N7  &kp N8   &kp N9  &kp N0  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans                     &kp N4  &kp N5   &kp N6  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans     &kp N1  &kp N2   &kp N3  &trans  &trans  &trans
+                &trans  &trans  &trans  &trans  &trans  &kp SPACE  &kp N0  &kp DOT  &trans  &trans
             >;
 
             label = "numbers";
@@ -373,35 +364,35 @@
 
         Symbols {
             bindings = <
-&none   &none  &none  &none  &none  &none                &none  &none  &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp MINUS  &trans
-&none   &none  &none  &none  &none  &none                &none  &none  &kp LEFT_BRACKET      &kp RBKT               &kp EQUAL  &kp DELETE
-&trans  &none  &none  &none  &none  &none  &none  &none  &none  &none  &none                 &none                  &none      &none
-               &none  &none  &none  &none  &none  &none  &none  &none  &none                 &none
+&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans  &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp MINUS  &trans
+&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans  &kp LEFT_BRACKET      &kp RBKT               &kp EQUAL  &kp DELETE
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans                &trans                 &trans     &trans
+                &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans                &trans
             >;
 
             label = "symbols";
         };
 
+        Arrows {
+            bindings = <
+&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans    &kp UP    &mo 4      &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &kp LEFT  &kp DOWN  &kp RIGHT  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans    &trans    &trans     &trans  &trans
+                &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans    &trans    &trans
+            >;
+
+            label = "arrows";
+        };
+
         Function {
             bindings = <
-&none   &none       &none       &none   &none   &none                   &none   &none     &kp UP    &mo 4      &none  &trans
-&none   &bt BT_PRV  &bt BT_NXT  &none   &none   &none                   &none   &kp LEFT  &kp DOWN  &kp RIGHT  &none  &none
-&trans  &bt BT_CLR  &none       &none   &none   &none   &none   &to 0   &none   &none     &none     &none      &none  &none
-                    &trans      &trans  &trans  &trans  &trans  &trans  &trans  &trans    &trans    &trans
+&bt BT_SEL 0   &bt BT_SEL 1   &bt BT_SEL 2   &bt BT_SEL 3   &bt BT_SEL 4   &bt BT_NXT                  &trans  &trans  &kp HOME  &trans  &trans  &trans
+&bt BT_DISC 0  &bt BT_DISC 1  &bt BT_DISC 2  &bt BT_DISC 3  &bt BT_DISC 4  &bt BT_PRV                  &trans  &trans  &kp END   &trans  &trans  &trans
+&trans         &trans         &trans         &trans         &trans         &bt BT_CLR  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans
+                              &trans         &trans         &trans         &trans      &trans  &trans  &trans  &trans  &trans    &trans
             >;
 
             label = "function";
-        };
-
-        Navigation {
-            bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans  &kp HOME  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans  &kp END   &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans
-                &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans    &trans
-            >;
-
-            label = "navigation";
         };
 
         test {
