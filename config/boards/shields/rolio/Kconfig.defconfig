@@ -1,7 +1,7 @@
 if SHIELD_ROLIO_LEFT
 
 config ZMK_KEYBOARD_NAME
-    default "Rolio"
+    default "Rolio46"
 
 config ZMK_SPLIT_ROLE_CENTRAL
     default y
