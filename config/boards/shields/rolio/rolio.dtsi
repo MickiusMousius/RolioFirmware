@@ -15,8 +15,8 @@
 
 / {
     chosen {
+        zmk,physical-layout = &rolio46_layout;
         zmk,kscan = &kscan0;
-        zmk,matrix_transform = &default_transform;
         zmk,backlight = &backlight;
     };
 
