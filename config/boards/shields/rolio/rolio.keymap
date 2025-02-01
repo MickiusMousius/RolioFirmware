@@ -160,7 +160,7 @@
             bindings
                 = <&macro_press &kp LGUI>
                 , <&macro_press &kp LSHIFT>
-                , <&macro_tap &kp N5>
+                , <&macro_tap &kp N4>
                 , <&macro_release &kp LSHFT>
                 , <&macro_release &kp LGUI>
                 ;
