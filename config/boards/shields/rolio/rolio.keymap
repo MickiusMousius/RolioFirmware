@@ -12,99 +12,28 @@
 
 
 #define MACOS     0
-#define FKEYS     1
-#define NUMBERS   2
-#define WINDOWS   3
-#define W_FKEYS   4
-#define W_NUMBERS 5
-#define NUMPAD    6
-#define KB_CONFIG 7
+#define NUMBERS   1
+#define NUMPAD    2
+#define FKEYS     3
+#define KB_CONFIG 4
 
 
 / {
 
-    conditional_layers {
-        compatible = "zmk,conditional-layers";
-        win_fkeys {
-            if-layers = <WINDOWS FKEYS>;
-            then-layer = <W_FKEYS>;
-        };
-        win_numbers {
-            if-layers = <WINDOWS NUMBERS>;
-            then-layer = <W_NUMBERS>;
-        };
-    };
-
-
     behaviors {
         // Toggle F-Keys Layer
-        td0: tap_dance_0 {
+        td0: Toggle_FKeys {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
             tapping-term-ms = <300>;
             bindings = <&mo FKEYS>, <&tog FKEYS>, <&tog KB_CONFIG>;
         };
         // Toggle Numbers layer
-        td1: tap_dance_1 {
+        td1: Toggle_Numpad {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
             tapping-term-ms = <300>;
             bindings = <&mo NUMBERS>, <&tog NUMPAD>, <&tog NUMBERS>;
-        };
-        // Toggle Windows layer
-        td4: tap_dance_4 {
-            compatible = "zmk,behavior-tap-dance";
-            #binding-cells = <0>;
-            tapping-term-ms = <200>;
-            bindings = <&kp LGUI>, <&tog WINDOWS>;
-        };
-        // Toggle Windows layer
-        td5: tap_dance_5 {
-            compatible = "zmk,behavior-tap-dance";
-            #binding-cells = <0>;
-            tapping-term-ms = <200>;
-            bindings = <&kp RGUI>, <&tog WINDOWS>;
-        };
-        // Backspace a whole word when holding backspace
-        backspace_word: backspace_word {
-            compatible = "zmk,behavior-hold-tap";
-            #binding-cells = <2>;
-            tapping_term_ms = <250>;
-            quick_tap_ms = <0>;
-            flavor = "tap-preferred";
-            bindings = <&bsp_word>, <&kp>;
-        };
-        w_backspace_word: w_backspace_word {
-            compatible = "zmk,behavior-hold-tap";
-            #binding-cells = <2>;
-            tapping_term_ms = <200>;
-            quick_tap_ms = <0>;
-            flavor = "tap-preferred";
-            bindings = <&w_bsp_word>, <&kp>;
-        };
-        //Mac OS Zoom
-        mac_zoom: mac_zoom {
-            compatible = "zmk,behavior-sensor-rotate";
-            #sensor-binding-cells = <0>;
-            bindings = <&zoom_in>, <&zoom_out>;
-        };
-        //Windows OS Zoom
-        win_zoom: win_zoom {
-            compatible = "zmk,behavior-sensor-rotate";
-            #sensor-binding-cells = <0>;
-            bindings = <&w_zoom_in>, <&w_zoom_out>;
-        };
-        //Mac OS word seek
-        mac_word_seek: mac_word_seek {
-            compatible = "zmk,behavior-sensor-rotate";
-            #sensor-binding-cells = <0>;
-            bindings = <&prev_word>, <&next_word>;
-        };
-        //Windows word seek
-        win_word_seek: win_word_seek {
-            compatible = "zmk,behavior-sensor-rotate";
-            #sensor-binding-cells = <0>;
-            bindings = <&w_prev_word>, <&w_next_word>;
         };
         //Backlight Brightness
         bri_adjust: bri_adjust {
@@ -116,7 +45,7 @@
 
 
     macros {
-        unindent: unindent {
+        unindent: Unindent {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings
@@ -125,7 +54,7 @@
                 , <&macro_release &kp LSHIFT>
                 ;
         };
-        lstart: lstart {
+        lstart: MacOS_Start_Of_Line {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings
@@ -134,7 +63,7 @@
                 , <&macro_release &kp LGUI>
                 ;
         };
-        lend: lend {
+        lend: MacOS_End_Of_Line {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings
@@ -143,7 +72,7 @@
                 , <&macro_release &kp LGUI>
                 ;
         };
-        scrsh: scrsh {
+        scrsh: MacOS_Screenshot {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings
@@ -154,7 +83,7 @@
                 , <&macro_release &kp LGUI>
                 ;
         };
-        scrcr: scrcr {
+        scrcr: MacOS_Screenshot_Cropped {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings
@@ -165,7 +94,7 @@
                 , <&macro_release &kp LGUI>
                 ;
         };
-        wscrcr: wscrcr {
+        wscrcr: Windows_Screenshot_Cropped {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings
@@ -176,7 +105,7 @@
                 , <&macro_release &kp LGUI>
                 ;
         };
-        pal: pal {
+        pal: MacOS_Emojis {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings
@@ -187,132 +116,13 @@
                 , <&macro_release &kp LGUI>
                 ;
         };
-        wpal: wpal {
+        wpal: Windows_Emojis {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings
                 = <&macro_press &kp LGUI>
                 , <&macro_tap &kp DOT>
                 , <&macro_release &kp LGUI>
-                ;
-        };
-        // Word backspace macros
-        bsp_word: bsp_word {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings
-                = <&macro_press &kp LALT>
-                , <&macro_tap &kp BSPC>
-                , <&macro_release &kp LALT>
-                ;
-        };
-        w_bsp_word: w_bsp_word {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings
-                = <&macro_press &kp LCTRL>
-                , <&macro_tap &kp BSPC>
-                , <&macro_release &kp LCTRL>
-                ;
-        };
-        // Word seek macros
-        prev_word: prev_word {
-            compatible = "zmk,behavior-macro";
-            wait-ms = <2>;
-            tap-ms = <20>;
-            #binding-cells = <0>;
-            bindings
-                = <&macro_press &kp LALT>
-                , <&macro_tap &kp LEFT>
-                , <&macro_release &kp LALT>
-                ;
-        };
-        next_word: next_word {
-            compatible = "zmk,behavior-macro";
-            wait-ms = <2>;
-            tap-ms = <20>;
-            #binding-cells = <0>;
-            bindings
-                = <&macro_press &kp LALT>
-                , <&macro_tap &kp RIGHT>
-                , <&macro_release &kp LALT>
-                ;
-        };
-        w_prev_word: w_prev_word {
-            compatible = "zmk,behavior-macro";
-            wait-ms = <2>;
-            tap-ms = <20>;
-            #binding-cells = <0>;
-            bindings
-                = <&macro_press &kp LCTRL>
-                , <&macro_tap &kp LEFT>
-                , <&macro_release &kp LCTRL>
-                ;
-        };
-        w_next_word: w_next_word {
-            compatible = "zmk,behavior-macro";
-            wait-ms = <2>;
-            tap-ms = <20>;
-            #binding-cells = <0>;
-            bindings
-                = <&macro_press &kp LCTRL>
-                , <&macro_tap &kp RIGHT>
-                , <&macro_release &kp LCTRL>
-                ;
-        };
-        // Zoom macros
-        zoom_in: zoom_in {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings
-                = <&macro_press &kp LGUI>
-                , <&macro_tap &kp EQUAL>
-                , <&macro_release &kp LGUI>
-                ;
-        };
-        zoom_out: zoom_out {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings
-                = <&macro_press &kp LGUI>
-                , <&macro_tap &kp MINUS>
-                , <&macro_release &kp LGUI>
-                ;
-        };
-        reset_zoom: reset_zoom {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings
-                = <&macro_press &kp LGUI>
-                , <&macro_tap &kp N0>
-                , <&macro_release &kp LGUI>
-                ;
-        };
-        w_zoom_in: w_zoom_in {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings
-                = <&macro_press &kp LCTRL>
-                , <&macro_tap &kp EQUAL>
-                , <&macro_release &kp LCTRL>
-                ;
-        };
-        w_zoom_out: w_zoom_out {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings
-                = <&macro_press &kp LCTRL>
-                , <&macro_tap &kp MINUS>
-                , <&macro_release &kp LCTRL>
-                ;
-        };
-        w_reset_zoom: w_reset_zoom {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings
-                = <&macro_press &kp LCTRL>
-                , <&macro_tap &kp N0>
-                , <&macro_release &kp LCTRL>
                 ;
         };
 
@@ -328,38 +138,20 @@
             bindings = <
 //---------------------------------------------------------------+                                        +---------------------------------------------------------------//
 //          |         |          |           |          |        |                                        |       |       |           |         |          |           // 
-  &kp GRAVE   &kp Q     &kp W      &kp E        &kp R     &kp T                                             &kp Y   &kp U     &kp I      &kp O     &kp P     &backspace_word 0 BSPC
+  &kp GRAVE   &kp Q     &kp W      &kp E        &kp R     &kp T                                             &kp Y   &kp U     &kp I      &kp O     &kp P      &kp BSPC
 //          |         |          |           |          |        |                                        |       |       |           |         |          |           //
   &kp TAB     &kp A     &kp S      &kp D        &kp F     &kp G                                             &kp H   &kp J     &kp K      &kp L    &kp SEMI    &kp SQT
 //          |         |          |           |          |        +--------------------+ +-----------------|       |       |           |         |          |           //
   &kp LSHIFT  &kp Z     &kp X      &kp C        &kp V     &kp B     &kp F16                  &kp F17        &kp N   &kp M   &kp COMMA   &kp DOT    &kp FSLH   &kp RSHIFT
 //--------------------|          |           |          |        |                    | |                 |       |       |           |--------------------------------//  
-                        &kp LALT   &kp LCTRL     &td4     &td0     &lt KB_CONFIG ENTER   &lt NUMPAD SPACE   &td1    &td5    &kp RCTRL   &kp DEL
+                        &kp LALT   &kp LCTRL     &kp LGUI     &td0     &lt KB_CONFIG ENTER   &lt NUMPAD SPACE   &td1   &kp RGUI    &kp RCTRL   &kp DEL
 //                    +----------|-----------|----------|-----------------------------+  +-----------------|-------|--------|-----------|---------+                      //
             >;
         };
 
-        f_keys_layer {
-            display-name = "F Keys";
-            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &mac_zoom>;
-            bindings = <
-//-------------------------------------------------------------------------------+                           +-------------------------------------------------------------------//
-//          |            |            |              |            |              |                           |          |          |           |         |           |           // 
-  &kp ESCAPE    &kp F1      &kp F2       &kp F3          &kp F4        &kp F5                                   &kp F6    &kp F7      &kp F8     &kp F9    &kp F10     &kp F11
-//          |            |            |              |            |              |                           |          |          |           |         |           |           // 
-  &unindent   &bt BT_PRV   &bt BT_NXT   &kp C_PREV     &kp C_PP     &kp C_NEXT                                 &lstart     &kp UP     &lend      &scrsh    &kp PG_UP   &kp F12
-//          |            |            |              |            |              +-------------+    +--------+          |          |           |         |           |           // 
-    &trans    &bl BL_TOG  &bl BL_SET 4  &kp C_VOL_DN   &kp C_MUTE   &kp C_VOL_UP    &kp C_MUTE     &reset_zoom &kp LEFT   &kp DOWN   &kp RIGHT   &scrcr    &kp PG_DN   &kp F13
-//-----------------------|            |              |            |              |             |    |        |          |          |           |         |-----------------------//  
-                            &trans         &trans       &trans        &trans        &trans            &trans    &trans    &trans      &trans     &trans
-//                       +------------|--------------|------------|--------------|-------------+    +--------|----------|----------|-----------|---------+                       //
-            >;
-
-        };
-
         numbers_layer {
             display-name = "Numbers";
-            sensor-bindings = <&inc_dec_kp UP DOWN &mac_word_seek>;
+            sensor-bindings = <&inc_dec_kp UP DOWN &inc_dec_kp LEFT RIGHT>;
             bindings = <
 //-------------------------------------------------------------------------------+                      +----------------------------------------------------------------------------//
 //          |          |                |                 |          |           |                      |           |               |          |          |               |          // 
@@ -374,56 +166,6 @@
             >;
         };
 
-        windows_default_layer {
-            display-name = "Windows";
-            sensor-bindings = <&inc_dec_kp UP DOWN &inc_dec_kp LEFT RIGHT>;
-            bindings = <
-//-----------------------------------------------------------------+                        +------------------------------------------------------------------//
-//          |          |          |          |          |          |                        |          |          |          |          |          |           // 
-    &trans     &trans     &trans     &trans     &trans     &trans                              &trans     &trans     &trans     &trans     &trans     &w_backspace_word 0 BSPC
-//          |          |          |          |          |          |                        |          |          |          |          |          |           //
-    &trans     &trans     &trans     &trans     &trans     &trans                              &trans     &trans     &trans     &trans     &trans     &trans
-//          |          |          |          |          |          +--------+     +---------|          |          |          |          |          |           // 
-    &trans     &trans     &trans     &trans     &trans     &trans    &trans         &trans     &trans     &trans     &trans     &trans     &trans     &trans
-//---------------------|          |          |          |          |        |     |         |          |          |          |          |----------------------//
-                          &trans     &trans     &trans     &trans    &trans         &trans     &trans     &trans     &trans     &trans
-//                     +----------|----------|----------|----------|--------+     +----------|---------|----------|----------|----------+                      //
-            >;
-        };
-
-        windows_fkeys_layer {
-            display-name = "F Keys";
-            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &win_zoom>;
-            bindings = <
-//-----------------------------------------------------------------+                        +------------------------------------------------------------------//
-//          |          |          |          |          |          |                        |          |          |          |          |          |           // 
-    &trans     &trans     &trans     &trans     &trans     &trans                              &trans     &trans     &trans     &trans     &trans     &trans
-//          |          |          |          |          |          |                        |          |          |          |          |          |           //
-    &trans     &trans     &trans     &trans     &trans     &trans                             &kp HOME    &trans     &kp END  &kp PSCRN    &trans     &trans
-//          |          |          |          |          |          +--------+     +---------|          |          |          |          |          |           // 
-    &trans     &trans     &trans     &trans     &trans     &trans    &trans      &w_reset_zoom &trans     &trans     &trans     &wscrcr    &trans     &trans
-//---------------------|          |          |          |          |        |     |         |          |          |          |          |----------------------//
-                          &trans     &trans     &trans     &trans    &trans         &trans     &trans     &trans     &trans     &trans
-//                     +----------|----------|----------|----------|--------+     +----------|---------|----------|----------|----------+                      //
-            >;
-        };
-
-        windows_numbers_layer {
-            display-name = "Numbers";
-            sensor-bindings = <&inc_dec_kp UP DOWN &win_word_seek>;
-            bindings = <
-//-----------------------------------------------------------------+                        +------------------------------------------------------------------//
-//          |          |          |          |          |          |                        |          |          |          |          |          |           // 
-    &trans     &trans     &trans     &trans     &trans     &trans                              &trans     &trans     &trans     &trans     &trans     &trans
-//          |          |          |          |          |          |                        |          |          |          |          |          |           //
-    &trans     &trans     &trans     &trans     &trans     &trans                              &trans     &trans     &trans     &trans     &trans     &trans
-//          |          |          |          |          |          +--------+     +---------|          |          |          |          |          |           // 
-    &trans     &wpal      &trans     &trans     &trans     &trans    &trans         &trans     &trans     &trans     &trans     &trans     &trans     &trans
-//---------------------|          |          |          |          |        |     |         |          |          |          |          |----------------------//
-                          &trans     &trans     &trans     &trans    &trans         &trans     &trans     &trans     &trans     &trans
-//                     +----------|----------|----------|----------|--------+     +---------|----------|----------|----------|----------+                      //
-            >;
-        };
 
         numpad_layer {
             display-name = "Number Pad";
@@ -442,7 +184,27 @@
             >;
       };
 
-        settings_layer {
+
+        f_keys_layer {
+            display-name = "F Keys";
+            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp LEFT RIGHT>;
+            bindings = <
+//-------------------------------------------------------------------------------+                           +-------------------------------------------------------------------//
+//          |            |            |              |            |              |                           |          |          |           |         |           |           // 
+  &kp ESCAPE    &kp F1      &kp F2       &kp F3          &kp F4        &kp F5                                   &kp F6    &kp F7      &kp F8     &kp F9    &kp F10     &kp F11
+//          |            |            |              |            |              |                           |          |          |           |         |           |           // 
+  &unindent   &bt BT_PRV   &bt BT_NXT   &kp C_PREV     &kp C_PP     &kp C_NEXT                                 &lstart     &kp UP     &lend      &scrsh    &kp PG_UP   &kp F12
+//          |            |            |              |            |              +-------------+    +--------+          |          |           |         |           |           // 
+    &trans    &bl BL_TOG  &bl BL_SET 4  &kp C_VOL_DN   &kp C_MUTE   &kp C_VOL_UP    &kp C_MUTE     &kp F18 &kp   LEFT     &kp DOWN   &kp RIGHT   &scrcr    &kp PG_DN   &kp F13
+//-----------------------|            |              |            |              |             |    |        |          |          |           |         |-----------------------//  
+                            &trans         &trans       &trans        &trans        &trans            &trans    &trans    &trans      &trans     &trans
+//                       +------------|--------------|------------|--------------|-------------+    +--------|----------|----------|-----------|---------+                       //
+            >;
+
+        };
+
+
+      settings_layer {
             display-name = "Settings";
             sensor-bindings = <&bri_adjust &inc_dec_kp LEFT RIGHT>;
             bindings = <
@@ -452,12 +214,24 @@
 //          |              |              |              |              |                |                        |          |          |          |          |          |           // 
     &trans     &bt BT_PRV     &bt BT_NXT       &trans         &trans         &trans                                  &trans     &trans     &trans     &trans     &trans     &trans
 //          |              |              |              |              |                +--------+     +---------|          |          |          |          |          |           // 
-    &trans       &trans       &bt BT_CLR     &bl BL_DEC    &bl BL_TOG      &bl BL_INC    &bl BL_TOG       &trans     &trans     &trans     &trans     &trans     &trans     &trans
+    &trans     &bl BL_TOG       &bt BT_CLR     &bl BL_DEC    &bl BL_TOG      &bl BL_INC    &bl BL_TOG       &trans     &trans     &trans     &trans     &trans     &trans     &trans
 //-------------------------|              |              |              |                |        |     |         |          |          |          |          |----------------------//
                                &trans          &trans         &trans      &tog KB_CONFIG   &trans         &trans     &trans     &trans     &trans     &trans
 //                         +--------------|--------------|--------------|----------------|--------+     +----------|---------|----------|----------|----------+                      //
             >;
         };
 
+        // Extra layers for ZMK Studio
+        extra1 {
+            status = "reserved";
+        };
+        extra2 {
+            status = "reserved";
+        };
+        extra3 {
+            status = "reserved";
+        };
+
     };
+
 };
