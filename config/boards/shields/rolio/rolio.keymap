@@ -9,7 +9,9 @@
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/outputs.h>
 #include <dt-bindings/zmk/backlight.h>
+#include <dt-bindings/zmk/pointing.h>
 
+#define ZMK_POINTING_DEFAULT_SCRL_VAL 100
 
 #define MACOS     0
 #define NUMBERS   1
@@ -41,6 +43,14 @@
             #sensor-binding-cells = <0>;
             bindings = <&bl BL_INC>, <&bl BL_DEC>;
         };
+        // Encoder to Mouse Scroll
+        scroll_up_down: scroll_up_down {
+            compatible = "zmk,behavior-sensor-rotate";
+            #sensor-binding-cells = <0>;
+            bindings = <&msc SCRL_UP>, <&msc SCRL_DOWN>;
+            tap-ms = <20>;
+        };
+
     };
 
 
@@ -187,7 +197,7 @@
 
         f_keys_layer {
             display-name = "F Keys";
-            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp LEFT RIGHT>;
+            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &scroll_up_down>;
             bindings = <
 //-------------------------------------------------------------------------------+                           +-------------------------------------------------------------------//
 //          |            |            |              |            |              |                           |          |          |           |         |           |           // 
@@ -195,7 +205,7 @@
 //          |            |            |              |            |              |                           |          |          |           |         |           |           // 
   &unindent   &bt BT_PRV   &bt BT_NXT   &kp C_PREV     &kp C_PP     &kp C_NEXT                                 &lstart     &kp UP     &lend      &scrsh    &kp PG_UP   &kp F12
 //          |            |            |              |            |              +-------------+    +--------+          |          |           |         |           |           // 
-    &trans    &bl BL_TOG  &bl BL_SET 4  &kp C_VOL_DN   &kp C_MUTE   &kp C_VOL_UP    &kp C_MUTE     &kp F18 &kp   LEFT     &kp DOWN   &kp RIGHT   &scrcr    &kp PG_DN   &kp F13
+    &trans    &bl BL_TOG  &bl BL_SET 4  &kp C_VOL_DN   &kp C_MUTE   &kp C_VOL_UP    &kp C_MUTE     &mkp LCLK   &kp LEFT   &kp DOWN   &kp RIGHT   &scrcr    &kp PG_DN   &kp F13
 //-----------------------|            |              |            |              |             |    |        |          |          |           |         |-----------------------//  
                             &trans         &trans       &trans        &trans        &trans            &trans    &trans    &trans      &trans     &trans
 //                       +------------|--------------|------------|--------------|-------------+    +--------|----------|----------|-----------|---------+                       //
