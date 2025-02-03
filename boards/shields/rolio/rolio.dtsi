@@ -5,11 +5,18 @@
  */
 
 #include <dt-bindings/zmk/matrix_transform.h>
+#include "rolio46-layout.dtsi"
+
+&rolio46_layout {
+    kscan = <&kscan0>;
+    transform = <&default_transform>;
+};
+
 
 / {
     chosen {
+        zmk,physical-layout = &rolio46_layout;
         zmk,kscan = &kscan0;
-        zmk,matrix_transform = &default_transform;
         zmk,backlight = &backlight;
     };
 
@@ -31,7 +38,7 @@ RC(2,0) RC(2,1) RC(2,2) RC(2,3) RC(2,4) RC(2,5) RC(3,0)   RC(3,11) RC(2,6) RC(2,
 
     kscan0: kscan {
         compatible = "zmk,kscan-gpio-matrix";
-				wakeup-source;
+        wakeup-source;
         diode-direction = "col2row";
         row-gpios
             = <&pro_micro 5 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
