@@ -8,6 +8,7 @@ features:
   - keys
   - encoder
   - backlight
+  - studio
 siblings:
   - rolio_left
   - rolio_right
