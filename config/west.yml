@@ -2,10 +2,15 @@ manifest:
   remotes:
     - name: zmkfirmware
       url-base: https://github.com/zmkfirmware
+    - name: elpekenin
+      url-base: https://github.com/elpekenin
   projects:
     - name: zmk
       import: app/west.yml
       remote: zmkfirmware
+      revision: main
+    - name: zmk-userspace
+      remote: elpekenin
       revision: main
   self:
     path: config
