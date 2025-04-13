@@ -79,6 +79,15 @@
             require-prior-idle-ms = <125>;
             bindings = <&out>, <&kp>;
         };
+        // Hold to clear BT connection or tap for key press
+        btclr_kp: btclr_kp {
+            display-name = "Bluetooth Profile Clear Or Key Press";
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            flavor = "tap-preferred";
+            tapping-term-ms = <2000>;
+            bindings = <&btclrmacro>, <&kp>;
+        };
         // Small volume steps for MacOS
         mac_vol: Mac_Volume_Scroller {
             label = "Scroller MacOS Small Volume Steps";
@@ -105,6 +114,13 @@
             #binding-cells = <1>;
             bindings = <&macro_param_1to2>
                 , <&bt BT_SEL MACRO_PLACEHOLDER>;
+        };
+        // Select bluetooth profile helper  for behaviours
+        btclrmacro: btclrmacro {
+            display-name = "Bluetooth Profile Clear";
+            compatible = "zmk,behavior-macro-one-param";
+            #binding-cells = <1>;
+            bindings = <&bt BT_CLR>;
         };
         // Utilities so that Studio's use of "df" looks nice
         df_mac: df_mac {
@@ -233,16 +249,16 @@
             display-name = "Number Pad";
             sensor-bindings = <&inc_dec_kp UP DOWN &inc_dec_kp LEFT RIGHT>;
             bindings = <
-//-----------------------------------------------------------------+                        +-----------------------------------------------------------------------------------------------//
-//          |          |          |          |          |          |                        |           |               |                 |                |                  |             // 
-    &trans    &kp N1      &kp N2    &kp N3     &kp N4     &kp N5                              &kp N6         &kp KP_N7    &kp KP_N8        &kp KP_N9        &kp N0             &trans 
-//          |          |          |          |          |          |                        |           |               |                 |                |                  |             // 
-    &trans    &kp EXCL    &kp AT    &kp HASH   &kp DLLR   &kp PRCNT                           &kp CARET      &kp KP_N4    &kp KP_N5        &mt LPAR KP_N6   &mt RPAR KP_PLUS   &kp KP_MINUS
-//          |          |          |          |          |          +--------+     +---------|           |               |                 |                |                  |             // 
-    &trans     &trans     &trans     &trans     &trans    &kp EQUAL  &trans         &trans    &kp PRCNT      &kp KP_N1    &mt COMMA KP_N2  &mt DOT KP_N3    &kp KP_DIVIDE      &kp KP_MULTIPLY
-//---------------------|          |          |          |          |        |     |         |           |               |                 |                |--------------------------------//
-                          &trans     &trans     &trans     &trans    &trans         &trans   &tog NUMPAD     &kp KP_N0    &kp KP_DOT       &trans
-//                     +----------|----------|----------|----------|--------+     +---------|-----------|---------------|-----------------|----------------+                                //
+//-----------------------------------------------------------------+                        +-------------------------------------------------------------------------------------//
+//          |          |          |          |          |          |                        |           |          |              |             |                  |              // 
+    &trans    &kp N1      &kp N2    &kp N3     &kp N4     &kp N5                              &kp N6       &kp N7       &kp N8        &kp N9           &kp N0          &trans 
+//          |          |          |          |          |          |                        |           |          |              |             |                  |              // 
+    &trans    &kp EXCL    &kp AT    &kp HASH   &kp DLLR   &kp PRCNT                           &kp CARET    &kp N4       &kp N5      &mt LPAR N6   &mt RPAR KP_PLUS   &kp KP_MINUS
+//          |          |          |          |          |          +--------+     +---------|           |          |              |             |                  |              // 
+    &trans     &trans     &trans     &trans     &trans    &kp EQUAL  &trans         &trans    &kp PRCNT    &kp N1    &mt COMMA N2   &mt DOT N3     &kp KP_DIVIDE    &kp KP_MULTIPLY
+//---------------------|          |          |          |          |        |     |         |           |          |              |             |---------------------------------//
+                          &trans     &trans     &trans     &trans    &trans         &trans   &tog NUMPAD   &kp N0    &kp KP_DOT       &trans
+//                     +----------|----------|----------|----------|--------+     +---------|-----------|----------|--------------|-------------+                                 //
             >;
       };
 
@@ -292,11 +308,11 @@
             bindings = <
 //---------------------------------------------------------------------------------------+                        +------------------------------------------------------------------//
 //          |              |              |              |              |                |                        |          |          |          |          |          |           // 
- &out OUT_TOG   &btsel 0        &btsel 1      &btsel 2        &btsel 3       &btsel 4                                &trans     &kp N7     &kp N8     &kp N9     &trans     &trans
+ &out OUT_TOG  &btkp 0 N1      &btkp 1 N2    &btkp 2 N3     &btkp 3 N4     &btkp 4 N5                                &kp N6     &kp N7     &kp N8     &kp N9     &kp N0     &trans
 //          |              |              |              |              |                |                        |          |          |          |          |          |           // 
     &trans       &trans         &trans         &trans         &trans         &trans                                  &trans     &kp N4     &kp N5     &kp N6     &trans     &trans
 //          |              |              |              |              |                +--------+     +---------|          |          |          |          |          |           // 
-    &trans     &bl BL_TOG       &bt BT_CLR   &bl BL_DEC     &bl BL_TOG      &bl BL_INC   &bl BL_TOG       &trans     &trans     &kp N1     &kp N2     &kp N3     &trans     &trans
+    &trans     &bl BL_TOG   &btclr_kp X X   &bl BL_DEC     &bl BL_TOG      &bl BL_INC    &bl BL_TOG       &trans     &trans     &kp N1     &kp N2     &kp N3     &trans     &trans
 //-------------------------|              |              |              |                |        |     |         |          |          |          |          |----------------------//
                                &trans          &df_win        &trans        &df_mac        &trans         &trans     &trans     &kp N0     &trans     &trans
 //                         +--------------|--------------|--------------|----------------|--------+     +----------|---------|----------|----------|----------+                      //
