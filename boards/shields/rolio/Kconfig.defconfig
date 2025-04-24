@@ -1,0 +1,26 @@
+if SHIELD_ROLIO_LEFT
+
+config ZMK_KEYBOARD_NAME
+    default "Rolio46"
+
+config ZMK_SPLIT_ROLE_CENTRAL
+    default y
+
+endif
+
+if SHIELD_ROLIO_LEFT || SHIELD_ROLIO_RIGHT
+
+config ZMK_SPLIT
+    default y
+
+endif
+
+if ZMK_BACKLIGHT
+
+config PWM
+    default y
+
+config LED_PWM
+    default y
+
+endif # ZMK_BACKLIGHT

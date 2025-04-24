@@ -1,0 +1,23 @@
+#include "rolio.dtsi"
+
+&kscan0 {
+    col-gpios
+        = <&pro_micro 19 GPIO_ACTIVE_HIGH>
+        , <&pro_micro 18 GPIO_ACTIVE_HIGH>
+        , <&pro_micro 15 GPIO_ACTIVE_HIGH>
+        , <&pro_micro 14 GPIO_ACTIVE_HIGH>
+        , <&pro_micro 16 GPIO_ACTIVE_HIGH>
+        , <&pro_micro 10 GPIO_ACTIVE_HIGH>
+        ;
+};
+
+&encoder_left {
+    status = "okay";
+};
+
+&pwm0 {
+  status = "okay";
+  pinctrl-0 = <&pwm0_default>;
+  pinctrl-1 = <&pwm0_sleep>;
+  pinctrl-names = "default", "sleep";
+};

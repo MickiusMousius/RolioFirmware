@@ -14,8 +14,42 @@
 ---
 include:
   - board: nice_nano_v2
-    shield: rolio_left nice_view_adapter nice_view
+    shield: rolio_left vista508
+    snippet: studio-rpc-usb-uart
+    cmake-args: -DCONFIG_ZMK_STUDIO=y
+    artifact-name: zmk-rolio461-nicenano_v2-vista508-left
   - board: nice_nano_v2
-    shield: rolio_right nice_view_adapter nice_view
+    shield: rolio_right vista508
+    artifact-name: zmk-rolio461-nicenano_v2-vista508-right
   - board: nice_nano_v2
     shield: settings_reset
+    artifact-name: zmk-nicenano_v2-settings_reset
+  - board: mikoto@7.2.0
+    shield: rolio_left vista508
+    snippet: studio-rpc-usb-uart
+    cmake-args: -DCONFIG_ZMK_STUDIO=y
+    artifact-name: zmk-rolio461-mikoto720-vista508-left
+  - board: mikoto@7.2.0
+    shield: rolio_right vista508
+    artifact-name: zmk-rolio461-mikoto720-vista508-right
+  - board: mikoto@7.2.0
+    shield: settings_reset
+    artifact-name: zmk-mikoto720-settings_reset
+  - board: nice_nano_v2
+    shield: rolio_left nice_view
+    snippet: studio-rpc-usb-uart
+    cmake-args: -DCONFIG_ZMK_STUDIO=y -DEXTRA_CONF_FILE=../../config/rolio-nice_view.conf
+    artifact-name: zmk-rolio461-nicenano_v2-nice_view-left
+  - board: nice_nano_v2
+    shield: rolio_right nice_view
+    cmake-args: -DEXTRA_CONF_FILE=../../config/rolio-nice_view.conf  
+    artifact-name: zmk-rolio461-nicenano_v2-nice_view-right
+  - board: mikoto@7.2.0
+    shield: rolio_left nice_view
+    snippet: studio-rpc-usb-uart
+    cmake-args: -DCONFIG_ZMK_STUDIO=y -DEXTRA_CONF_FILE=../../config/rolio-nice_view.conf
+    artifact-name: zmk-rolio461-mikoto720-nice_view-left
+  - board: mikoto@7.2.0
+    shield: rolio_right nice_view 
+    cmake-args: -DEXTRA_CONF_FILE=../../config/rolio-nice_view.conf  
+    artifact-name: zmk-rolio461-mikoto720-nice_view-right
