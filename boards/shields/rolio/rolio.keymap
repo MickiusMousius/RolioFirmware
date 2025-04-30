@@ -104,6 +104,15 @@
             flavor = "tap-preferred";
             bindings = <&kpss>, <&kp>;
         };
+        // Shift / Capsword
+         shift_capsword: shift_capsword {
+            display-name = "Hold Shift / Tap Capsword";
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            flavor = "hold-preferred";
+            tapping-term-ms = <200>;
+            bindings = <&kp>, <&caps_word>;
+        };
     };
 
     macros{
@@ -183,7 +192,7 @@
 //          |         |          |           |          |         |                                        |       |       |           |         |          |           //
   &kp TAB     &kp A     &kp S      &kp D        &kp F     &kp G                                              &kp H   &kp J     &kp K      &kp L    &kp SEMI    &kp SQT
 //          |         |          |           |          |         +--------------------+ +-----------------|       |       |           |         |          |           //
-  &kp LSHIFT  &kp Z     &kp X      &kp C        &kp V     &kp B      &kp F16                  &kp F17        &kp N   &kp M   &kp COMMA   &kp DOT    &kp FSLH   &kp RSHIFT
+  &kp LSHIFT  &kp Z     &kp X      &kp C        &kp V     &kp B      &kp F16                  &kp F17        &kp N   &kp M   &kp COMMA   &kp DOT    &kp FSLH   &shift_capsword RSHIFT 0
 //--------------------|          |           |          |         |                    | |                 |       |       |            |--------------------------------//  
                      &mo KB_CONFIG  &kp LALT   &kp LCTRL  &kp LGUI   &lt M_FKEYS ENTER    &lt NUMPAD SPACE   &td1   &kp RGUI  &kp RCTRL   &kp DEL
 //                    +----------|-----------|----------|-----------------------------+  +-----------------|-------|--------|-----------|---------+                      //
@@ -201,7 +210,7 @@
 //          |         |          |           |          |         |                                        |       |       |           |         |          |           //
   &kp TAB     &kp A     &kp S      &kp D        &kp F     &kp G                                              &kp H   &kp J     &kp K      &kp L    &kp SEMI    &kp SQT
 //          |         |          |           |          |         +--------------------+ +-----------------|       |       |           |         |          |           //
-  &kp LSHIFT  &kp Z     &kp X      &kp C        &kp V     &kp B      &kp F16                  &kp F17        &kp N   &kp M   &kp COMMA   &kp DOT    &kp FSLH   &kp RSHIFT
+  &kp LSHIFT  &kp Z     &kp X      &kp C        &kp V     &kp B      &kp F16                  &kp F17        &kp N   &kp M   &kp COMMA   &kp DOT    &kp FSLH   &shift_capsword RSHIFT 0
 //--------------------|          |           |          |         |                    | |                 |       |       |            |--------------------------------//  
                      &mo KB_CONFIG  &kp LGUI   &kp LALT  &kp LCTRL   &lt W_FKEYS ENTER     &lt NUMPAD SPACE  &td2  &kp RCTRL  &kp RALT   &kp DEL
 //                    +----------|-----------|----------|-----------------------------+  +-----------------|-------|--------|-----------|---------+                      //
