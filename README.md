@@ -46,8 +46,8 @@ The Rolio46 has a few more layers than a regular keyboard. This is done to keep 
 The Rolio46 comes with a built in set of layouts (and layers) for Windows & MacOS. You can use [ZMK Studio](https://zmk.studio/download) to customise these layouts any time, or if you're adventurous you can clone this repository & edit the keymap file to make far more advanced customisations.
 
 To interpret the diagrams below use the following rules:
- * If text is in <span style="color:#00FFFF"><strong>aqua blue</strong></span> then you need to hold the key down to make the key do whatever the <span style="color:#00FFFF"><strong>aqua blue</strong></span> text says.
- * To activate a given layer (Symbols, NumberPad etc) hold down the button highlighted in <span style="color:#FF00FF"><strong>pink</strong></span>.
+ * If text is in **${\color{#00FFFF}Aqua\ Blue}$** then you need to hold the key down to make the key do whatever the **${\color{#00FFFF}Aqua\ Blue}$** text says.
+ * To activate a given layer (Symbols, NumberPad etc) hold down the button highlighted in **${\color{#FF00FF}Pink}$**.
  * The keys marked with a small faded triangle will not change their behaviour when you change layer.
 
 Special behaviours:
