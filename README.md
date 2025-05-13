@@ -49,3 +49,5 @@ Special behaviours:
 # Keymap Diagrams
 
 ![Default layout for the Rolio46](doc/images/keymap.svg)
+
+*NOTE: These layout diagrams were created using a combination of [Keymap Drawer](https://github.com/caksoylar/keymap-drawer-web) and [Inkscape](https://inkscape.org).*
