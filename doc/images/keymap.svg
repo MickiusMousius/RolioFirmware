@@ -6,7 +6,7 @@
    class="keymap"
    version="1.1"
    id="svg279"
-   sodipodi:docname="my_keymap-3.svg"
+   sodipodi:docname="keymap.svg"
    inkscape:version="1.4 (e7c3feb1, 2024-10-09)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -25,7 +25,7 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:zoom="1.8910679"
      inkscape:cx="622.66405"
-     inkscape:cy="146.47808"
+     inkscape:cy="781.04017"
      inkscape:window-width="3840"
      inkscape:window-height="1547"
      inkscape:window-x="0"
@@ -3855,11 +3855,11 @@ path.combo { stroke: #7f7f7f; }
            id="rect66"
            style="fill:#3f4750;stroke:#60666c;stroke-width:1" />
         <text
-           x="0"
-           y="0"
-           class="key trans tap"
-           id="text66"
-           style="dominant-baseline:middle;text-anchor:middle;fill:#7e8184">▽</text>
+           x="0.4668"
+           y="3.08565"
+           class="key tap"
+           id="text53-7"
+           style="dominant-baseline:middle;text-anchor:middle">DEL</text>
       </g>
       <g
          transform="translate(28,97)"

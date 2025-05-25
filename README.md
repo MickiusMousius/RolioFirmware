@@ -1,5 +1,13 @@
 # RolioFirmware
-Firmware for the Rolio46 split wireless keyboard.
+This repository contains the firmware for the Rolio46 split wireless keyboard.
+
+You can view a demo of its features in the video below:
+
+[![Watch the video](doc/images/video_thumbnail.png)](https://www.youtube.com/watch?v=ROdyQWcNV8Y)
+
+If you'd like to build your own Rolio46 you can find resources at the following two links:
+ * [Rolio46 Github](https://github.com/MickiusMousius/Rolio46Keyboard) - All the reousurces to build your own PCBs etc
+ * [Keydio.io](https://keydio.io) - Online store to buy a complete kit or just some parts to build your own Rolio46
 
 <br/>
 

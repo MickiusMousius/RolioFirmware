@@ -226,17 +226,16 @@
             bindings = <
 //---------------------------------------------------------------------------------------+                      +----------------------------------------------------------------------------//
 //          |                  |                |                 |          |           |                      |           |               |          |          |               |          // 
-  &kp UNDER       &kp N1             &kp N2           &kp N3         &kp N4     &kp N5                             &kp N6        &kp N7        &kp N8     &kp N9       &kp N0        &trans
+  &kp UNDER       &kp N1             &kp N2           &kp N3         &kp N4     &kp N5                             &kp N6        &kp N7        &kp N8     &kp N9       &kp N0        &kp DEL
 //          |                  |                |                 |          |           |                      |           |               |          |          |               |          // 
     &trans       &kp EXCL            &kp AT          &kp HASH       &kp DLLR   &kp PRCNT                          &kp CARET   &kp AMPERSAND   &kp STAR   &kp LPAR     &kp RPAR      &kp MINUS
 //          |                  |                |                 |          |           +--------+     +-------|           |               |                     |               |          // 
    &trans    &kp LC(LG(SPACE))   &kp LEFT_BRACE   &kp RIGHT_BRACE   &kp PIPE   &kp EQUAL   &trans        &trans   &kp PRCNT     &kp PLUS      &kp LBKT   &kp RBKT   &kp BACKSLASH   &trans
 //-----------------------------|                |                 |          |           |        |    |                    |               |          |          |--------------------------//
-                                    &trans            &trans         &trans     &trans     &trans        &trans    &trans       &trans         &trans     &kp SPACE
+                                    &trans            &trans         &trans     &trans     &trans        &trans    &trans       &trans         &trans     &trans
 //                             +----------------|-----------------|----------|-----------|--------+    +--------|----------|----------------|----------|----------+                          //
             >;
         };
-
 
         windows_symbols_layer {
             display-name = "Symbols (Win)";
@@ -244,7 +243,7 @@
             bindings = <
 //---------------------------------------------------------------------------------------+                      +----------------------------------------------------------------------------//
 //          |                  |                |                 |          |           |                      |           |               |          |          |               |          // 
-  &kp UNDER       &kp N1             &kp N2           &kp N3         &kp N4     &kp N5                             &kp N6        &kp N7        &kp N8     &kp N9       &kp N0        &trans
+  &kp UNDER       &kp N1             &kp N2           &kp N3         &kp N4     &kp N5                             &kp N6        &kp N7        &kp N8     &kp N9       &kp N0        &kp DEL
 //          |                  |                |                 |          |           |                      |           |               |          |          |               |          // 
     &trans       &kp EXCL            &kp AT          &kp HASH       &kp DLLR   &kp PRCNT                          &kp CARET   &kp AMPERSAND   &kp STAR   &kp LPAR     &kp RPAR      &kp MINUS
 //          |                  |                |                 |          |           +--------+     +-------|           |               |                     |               |          // 
@@ -255,7 +254,6 @@
             >;
         };
 
-
         numpad_layer {
             display-name = "Number Pad";
             sensor-bindings = <&inc_dec_kp UP DOWN &inc_dec_kp LEFT RIGHT>;
@@ -264,7 +262,7 @@
 //          |          |          |          |          |          |                        |           |          |              |             |                  |              // 
     &trans    &kp N1      &kp N2    &kp N3     &kp N4     &kp N5                              &kp N6       &kp N7       &kp N8        &kp N9           &kp N0          &trans 
 //          |          |          |          |          |          |                        |           |          |              |             |                  |              // 
-    &trans    &kp EXCL    &kp AT    &kp HASH   &kp DLLR   &kp PRCNT                           &kp CARET    &kp N4       &kp N5      &mt LPAR N6   &mt RPAR KP_PLUS   &kp KP_MINUS
+    &trans    &kp EXCL    &kp AT    &kp HASH   &kp DLLR   &kp PRCNT                           &kp CARET    &kp N4       &kp N5      &mt LPAR N6    &mt RPAR PLUS      &kp MINUS
 //          |          |          |          |          |          +--------+     +---------|           |          |              |             |                  |              // 
     &trans     &trans     &trans     &trans     &trans    &kp EQUAL  &trans         &trans    &kp PRCNT    &kp N1    &mt COMMA N2   &mt DOT N3     &kp KP_DIVIDE    &kp KP_MULTIPLY
 //---------------------|          |          |          |          |        |     |         |           |          |              |             |---------------------------------//
