@@ -22,6 +22,8 @@ This repository will produce firmware for the following controller & display com
 
 You should hopefully be able to infer what files inside the release zip each mean.
 
+The firmware.zip can be found in the "[Releases](https://github.com/MickiusMousius/RolioFirmware/releases/)" area.
+
 To flash your Rolio46 use the following steps:
  1. Plug your right hand side Rolio into your computer.
  2. Quickly double press the reset button.
