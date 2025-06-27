@@ -1,0 +1,66 @@
+/ {
+
+    macros{
+        // Select bluetooth profile helper  for behaviours
+        btsel: btsel {
+            display-name = "Bluetooth Profile Select";
+            compatible = "zmk,behavior-macro-one-param";
+            #binding-cells = <1>;
+            bindings = <&macro_param_1to2>
+                , <&bt BT_SEL MACRO_PLACEHOLDER>;
+        };
+        // Select bluetooth profile helper  for behaviours
+        btclrmacro: btclrmacro {
+            display-name = "Bluetooth Profile Clear";
+            compatible = "zmk,behavior-macro-one-param";
+            #binding-cells = <1>;
+            bindings = <&bt BT_CLR>;
+        };
+        // Utilities so that Studio's use of "df" looks nice
+        df_mac: df_mac {
+            display-name = "Set Connection Default Layer to MacOS";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&df MACOS>;
+        };
+        df_win: df_win {
+            display-name = "Set Connection Default Layer to Windows";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&df WINDOWS>;
+        };
+        // Invoke MacOS dictation
+        mac_talk: mac_talk {
+            display-name = "MacOS Dictation";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&kp GLOBE>
+                , <&macro_wait_time 125>
+                , <&kp GLOBE>
+                ;
+        };
+        // MacOS Screenshot Current App
+        mac_cap_app: mac_cap_app {
+            display-name = "MacOS Screenshot App";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            tap-ms = <70>;
+            bindings
+                = <&macro_tap &kp LG(LS(N4))>
+                , <&macro_wait_time 300>
+                , <&macro_tap &kp SPACE>
+                , <&macro_wait_time 300>
+                , <&macro_tap &mkp LCLK>
+                ;
+        };
+        // Macro KP
+        kpss: kpss {
+            display-name = "Key Press (No Repeat)";
+            compatible = "zmk,behavior-macro-one-param";
+            #binding-cells = <1>;
+            bindings = <&macro_param_1to1>
+                , <&macro_tap &kp MACRO_PLACEHOLDER>;
+        };
+    };
+};

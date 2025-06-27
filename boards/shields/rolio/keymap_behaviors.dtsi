@@ -1,0 +1,92 @@
+/ {
+
+    behaviors {
+        // Toggle Numbers layer
+        td1: Toggle_Numpad_MacOS {
+            display-name = "MacOS Symbols Tap Dance";
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <300>;
+            bindings = <&mo M_SYMBOLS>, <&tog NUMPAD>;
+        };
+        td2: Toggle_Numpad_Windows {
+            display-name = "Windows Symbols Tap Dance";
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <300>;
+            bindings = <&mo W_SYMBOLS>, <&tog NUMPAD>;
+        };
+        //Backlight Brightness
+        bri_adjust: Brightness_Scroller {
+            label = "Scroller Brightness Adjust";
+            compatible = "zmk,behavior-sensor-rotate";
+            #sensor-binding-cells = <0>;
+            bindings = <&bl BL_INC>, <&bl BL_DEC>;
+        };
+        // Encoder to Mouse Scroll
+        scroll_up_down: Mouse_Scroller {
+            label = "Scroller As Mouse Wheel";
+            compatible = "zmk,behavior-sensor-rotate";
+            #sensor-binding-cells = <0>;
+            bindings = <&msc SCRL_UP>, <&msc SCRL_DOWN>;
+            tap-ms = <20>;
+        };
+        // Hold to choose BT profile or tap for key press
+        btkp: btsel_or_kp {
+            display-name = "Bluetooth Select Or Key Press";
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            flavor = "tap-preferred";
+            tapping-term-ms = <200>;
+            quick-tap-ms = <200>;
+            require-prior-idle-ms = <125>;
+            bindings = <&btsel>, <&kp>;
+        };
+        // Hold to select output or tap for key press
+        usb_tog: usb_tog {
+            display-name = "Set Output Or Key Press";
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            flavor = "tap-preferred";
+            tapping-term-ms = <200>;
+            quick-tap-ms = <200>;
+            require-prior-idle-ms = <125>;
+            bindings = <&out>, <&kp>;
+        };
+        // Hold to clear BT connection or tap for key press
+        btclr_kp: btclr_kp {
+            display-name = "Bluetooth Profile Clear Or Key Press";
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            flavor = "tap-preferred";
+            tapping-term-ms = <2000>;
+            bindings = <&btclrmacro>, <&kp>;
+        };
+        // Small volume steps for MacOS
+        mac_vol: Mac_Volume_Scroller {
+            label = "Scroller MacOS Small Volume Steps";
+            compatible = "zmk,behavior-sensor-rotate";
+            #sensor-binding-cells = <0>;
+            bindings = <&kp LS(LA(C_VOL_UP))>, <&kp LS(LA(C_VOL_DN))>;
+        };
+        // Behave like "mod-tap" without the keyrepeat
+        mtos: mtos {
+            display-name = "Mod-Tap (No Repeat)";
+            compatible = "zmk,behavior-hold-tap";
+            tapping-term-ms = <135>;
+            #binding-cells = <2>;
+            flavor = "tap-preferred";
+            bindings = <&kpss>, <&kp>;
+        };
+        // Shift / Capsword
+         scw: scw {
+            display-name = "Hold Shift / Tap Capsword";
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            flavor = "hold-preferred";
+            tapping-term-ms = <200>;
+            bindings = <&kp>, <&caps_word>;
+        };
+    };
+
+};
