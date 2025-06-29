@@ -63,8 +63,29 @@ struct wpm_status_state {
     uint8_t wpm;
 };
 
-static void draw_battery(lv_obj_t *canvas, uint8_t level, bool usb_present) {
-    return;
+static void draw_battery(lv_obj_t *widget, lv_color_t cbuf[], const struct status_state *state) {
+    lv_obj_t *canvas = lv_obj_get_child(widget, 0);
+
+    lv_draw_rect_dsc_t rect_black_dsc;
+    init_rect_dsc(&rect_black_dsc, LVGL_BACKGROUND);
+    // lv_draw_label_dsc_t label_dsc;
+    // init_label_dsc(&label_dsc, LVGL_FOREGROUND, &lv_font_montserrat_18, LV_TEXT_ALIGN_CENTER);
+    lv_draw_label_dsc_t label_dsc;
+    init_label_dsc(&label_dsc, LVGL_FOREGROUND, &lv_font_montserrat_16, LV_TEXT_ALIGN_LEFT);
+
+    // Fill background
+    lv_canvas_draw_rect(canvas, 0, 0, CANVAS_SIZE, CANVAS_SIZE, &rect_black_dsc);
+
+
+
+    char charge_text[6] = {};
+    snprintf(charge_text, sizeof(charge_text), "%d%%", state->batteries[0].level);
+    lv_canvas_draw_text(canvas, 37, 0, 60, &label_dsc, charge_text);
+
+
+    snprintf(charge_text, sizeof(charge_text), "%d%%", state->batteries[1].level);
+    lv_canvas_draw_text(canvas, 100, 0, 60, &label_dsc, charge_text);
+
     // lv_canvas_fill_bg(canvas, lv_color_black(), LV_OPA_COVER);
     
     // lv_draw_rect_dsc_t rect_fill_dsc;
@@ -327,12 +348,13 @@ static void set_battery_status(struct zmk_widget_status *widget, struct battery_
     widget->state.batteries[state.source].level = state.level;
     widget->state.batteries[state.source].usb_present = state.usb_present;
 
-    
+    draw_battery(widget->obj, widget->cbuf0, &widget->state);
+
 }
 
 void battery_status_update_cb(struct battery_state state) {
     struct zmk_widget_status *widget;
-    SYS_SLIST_FOR_EACH_CONTAINER(&widgets, widget, node) { set_battery_status(widget->obj, state); }
+    SYS_SLIST_FOR_EACH_CONTAINER(&widgets, widget, node) { set_battery_status(widget, state); }
 }
 
 static struct battery_state peripheral_battery_status_get_state(const zmk_event_t *eh) {
@@ -371,35 +393,35 @@ ZMK_SUBSCRIPTION(widget_dongle_battery_status, zmk_usb_conn_state_changed);
 
 
 
-int zmk_widget_dongle_battery_status_init(struct zmk_widget_dongle_battery_status *widget, lv_obj_t *parent) {
-    // widget->obj = lv_obj_create(parent);
+// int zmk_widget_dongle_battery_status_init(struct zmk_widget_dongle_battery_status *widget, lv_obj_t *parent) {
+//     // widget->obj = lv_obj_create(parent);
 
-    // lv_obj_set_size(widget->obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+//     // lv_obj_set_size(widget->obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
     
-    // for (int i = 0; i < ZMK_SPLIT_CENTRAL_PERIPHERAL_COUNT + SOURCE_OFFSET; i++) {
-    //     lv_obj_t *image_canvas = lv_canvas_create(widget->obj);
-    //     lv_obj_t *battery_label = lv_label_create(widget->obj);
+//     // for (int i = 0; i < ZMK_SPLIT_CENTRAL_PERIPHERAL_COUNT + SOURCE_OFFSET; i++) {
+//     //     lv_obj_t *image_canvas = lv_canvas_create(widget->obj);
+//     //     lv_obj_t *battery_label = lv_label_create(widget->obj);
 
-    //     lv_canvas_set_buffer(image_canvas, battery_image_buffer[i], 5, 8, LV_IMG_CF_TRUE_COLOR);
+//     //     lv_canvas_set_buffer(image_canvas, battery_image_buffer[i], 5, 8, LV_IMG_CF_TRUE_COLOR);
 
-    //     lv_obj_align(image_canvas, LV_ALIGN_TOP_RIGHT, 0, i * 10);
-    //     lv_obj_align(battery_label, LV_ALIGN_TOP_RIGHT, -7, i * 10);
+//     //     lv_obj_align(image_canvas, LV_ALIGN_TOP_RIGHT, 0, i * 10);
+//     //     lv_obj_align(battery_label, LV_ALIGN_TOP_RIGHT, -7, i * 10);
 
-    //     lv_obj_add_flag(image_canvas, LV_OBJ_FLAG_HIDDEN);
-    //     lv_obj_add_flag(battery_label, LV_OBJ_FLAG_HIDDEN);
+//     //     lv_obj_add_flag(image_canvas, LV_OBJ_FLAG_HIDDEN);
+//     //     lv_obj_add_flag(battery_label, LV_OBJ_FLAG_HIDDEN);
         
-    //     battery_objects[i] = (struct battery_object){
-    //         .symbol = image_canvas,
-    //         .label = battery_label,
-    //     };
-    // }
+//     //     battery_objects[i] = (struct battery_object){
+//     //         .symbol = image_canvas,
+//     //         .label = battery_label,
+//     //     };
+//     // }
 
-    // sys_slist_append(&widgets, &widget->node);
+//     // sys_slist_append(&widgets, &widget->node);
 
-    widget_dongle_battery_status_init();
+//     widget_dongle_battery_status_init();
 
-    return 0;
-}
+//     return 0;
+// }
 
 lv_obj_t *zmk_widget_dongle_battery_status_obj(struct zmk_widget_dongle_battery_status *widget) {
     return widget->obj;
@@ -511,6 +533,7 @@ int zmk_widget_status_init(struct zmk_widget_status *widget, lv_obj_t *parent) {
     widget_output_status_init();
     widget_layer_status_init();
     widget_wpm_status_init();
+    widget_dongle_battery_status_init();
 
     return 0;
 }
