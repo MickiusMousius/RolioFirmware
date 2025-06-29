@@ -55,6 +55,10 @@ static void draw_top(lv_obj_t *widget, lv_color_t cbuf[], const struct status_st
     init_rect_dsc(&rect_black_dsc, LVGL_BACKGROUND);
     lv_draw_rect_dsc_t rect_white_dsc;
     init_rect_dsc(&rect_white_dsc, LVGL_FOREGROUND);
+    lv_draw_line_dsc_t line_thick_dsc;
+    init_line_dsc(&line_thick_dsc, LVGL_FOREGROUND, 2);
+    lv_draw_arc_dsc_t arc_dsc;
+    init_arc_dsc(&arc_dsc, LVGL_FOREGROUND, 2);
     lv_draw_line_dsc_t line_dsc;
     init_line_dsc(&line_dsc, LVGL_FOREGROUND, 1);
 
@@ -88,8 +92,32 @@ static void draw_top(lv_obj_t *widget, lv_color_t cbuf[], const struct status_st
 
     // Draw WPM
     const int WPM_HEIGHT = 82;
-    lv_canvas_draw_rect(canvas, 0, 21, CANVAS_SIZE, WPM_HEIGHT, &rect_white_dsc);
-    lv_canvas_draw_rect(canvas, 2, 23, CANVAS_SIZE - 4, WPM_HEIGHT - 4, &rect_black_dsc);
+    const uint8_t cornerRadius = 4;
+    const uint8_t yOffset = 21;
+    // Draw the WPM Boundary - top
+    lv_point_t boxPoints[2];
+    boxPoints[0].x = 1 + cornerRadius;
+    boxPoints[0].y = yOffset;
+    boxPoints[1].x = CANVAS_SIZE - cornerRadius - 1;
+    boxPoints[1].y = yOffset;
+    lv_canvas_draw_line(canvas, boxPoints, 2, &line_thick_dsc);
+    lv_canvas_draw_arc(canvas, boxPoints[0].x, boxPoints[0].y + cornerRadius, cornerRadius, 180, 270, &arc_dsc);
+    lv_canvas_draw_arc(canvas, boxPoints[1].x, boxPoints[1].y + cornerRadius, cornerRadius, 270, 0, &arc_dsc);
+    // Draw the WPM Boundary - bottom
+    boxPoints[0].y = yOffset + WPM_HEIGHT;
+    boxPoints[1].y = yOffset + WPM_HEIGHT;
+    lv_canvas_draw_line(canvas, boxPoints, 2, &line_thick_dsc);
+    lv_canvas_draw_arc(canvas, boxPoints[0].x, boxPoints[0].y - cornerRadius, cornerRadius, 90, 180, &arc_dsc);
+    lv_canvas_draw_arc(canvas, boxPoints[1].x, boxPoints[1].y - cornerRadius, cornerRadius, 0, 90, &arc_dsc);
+    // Draw the sides
+    boxPoints[0].x = 1;
+    boxPoints[0].y = cornerRadius + yOffset;
+    boxPoints[1].x = 1;
+    boxPoints[1].y = yOffset + WPM_HEIGHT - cornerRadius;
+    lv_canvas_draw_line(canvas, boxPoints, 2, &line_thick_dsc);
+    boxPoints[0].x = CANVAS_SIZE - 1;
+    boxPoints[1].x = CANVAS_SIZE - 1;
+    lv_canvas_draw_line(canvas, boxPoints, 2, &line_thick_dsc);
 
     char wpm_text[6] = {};
     snprintf(wpm_text, sizeof(wpm_text), "%d", state->wpm[WPM_SAMPLES - 1]);
@@ -116,7 +144,7 @@ static void draw_top(lv_obj_t *widget, lv_color_t cbuf[], const struct status_st
     lv_point_t points[WPM_SAMPLES];
     for (int i = 0; i < WPM_SAMPLES; i++) {
         points[i].x = 3 + i * WPM_COLUMN_WIDTH;
-        points[i].y = 19 + WPM_HEIGHT - (state->wpm[i] - min) * (WPM_HEIGHT - 7) / range;
+        points[i].y = 20 + WPM_HEIGHT - (state->wpm[i] - min) * (WPM_HEIGHT - 7) / range;
     }
     lv_canvas_draw_line(canvas, points, WPM_SAMPLES, &line_dsc);
 }
@@ -130,36 +158,113 @@ static void draw_middle(lv_obj_t *widget, lv_color_t cbuf[], const struct status
     init_rect_dsc(&rect_white_dsc, LVGL_FOREGROUND);
     lv_draw_arc_dsc_t arc_dsc;
     init_arc_dsc(&arc_dsc, LVGL_FOREGROUND, 2);
+    lv_draw_arc_dsc_t arc_dsc_thin;
+    init_arc_dsc(&arc_dsc_thin, LVGL_FOREGROUND, 1);
     lv_draw_arc_dsc_t arc_dsc_filled;
     init_arc_dsc(&arc_dsc_filled, LVGL_FOREGROUND, 9);
+    lv_draw_arc_dsc_t arc_dsc_filled_background;
+    init_arc_dsc(&arc_dsc_filled_background, LVGL_BACKGROUND, 9);
+    lv_draw_line_dsc_t line_dsc;
+    init_line_dsc(&line_dsc, LVGL_FOREGROUND, 2);
+    lv_draw_line_dsc_t line_thick_dsc;
+    init_line_dsc(&line_thick_dsc, LVGL_FOREGROUND, 5);
     lv_draw_label_dsc_t label_dsc;
     init_label_dsc(&label_dsc, LVGL_FOREGROUND, &lv_font_montserrat_18, LV_TEXT_ALIGN_CENTER);
+    lv_draw_label_dsc_t status_dsc;
+    init_label_dsc(&status_dsc, LVGL_FOREGROUND, &lv_font_montserrat_28, LV_TEXT_ALIGN_CENTER);
     lv_draw_label_dsc_t label_dsc_black;
     init_label_dsc(&label_dsc_black, LVGL_BACKGROUND, &lv_font_montserrat_18, LV_TEXT_ALIGN_CENTER);
 
     // Fill background
     lv_canvas_draw_rect(canvas, 0, 0, CANVAS_SIZE, CANVAS_SIZE, &rect_black_dsc);
 
-    // Draw circles
-    int circle_offsets[5][2] = {
-        {14, 13}, {43, 13}, {72, 13}, {101, 13}, {130, 13},
-    };
+    bool usingUsb = false;
+    bool profileConnected = false;
+    bool profileAdvertising = false;
+    if (state->selected_endpoint.transport == ZMK_TRANSPORT_USB) {
+        usingUsb = true;
+    }
+    if (state->active_profile_bonded) {
+        if (state->active_profile_connected) {
+            profileConnected = true;
+        }
+    } else {
+        profileAdvertising = true;
+    }
+ 
+    if (usingUsb) {
+        // Draw the pill outline
+        lv_canvas_draw_arc(canvas, 15, 14, 13, 90, 270, &arc_dsc);
+        lv_canvas_draw_arc(canvas, 95, 14, 13, 270, 90, &arc_dsc);
+        lv_point_t points[2];
+        points[0].x = 15;
+        points[0].y = 2;
+        points[1].x = 95;
+        points[1].y = 2;
+        lv_canvas_draw_line(canvas, points, 2, &line_dsc);
+        points[0].y = 26;
+        points[1].y = 26;
+        lv_canvas_draw_line(canvas, points, 2, &line_dsc);
+        // Draw the pill fill
+        lv_canvas_draw_arc(canvas, 15, 14, 9, 0, 359, &arc_dsc_filled);
+        lv_canvas_draw_arc(canvas, 95, 14, 9, 0, 359, &arc_dsc_filled);
+        lv_canvas_draw_rect(canvas, 15, 5, 80, 18, &rect_white_dsc);
+        // Draw the label
+        lv_canvas_draw_text(canvas, 5, 4, 100, &label_dsc_black, "USB Out");
+        // Draw the current profile indicator
+        uint8_t xOffset = 129;
+        uint8_t yOffset = 14;
+        char profileNumber[4] = {};
+        sprintf(profileNumber, "%d", (uint8_t)state->active_profile_index + 1);
+        if (profileConnected) {
+            lv_canvas_draw_arc(canvas, xOffset, yOffset, 13, 0, 359, &arc_dsc);
+            lv_canvas_draw_arc(canvas, xOffset, yOffset, 9, 0, 359, &arc_dsc_filled);
+            lv_canvas_draw_text(canvas, xOffset - 8, yOffset - 11, 16, &label_dsc_black, profileNumber);
+        }
+        else if (profileAdvertising) {
+            lv_canvas_draw_text(canvas, xOffset - 8, yOffset - 15, 16, &status_dsc, LV_SYMBOL_SETTINGS);
+            lv_canvas_draw_arc(canvas, xOffset, yOffset, 9, 0, 359, &arc_dsc_filled);
+            lv_canvas_draw_text(canvas, xOffset - 8, yOffset - 11, 16, &label_dsc_black, profileNumber);
+        }
+        else {
+            lv_canvas_draw_arc(canvas, xOffset, yOffset, 13, 0, 359, &arc_dsc_thin);
+            lv_canvas_draw_arc(canvas, xOffset, yOffset, 10, 0, 359, &arc_dsc_thin);
+            lv_canvas_draw_text(canvas, xOffset - 8, yOffset - 11, 16, &label_dsc, profileNumber);
+        }
+        return;
+    }
 
+    // Draw circles
+    uint8_t xOffset = 15;
+    uint8_t yOffset = 15;
     for (int i = 0; i < 5; i++) {
         bool selected = i == state->active_profile_index;
 
-        lv_canvas_draw_arc(canvas, circle_offsets[i][0], circle_offsets[i][1], 13, 0, 359,
-                           &arc_dsc);
-
-        if (selected) {
-            lv_canvas_draw_arc(canvas, circle_offsets[i][0], circle_offsets[i][1], 9, 0, 359,
-                               &arc_dsc_filled);
-        }
-
         char label[2];
         snprintf(label, sizeof(label), "%d", i + 1);
-        lv_canvas_draw_text(canvas, circle_offsets[i][0] - 8, circle_offsets[i][1] - 10, 16,
-                            (selected ? &label_dsc_black : &label_dsc), label);
+
+        if (selected) {
+            if (profileAdvertising) {
+                lv_canvas_draw_text(canvas, xOffset - 8, yOffset - 15, 16, &status_dsc, LV_SYMBOL_SETTINGS);
+                lv_canvas_draw_arc(canvas, xOffset, yOffset, 9, 0, 359, &arc_dsc_filled);
+                lv_canvas_draw_text(canvas, xOffset - 8, yOffset - 11, 16, &label_dsc_black, label);
+            }
+            else if (profileConnected) {
+                lv_canvas_draw_arc(canvas, xOffset, yOffset, 13, 0, 359, &arc_dsc);
+                lv_canvas_draw_arc(canvas, xOffset, yOffset, 9, 0, 359, &arc_dsc_filled);
+                lv_canvas_draw_text(canvas, xOffset - 8, yOffset - 11, 16, &label_dsc_black, label);
+            }
+            else {
+                lv_canvas_draw_arc(canvas, xOffset, yOffset, 13, 0, 359, &arc_dsc_thin);
+                lv_canvas_draw_arc(canvas, xOffset, yOffset, 10, 0, 359, &arc_dsc_thin);
+                lv_canvas_draw_text(canvas, xOffset - 8, yOffset - 11, 16, &label_dsc, label);
+            }
+        }
+        else {
+            lv_canvas_draw_arc(canvas, xOffset, yOffset, 13, 0, 359, &arc_dsc);
+            lv_canvas_draw_text(canvas, xOffset - 8, yOffset - 11, 16, &label_dsc, label);
+        }
+        xOffset +=29;
     }
 }
 
@@ -306,10 +411,10 @@ int zmk_widget_status_init(struct zmk_widget_status *widget, lv_obj_t *parent) {
     lv_obj_align(top, LV_ALIGN_TOP_LEFT, 0, 0);
     lv_canvas_set_buffer(top, widget->cbuf, CANVAS_SIZE, CANVAS_SIZE, LV_IMG_CF_TRUE_COLOR);
     lv_obj_t *middle = lv_canvas_create(widget->obj);
-    lv_obj_align(middle, LV_ALIGN_TOP_LEFT, 0, 110);
+    lv_obj_align(middle, LV_ALIGN_TOP_LEFT, 0, 112);
     lv_canvas_set_buffer(middle, widget->cbuf2, CANVAS_SIZE, CANVAS_SIZE, LV_IMG_CF_TRUE_COLOR);
     lv_obj_t *bottom = lv_canvas_create(widget->obj);
-    lv_obj_align(bottom, LV_ALIGN_TOP_MID, 0, 136);
+    lv_obj_align(bottom, LV_ALIGN_TOP_LEFT, 0, 142);
     lv_canvas_set_buffer(bottom, widget->cbuf3, CANVAS_SIZE, CANVAS_SIZE, LV_IMG_CF_TRUE_COLOR);
 
     sys_slist_append(&widgets, &widget->node);
