@@ -319,30 +319,19 @@ static void draw_layer_info(lv_obj_t *widget, lv_color_t cbuf[], const struct st
 
 
 
-static void set_battery_status(lv_obj_t *widget, struct battery_state state) {
+static void set_battery_status(struct zmk_widget_status *widget, struct battery_state state) {
     if (state.source >= ZMK_SPLIT_BLE_PERIPHERAL_COUNT + SOURCE_OFFSET) {
         return;
     }
     LOG_DBG("DERP DERP DERP source: %d, level: %d, usb: %d", state.source, state.level, state.usb_present);
-    lv_obj_t *symbol = battery_objects[state.source].symbol;
-    lv_obj_t *label = battery_objects[state.source].label;
+    widget->state.batteries[state.source].level = state.level;
+    widget->state.batteries[state.source].usb_present = state.usb_present;
 
-    // draw_battery(symbol, state.level, state.usb_present);
-    // lv_label_set_text_fmt(label, "%4u%%", state.level);
     
-    // if (state.level > 0 || state.usb_present) {
-    //     lv_obj_clear_flag(symbol, LV_OBJ_FLAG_HIDDEN);
-    //     lv_obj_move_foreground(symbol);
-    //     lv_obj_clear_flag(label, LV_OBJ_FLAG_HIDDEN);
-    //     lv_obj_move_foreground(label);
-    // } else {
-    //     lv_obj_add_flag(symbol, LV_OBJ_FLAG_HIDDEN);
-    //     lv_obj_add_flag(label, LV_OBJ_FLAG_HIDDEN);
-    // }
 }
 
 void battery_status_update_cb(struct battery_state state) {
-    struct zmk_widget_dongle_battery_status *widget;
+    struct zmk_widget_status *widget;
     SYS_SLIST_FOR_EACH_CONTAINER(&widgets, widget, node) { set_battery_status(widget->obj, state); }
 }
 

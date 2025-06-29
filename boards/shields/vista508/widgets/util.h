@@ -17,6 +17,11 @@
 #define LVGL_FOREGROUND                                                                            \
     IS_ENABLED(CONFIG_VISTA508_WIDGET_INVERTED) ? lv_color_white() : lv_color_black()
 
+struct battery_info {
+    uint8_t source;
+    uint8_t level;
+    bool usb_present;
+};
 
 struct status_state {
 #if !IS_ENABLED(CONFIG_ZMK_SPLIT) || IS_ENABLED(CONFIG_ZMK_SPLIT_ROLE_CENTRAL)
@@ -27,6 +32,7 @@ struct status_state {
     uint8_t layer_index;
     const char *layer_label;
     uint8_t wpm[WPM_SAMPLES];
+    struct battery_info batteries[2];
 #else
     bool connected;
 #endif
