@@ -17,9 +17,14 @@
 #define LVGL_FOREGROUND                                                                            \
     IS_ENABLED(CONFIG_VISTA508_WIDGET_INVERTED) ? lv_color_white() : lv_color_black()
 
+
 struct status_state {
     uint8_t battery;
     bool charging;
+    uint8_t batteryCentral;
+    bool chargingCentral;
+    uint8_t batteryPeripheral;
+    bool chargingPeripheral;
 #if !IS_ENABLED(CONFIG_ZMK_SPLIT) || IS_ENABLED(CONFIG_ZMK_SPLIT_ROLE_CENTRAL)
     struct zmk_endpoint_instance selected_endpoint;
     int active_profile_index;
@@ -33,8 +38,9 @@ struct status_state {
 #endif
 };
 
-struct battery_status_state {
+struct battery_state {
     uint8_t level;
+    uint8_t source;
 #if IS_ENABLED(CONFIG_USB_DEVICE_STACK)
     bool usb_present;
 #endif
