@@ -65,9 +65,6 @@ static void draw_wpm(lv_obj_t *widget, lv_color_t cbuf[], const struct status_st
     // Fill background
     lv_canvas_draw_rect(canvas, 0, 0, CANVAS_SIZE, CANVAS_SIZE, &rect_black_dsc);
 
-    // Draw battery
-    // draw_battery(canvas, state);
-
     // Draw WPM
     const uint8_t yOffset = 0;
     const int WPM_HEIGHT = 82;
@@ -269,49 +266,6 @@ static void draw_layer_info(lv_obj_t *widget, lv_color_t cbuf[], const struct st
     }
 }
 
-static void set_battery_status(struct zmk_widget_status *widget,
-                               struct battery_state state) {
-#if IS_ENABLED(CONFIG_USB_DEVICE_STACK)
-    widget->state.charging = state.usb_present;
-#endif /* IS_ENABLED(CONFIG_USB_DEVICE_STACK) */
-    LOG_DBG("source: %d, level: %d, usb: %d", state.source, state.level, state.usb_present);
-
-    widget->state.battery = state.level;
-    // Ryan's hacks
-    if (state.source == 0){
-        widget->state.batteryCentral = state.level;
-        widget->state.chargingCentral = state.usb_present;
-    }
-    else {
-        widget->state.batteryPeripheral = state.level;
-        widget->state.chargingPeripheral = state.usb_present;
-    }
-
-    draw_wpm(widget->obj, widget->cbuf1, &widget->state);
-}
-
-static void battery_status_update_cb(struct battery_state state) {
-    struct zmk_widget_status *widget;
-    SYS_SLIST_FOR_EACH_CONTAINER(&widgets, widget, node) { set_battery_status(widget, state); }
-}
-
-
-static struct battery_state battery_status_get_state(const zmk_event_t *eh) {
-    return (struct battery_state){
-        .level = zmk_battery_state_of_charge(),
-#if IS_ENABLED(CONFIG_USB_DEVICE_STACK)
-        .usb_present = zmk_usb_is_powered(),
-#endif /* IS_ENABLED(CONFIG_USB_DEVICE_STACK) */
-    };
-}
-
-ZMK_DISPLAY_WIDGET_LISTENER(widget_battery_status, struct battery_state,
-                            battery_status_update_cb, battery_status_get_state)
-
-ZMK_SUBSCRIPTION(widget_battery_status, zmk_battery_state_changed);
-#if IS_ENABLED(CONFIG_USB_DEVICE_STACK)
-ZMK_SUBSCRIPTION(widget_battery_status, zmk_usb_conn_state_changed);
-#endif /* IS_ENABLED(CONFIG_USB_DEVICE_STACK) */
 
 static void set_output_status(struct zmk_widget_status *widget,
                               const struct output_status_state *state) {
@@ -410,7 +364,6 @@ int zmk_widget_status_init(struct zmk_widget_status *widget, lv_obj_t *parent) {
     lv_canvas_set_buffer(bottom, widget->cbuf3, CANVAS_SIZE, CANVAS_SIZE, LV_IMG_CF_TRUE_COLOR);
 
     sys_slist_append(&widgets, &widget->node);
-    widget_battery_status_init();
     widget_output_status_init();
     widget_layer_status_init();
     widget_wpm_status_init();
