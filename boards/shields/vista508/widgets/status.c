@@ -28,6 +28,9 @@ LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 #include <zmk/split/central.h>
 
 
+LV_IMG_DECLARE(bolt);
+
+
 #define SOURCE_OFFSET 1
 
 
@@ -43,9 +46,6 @@ struct battery_object {
     lv_obj_t *symbol;
     lv_obj_t *label;
 } battery_objects[ZMK_SPLIT_CENTRAL_PERIPHERAL_COUNT + SOURCE_OFFSET];
-    
-static lv_color_t battery_image_buffer[ZMK_SPLIT_CENTRAL_PERIPHERAL_COUNT + SOURCE_OFFSET][5 * 8];
-
 
 struct output_status_state {
     struct zmk_endpoint_instance selected_endpoint;
@@ -63,54 +63,50 @@ struct wpm_status_state {
     uint8_t wpm;
 };
 
-static void draw_battery(lv_obj_t *widget, lv_color_t cbuf[], const struct status_state *state) {
+
+static void draw_battery(lv_obj_t *canvas, uint8_t xOffset, struct battery_info batt_info) {
+    lv_draw_label_dsc_t label_dsc;
+    init_label_dsc(&label_dsc, LVGL_FOREGROUND, &lv_font_montserrat_16, LV_TEXT_ALIGN_RIGHT);
+
+    lv_draw_rect_dsc_t rect_black_dsc;
+    init_rect_dsc(&rect_black_dsc, LVGL_BACKGROUND);
+    lv_draw_rect_dsc_t rect_white_dsc;
+    init_rect_dsc(&rect_white_dsc, LVGL_FOREGROUND);
+
+    lv_canvas_draw_rect(canvas, xOffset + 0, 2, 29, 12, &rect_white_dsc);
+    lv_canvas_draw_rect(canvas, xOffset + 1, 3, 27, 10, &rect_black_dsc);
+    lv_canvas_draw_rect(canvas, xOffset + 2, 4, (batt_info.level + 2) / 4, 8, &rect_white_dsc);
+    lv_canvas_draw_rect(canvas, xOffset + 30, 5, 3, 6, &rect_white_dsc);
+    lv_canvas_draw_rect(canvas, xOffset + 31, 6, 1, 4, &rect_black_dsc);
+
+    if (batt_info.usb_present) {
+        lv_draw_img_dsc_t img_dsc;
+        lv_draw_img_dsc_init(&img_dsc);
+        lv_canvas_draw_img(canvas, xOffset + 9, -1, &bolt, &img_dsc);
+    }
+
+    char charge_text[6] = {};
+    snprintf(charge_text, sizeof(charge_text), "%d%%", batt_info.level);
+    lv_canvas_draw_text(canvas, xOffset, 0, 70, &label_dsc, charge_text);
+}
+
+static void draw_battery_info(lv_obj_t *widget, lv_color_t cbuf[], const struct status_state *state) {
     lv_obj_t *canvas = lv_obj_get_child(widget, 0);
 
     lv_draw_rect_dsc_t rect_black_dsc;
     init_rect_dsc(&rect_black_dsc, LVGL_BACKGROUND);
-    // lv_draw_label_dsc_t label_dsc;
-    // init_label_dsc(&label_dsc, LVGL_FOREGROUND, &lv_font_montserrat_18, LV_TEXT_ALIGN_CENTER);
-    lv_draw_label_dsc_t label_dsc;
-    init_label_dsc(&label_dsc, LVGL_FOREGROUND, &lv_font_montserrat_16, LV_TEXT_ALIGN_LEFT);
-
+    lv_draw_rect_dsc_t rect_white_dsc;
+    init_rect_dsc(&rect_white_dsc, LVGL_FOREGROUND);
     // Fill background
     lv_canvas_draw_rect(canvas, 0, 0, CANVAS_SIZE, CANVAS_SIZE, &rect_black_dsc);
 
+    // Left Battery
+    draw_battery(canvas, 0, state->batteries[0]);
+    draw_battery(canvas, 74, state->batteries[1]);
 
+    lv_draw_label_dsc_t label_dsc;
+    init_label_dsc(&label_dsc, LVGL_FOREGROUND, &lv_font_montserrat_16, LV_TEXT_ALIGN_LEFT);
 
-    char charge_text[6] = {};
-    snprintf(charge_text, sizeof(charge_text), "%d%%", state->batteries[0].level);
-    lv_canvas_draw_text(canvas, 37, 0, 60, &label_dsc, charge_text);
-
-
-    snprintf(charge_text, sizeof(charge_text), "%d%%", state->batteries[1].level);
-    lv_canvas_draw_text(canvas, 100, 0, 60, &label_dsc, charge_text);
-
-    // lv_canvas_fill_bg(canvas, lv_color_black(), LV_OPA_COVER);
-    
-    // lv_draw_rect_dsc_t rect_fill_dsc;
-    // lv_draw_rect_dsc_init(&rect_fill_dsc);
-
-    // if (usb_present) {
-    //     rect_fill_dsc.bg_opa = LV_OPA_TRANSP;
-    //     rect_fill_dsc.border_color = lv_color_white();
-    //     rect_fill_dsc.border_width = 1;
-    // }
-
-    // lv_canvas_set_px(canvas, 0, 0, lv_color_white());
-    // lv_canvas_set_px(canvas, 4, 0, lv_color_white());
-
-    // if (level <= 10 || usb_present) {
-    //     lv_canvas_draw_rect(canvas, 1, 2, 3, 5, &rect_fill_dsc);
-    // } else if (level <= 30) {
-    //     lv_canvas_draw_rect(canvas, 1, 2, 3, 4, &rect_fill_dsc);
-    // } else if (level <= 50) {
-    //     lv_canvas_draw_rect(canvas, 1, 2, 3, 3, &rect_fill_dsc);
-    // } else if (level <= 70) {
-    //     lv_canvas_draw_rect(canvas, 1, 2, 3, 2, &rect_fill_dsc);
-    // } else if (level <= 90) {
-    //     lv_canvas_draw_rect(canvas, 1, 2, 3, 1, &rect_fill_dsc);
-    // }
 }
 
 
@@ -348,7 +344,7 @@ static void set_battery_status(struct zmk_widget_status *widget, struct battery_
     widget->state.batteries[state.source].level = state.level;
     widget->state.batteries[state.source].usb_present = state.usb_present;
 
-    draw_battery(widget->obj, widget->cbuf0, &widget->state);
+    draw_battery_info(widget->obj, widget->cbuf0, &widget->state);
 
 }
 
