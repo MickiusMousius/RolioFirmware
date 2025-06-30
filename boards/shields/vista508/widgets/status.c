@@ -65,29 +65,29 @@ struct wpm_status_state {
 
 
 static void draw_battery(lv_obj_t *canvas, uint8_t xOffset, struct battery_info batt_info) {
-    lv_draw_label_dsc_t label_dsc;
-    init_label_dsc(&label_dsc, LVGL_FOREGROUND, &lv_font_montserrat_14, LV_TEXT_ALIGN_RIGHT);
 
     lv_draw_rect_dsc_t rect_black_dsc;
     init_rect_dsc(&rect_black_dsc, LVGL_BACKGROUND);
     lv_draw_rect_dsc_t rect_white_dsc;
     init_rect_dsc(&rect_white_dsc, LVGL_FOREGROUND);
 
-    lv_canvas_draw_rect(canvas, xOffset + 0, 2, 29, 12, &rect_white_dsc);
-    lv_canvas_draw_rect(canvas, xOffset + 1, 3, 27, 10, &rect_black_dsc);
-    lv_canvas_draw_rect(canvas, xOffset + 2, 4, (batt_info.level + 2) / 4, 8, &rect_white_dsc);
-    lv_canvas_draw_rect(canvas, xOffset + 30, 5, 3, 6, &rect_white_dsc);
-    lv_canvas_draw_rect(canvas, xOffset + 31, 6, 1, 4, &rect_black_dsc);
+
+    uint8_t yOffset = 1;
+
+    lv_canvas_draw_rect(canvas, xOffset + 0, yOffset  + 2, 29, 12, &rect_white_dsc);
+    lv_canvas_draw_rect(canvas, xOffset + 1, yOffset  + 3, 27, 10, &rect_black_dsc);
+    lv_canvas_draw_rect(canvas, xOffset + 2, yOffset  + 4, (batt_info.level + 2) / 4, 8, &rect_white_dsc);
+    lv_canvas_draw_rect(canvas, xOffset + 29, yOffset  + 5, 3, 6, &rect_white_dsc);
+    lv_canvas_draw_rect(canvas, xOffset + 28, yOffset  + 6, 3, 4, &rect_black_dsc);
+    if (batt_info.level >= 98){
+        lv_canvas_draw_rect(canvas, xOffset + 27, yOffset  + 7, 3, 2, &rect_white_dsc);
+    }
 
     if (batt_info.usb_present) {
         lv_draw_img_dsc_t img_dsc;
         lv_draw_img_dsc_init(&img_dsc);
-        lv_canvas_draw_img(canvas, xOffset + 9, -1, &bolt, &img_dsc);
+        lv_canvas_draw_img(canvas, xOffset + 9, yOffset  - 1, &bolt, &img_dsc);
     }
-
-    char charge_text[6] = {};
-    snprintf(charge_text, sizeof(charge_text), "%d%%", batt_info.level);
-    lv_canvas_draw_text(canvas, xOffset, 0, 70, &label_dsc, charge_text);
 }
 
 static void draw_battery_info(lv_obj_t *widget, lv_color_t cbuf[], const struct status_state *state) {
@@ -95,16 +95,24 @@ static void draw_battery_info(lv_obj_t *widget, lv_color_t cbuf[], const struct 
 
     lv_draw_rect_dsc_t rect_black_dsc;
     init_rect_dsc(&rect_black_dsc, LVGL_BACKGROUND);
-    lv_draw_rect_dsc_t rect_white_dsc;
-    init_rect_dsc(&rect_white_dsc, LVGL_FOREGROUND);
     // Fill background
     lv_canvas_draw_rect(canvas, 0, 0, CANVAS_SIZE, CANVAS_SIZE, &rect_black_dsc);
 
+
+    lv_draw_label_dsc_t label_left_dsc;
+    init_label_dsc(&label_left_dsc, LVGL_FOREGROUND, &lv_font_montserrat_16, LV_TEXT_ALIGN_LEFT);
+    lv_draw_label_dsc_t label_right_dsc;
+    init_label_dsc(&label_right_dsc, LVGL_FOREGROUND, &lv_font_montserrat_16, LV_TEXT_ALIGN_RIGHT);
+    char charge_text[6] = {};
+
     // Left Battery
     draw_battery(canvas, 0, state->batteries[0]);
+    snprintf(charge_text, sizeof(charge_text), "%d", state->batteries[0].level);
+    lv_canvas_draw_text(canvas, 36, 0, 36, &label_left_dsc, charge_text);
     // Right battery
-    draw_battery(canvas, 74, state->batteries[1]);
-
+    draw_battery(canvas, 112, state->batteries[1]);
+    snprintf(charge_text, sizeof(charge_text), "%d", state->batteries[1].level);
+    lv_canvas_draw_text(canvas, 72, 0, 36, &label_right_dsc, charge_text);
 
 }
 
