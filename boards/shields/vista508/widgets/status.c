@@ -66,7 +66,7 @@ struct wpm_status_state {
 
 static void draw_battery(lv_obj_t *canvas, uint8_t xOffset, struct battery_info batt_info) {
     lv_draw_label_dsc_t label_dsc;
-    init_label_dsc(&label_dsc, LVGL_FOREGROUND, &lv_font_montserrat_16, LV_TEXT_ALIGN_RIGHT);
+    init_label_dsc(&label_dsc, LVGL_FOREGROUND, &lv_font_montserrat_14, LV_TEXT_ALIGN_RIGHT);
 
     lv_draw_rect_dsc_t rect_black_dsc;
     init_rect_dsc(&rect_black_dsc, LVGL_BACKGROUND);
@@ -102,10 +102,9 @@ static void draw_battery_info(lv_obj_t *widget, lv_color_t cbuf[], const struct 
 
     // Left Battery
     draw_battery(canvas, 0, state->batteries[0]);
+    // Right battery
     draw_battery(canvas, 74, state->batteries[1]);
 
-    lv_draw_label_dsc_t label_dsc;
-    init_label_dsc(&label_dsc, LVGL_FOREGROUND, &lv_font_montserrat_16, LV_TEXT_ALIGN_LEFT);
 
 }
 
@@ -113,10 +112,8 @@ static void draw_battery_info(lv_obj_t *widget, lv_color_t cbuf[], const struct 
 static void draw_wpm(lv_obj_t *widget, lv_color_t cbuf[], const struct status_state *state) {
     lv_obj_t *canvas = lv_obj_get_child(widget, 1);
 
-    lv_draw_label_dsc_t label_dsc;
-    init_label_dsc(&label_dsc, LVGL_FOREGROUND, &lv_font_montserrat_16, LV_TEXT_ALIGN_RIGHT);
     lv_draw_label_dsc_t label_dsc_wpm;
-    init_label_dsc(&label_dsc_wpm, LVGL_FOREGROUND, &lv_font_montserrat_12, LV_TEXT_ALIGN_RIGHT);
+    init_label_dsc(&label_dsc_wpm, LVGL_FOREGROUND, &lv_font_montserrat_14, LV_TEXT_ALIGN_RIGHT);
     lv_draw_rect_dsc_t rect_black_dsc;
     init_rect_dsc(&rect_black_dsc, LVGL_BACKGROUND);
     lv_draw_rect_dsc_t rect_white_dsc;
@@ -138,9 +135,9 @@ static void draw_wpm(lv_obj_t *widget, lv_color_t cbuf[], const struct status_st
     // Draw the WPM Boundary - top
     lv_point_t boxPoints[2];
     boxPoints[0].x = 1 + cornerRadius;
-    boxPoints[0].y = yOffset;
+    boxPoints[0].y = yOffset + 1;
     boxPoints[1].x = CANVAS_SIZE - cornerRadius - 1;
-    boxPoints[1].y = yOffset;
+    boxPoints[1].y = yOffset + 1;
     lv_canvas_draw_line(canvas, boxPoints, 2, &line_thick_dsc);
     lv_canvas_draw_arc(canvas, boxPoints[0].x, boxPoints[0].y + cornerRadius, cornerRadius, 180, 270, &arc_dsc);
     lv_canvas_draw_arc(canvas, boxPoints[1].x, boxPoints[1].y + cornerRadius, cornerRadius, 270, 0, &arc_dsc);
@@ -337,10 +334,10 @@ static void draw_layer_info(lv_obj_t *widget, lv_color_t cbuf[], const struct st
 
 
 static void set_battery_status(struct zmk_widget_status *widget, struct battery_state state) {
-    if (state.source >= ZMK_SPLIT_BLE_PERIPHERAL_COUNT + SOURCE_OFFSET) {
+    if (state.source >= 2) {
         return;
     }
-    LOG_DBG("DERP DERP DERP source: %d, level: %d, usb: %d", state.source, state.level, state.usb_present);
+    LOG_DBG("Source: %d, level: %d, usb: %d", state.source, state.level, state.usb_present);
     widget->state.batteries[state.source].level = state.level;
     widget->state.batteries[state.source].usb_present = state.usb_present;
 
@@ -387,37 +384,6 @@ ZMK_SUBSCRIPTION(widget_dongle_battery_status, zmk_peripheral_battery_state_chan
 ZMK_SUBSCRIPTION(widget_dongle_battery_status, zmk_battery_state_changed);
 ZMK_SUBSCRIPTION(widget_dongle_battery_status, zmk_usb_conn_state_changed);
 
-
-
-// int zmk_widget_dongle_battery_status_init(struct zmk_widget_dongle_battery_status *widget, lv_obj_t *parent) {
-//     // widget->obj = lv_obj_create(parent);
-
-//     // lv_obj_set_size(widget->obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-    
-//     // for (int i = 0; i < ZMK_SPLIT_CENTRAL_PERIPHERAL_COUNT + SOURCE_OFFSET; i++) {
-//     //     lv_obj_t *image_canvas = lv_canvas_create(widget->obj);
-//     //     lv_obj_t *battery_label = lv_label_create(widget->obj);
-
-//     //     lv_canvas_set_buffer(image_canvas, battery_image_buffer[i], 5, 8, LV_IMG_CF_TRUE_COLOR);
-
-//     //     lv_obj_align(image_canvas, LV_ALIGN_TOP_RIGHT, 0, i * 10);
-//     //     lv_obj_align(battery_label, LV_ALIGN_TOP_RIGHT, -7, i * 10);
-
-//     //     lv_obj_add_flag(image_canvas, LV_OBJ_FLAG_HIDDEN);
-//     //     lv_obj_add_flag(battery_label, LV_OBJ_FLAG_HIDDEN);
-        
-//     //     battery_objects[i] = (struct battery_object){
-//     //         .symbol = image_canvas,
-//     //         .label = battery_label,
-//     //     };
-//     // }
-
-//     // sys_slist_append(&widgets, &widget->node);
-
-//     widget_dongle_battery_status_init();
-
-//     return 0;
-// }
 
 lv_obj_t *zmk_widget_dongle_battery_status_obj(struct zmk_widget_dongle_battery_status *widget) {
     return widget->obj;
@@ -510,7 +476,7 @@ int zmk_widget_status_init(struct zmk_widget_status *widget, lv_obj_t *parent) {
     lv_obj_set_size(widget->obj, 144, 168);
 
     lv_obj_t *batteryArea = lv_canvas_create(widget->obj);
-    lv_obj_align(batteryArea, LV_ALIGN_TOP_LEFT, 0, 1);
+    lv_obj_align(batteryArea, LV_ALIGN_TOP_LEFT, 0, 0);
     lv_canvas_set_buffer(batteryArea, widget->cbuf0, CANVAS_SIZE, 20, LV_IMG_CF_TRUE_COLOR);
 
     lv_obj_t *wpmArea = lv_canvas_create(widget->obj);
