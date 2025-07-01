@@ -30,10 +30,6 @@ LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 
 LV_IMG_DECLARE(bolt);
 
-
-#define SOURCE_OFFSET 1
-
-
 static sys_slist_t widgets = SYS_SLIST_STATIC_INIT(&widgets);
 
 struct battery_state {
@@ -41,11 +37,6 @@ struct battery_state {
     uint8_t level;
     bool usb_present;
 };
-
-struct battery_object {
-    lv_obj_t *symbol;
-    lv_obj_t *label;
-} battery_objects[ZMK_SPLIT_CENTRAL_PERIPHERAL_COUNT + SOURCE_OFFSET];
 
 struct output_status_state {
     struct zmk_endpoint_instance selected_endpoint;
@@ -70,7 +61,6 @@ static void draw_battery(lv_obj_t *canvas, uint8_t xOffset, struct battery_info 
     init_rect_dsc(&rect_black_dsc, LVGL_BACKGROUND);
     lv_draw_rect_dsc_t rect_white_dsc;
     init_rect_dsc(&rect_white_dsc, LVGL_FOREGROUND);
-
 
     uint8_t yOffset = 1;
 
@@ -338,9 +328,6 @@ static void draw_layer_info(lv_obj_t *widget, lv_color_t cbuf[], const struct st
 }
 
 
-
-
-
 static void set_battery_status(struct zmk_widget_status *widget, struct battery_state state) {
     if (state.source >= 2) {
         return;
@@ -361,7 +348,7 @@ void battery_status_update_cb(struct battery_state state) {
 static struct battery_state peripheral_battery_status_get_state(const zmk_event_t *eh) {
     const struct zmk_peripheral_battery_state_changed *ev = as_zmk_peripheral_battery_state_changed(eh);
     return (struct battery_state){
-        .source = ev->source + SOURCE_OFFSET,
+        .source = ev->source + 1,
         .level = ev->state_of_charge,
     };
 }
@@ -391,12 +378,6 @@ ZMK_DISPLAY_WIDGET_LISTENER(widget_dongle_battery_status, struct battery_state,
 ZMK_SUBSCRIPTION(widget_dongle_battery_status, zmk_peripheral_battery_state_changed);
 ZMK_SUBSCRIPTION(widget_dongle_battery_status, zmk_battery_state_changed);
 ZMK_SUBSCRIPTION(widget_dongle_battery_status, zmk_usb_conn_state_changed);
-
-
-lv_obj_t *zmk_widget_dongle_battery_status_obj(struct zmk_widget_dongle_battery_status *widget) {
-    return widget->obj;
-}
-
 
 
 static void set_output_status(struct zmk_widget_status *widget,
