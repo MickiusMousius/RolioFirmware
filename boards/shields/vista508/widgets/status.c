@@ -372,12 +372,12 @@ static struct battery_state battery_status_get_state(const zmk_event_t *eh) {
     }
 }
 
-ZMK_DISPLAY_WIDGET_LISTENER(widget_dongle_battery_status, struct battery_state,
+ZMK_DISPLAY_WIDGET_LISTENER(widget_battery_status, struct battery_state,
                             battery_status_update_cb, battery_status_get_state)
 
-ZMK_SUBSCRIPTION(widget_dongle_battery_status, zmk_peripheral_battery_state_changed);
-ZMK_SUBSCRIPTION(widget_dongle_battery_status, zmk_battery_state_changed);
-ZMK_SUBSCRIPTION(widget_dongle_battery_status, zmk_usb_conn_state_changed);
+ZMK_SUBSCRIPTION(widget_battery_status, zmk_peripheral_battery_state_changed);
+ZMK_SUBSCRIPTION(widget_battery_status, zmk_battery_state_changed);
+ZMK_SUBSCRIPTION(widget_battery_status, zmk_usb_conn_state_changed);
 
 
 static void set_output_status(struct zmk_widget_status *widget,
@@ -484,7 +484,7 @@ int zmk_widget_status_init(struct zmk_widget_status *widget, lv_obj_t *parent) {
     widget_output_status_init();
     widget_layer_status_init();
     widget_wpm_status_init();
-    widget_dongle_battery_status_init();
+    widget_battery_status_init();
 
     return 0;
 }
