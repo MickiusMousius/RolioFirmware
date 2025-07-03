@@ -18,6 +18,7 @@ struct zmk_widget_status {
     lv_color_t cbuf1[CANVAS_SIZE * CANVAS_SIZE];
     lv_color_t cbuf2[CANVAS_SIZE * CANVAS_SIZE];
     lv_color_t cbuf3[CANVAS_SIZE * CANVAS_SIZE];
+    lv_color_t cbuf4[75 * 21];
     struct status_state state;
 };
 
