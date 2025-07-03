@@ -29,6 +29,8 @@ LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 
 
 LV_IMG_DECLARE(bolt);
+LV_IMG_DECLARE(gear_icon);
+LV_IMG_DECLARE(disconnected_icon);
 
 static sys_slist_t widgets = SYS_SLIST_STATIC_INIT(&widgets);
 
@@ -111,7 +113,7 @@ static void draw_wpm(lv_obj_t *widget, lv_color_t cbuf[], const struct status_st
     lv_obj_t *canvas = lv_obj_get_child(widget, 1);
 
     lv_draw_label_dsc_t label_dsc_wpm;
-    init_label_dsc(&label_dsc_wpm, LVGL_FOREGROUND, &lv_font_montserrat_14, LV_TEXT_ALIGN_RIGHT);
+    init_label_dsc(&label_dsc_wpm, LVGL_FOREGROUND, &lv_font_montserrat_16, LV_TEXT_ALIGN_RIGHT);
     lv_draw_rect_dsc_t rect_black_dsc;
     init_rect_dsc(&rect_black_dsc, LVGL_BACKGROUND);
     lv_draw_rect_dsc_t rect_white_dsc;
@@ -157,7 +159,7 @@ static void draw_wpm(lv_obj_t *widget, lv_color_t cbuf[], const struct status_st
 
     char wpm_text[6] = {};
     snprintf(wpm_text, sizeof(wpm_text), "%d", state->wpm[WPM_SAMPLES - 1]);
-    lv_canvas_draw_text(canvas, CANVAS_SIZE - 29, 3 + WPM_HEIGHT - 21, 24, &label_dsc_wpm, wpm_text);
+    lv_canvas_draw_text(canvas, CANVAS_SIZE - 44, 3 + WPM_HEIGHT - 21, 40, &label_dsc_wpm, wpm_text);
 
     int max = 0;
     int min = 256;
@@ -206,8 +208,6 @@ static void draw_output_info(lv_obj_t *widget, lv_color_t cbuf[], const struct s
     init_line_dsc(&line_thick_dsc, LVGL_FOREGROUND, 5);
     lv_draw_label_dsc_t label_dsc;
     init_label_dsc(&label_dsc, LVGL_FOREGROUND, &lv_font_montserrat_18, LV_TEXT_ALIGN_CENTER);
-    lv_draw_label_dsc_t status_dsc;
-    init_label_dsc(&status_dsc, LVGL_FOREGROUND, &lv_font_montserrat_28, LV_TEXT_ALIGN_CENTER);
     lv_draw_label_dsc_t label_dsc_black;
     init_label_dsc(&label_dsc_black, LVGL_BACKGROUND, &lv_font_montserrat_18, LV_TEXT_ALIGN_CENTER);
 
@@ -258,14 +258,16 @@ static void draw_output_info(lv_obj_t *widget, lv_color_t cbuf[], const struct s
             lv_canvas_draw_text(canvas, xOffset - 8, yOffset - 11, 16, &label_dsc_black, profileNumber);
         }
         else if (profileAdvertising) {
-            lv_canvas_draw_text(canvas, xOffset - 8, yOffset - 15, 16, &status_dsc, LV_SYMBOL_SETTINGS);
-            lv_canvas_draw_arc(canvas, xOffset, yOffset, 9, 0, 359, &arc_dsc_filled);
+            lv_draw_img_dsc_t img_dsc;
+            lv_draw_img_dsc_init(&img_dsc);
+            lv_canvas_draw_img(canvas, xOffset - 14, yOffset - 14, &gear_icon, &img_dsc);
             lv_canvas_draw_text(canvas, xOffset - 8, yOffset - 11, 16, &label_dsc_black, profileNumber);
         }
         else {
-            lv_canvas_draw_arc(canvas, xOffset, yOffset, 13, 0, 359, &arc_dsc_thin);
-            lv_canvas_draw_arc(canvas, xOffset, yOffset, 10, 0, 359, &arc_dsc_thin);
-            lv_canvas_draw_text(canvas, xOffset - 8, yOffset - 11, 16, &label_dsc, profileNumber);
+            lv_draw_img_dsc_t img_dsc;
+            lv_draw_img_dsc_init(&img_dsc);
+            lv_canvas_draw_img(canvas, xOffset - 14, yOffset - 14, &disconnected_icon, &img_dsc);
+            lv_canvas_draw_text(canvas, xOffset - 8, yOffset - 11, 16, &label_dsc_black, profileNumber);
         }
         return;
     }
@@ -281,8 +283,9 @@ static void draw_output_info(lv_obj_t *widget, lv_color_t cbuf[], const struct s
 
         if (selected) {
             if (profileAdvertising) {
-                lv_canvas_draw_text(canvas, xOffset - 8, yOffset - 15, 16, &status_dsc, LV_SYMBOL_SETTINGS);
-                lv_canvas_draw_arc(canvas, xOffset, yOffset, 9, 0, 359, &arc_dsc_filled);
+                lv_draw_img_dsc_t img_dsc;
+                lv_draw_img_dsc_init(&img_dsc);
+                lv_canvas_draw_img(canvas, xOffset - 14, yOffset - 14, &gear_icon, &img_dsc);
                 lv_canvas_draw_text(canvas, xOffset - 8, yOffset - 11, 16, &label_dsc_black, label);
             }
             else if (profileConnected) {
@@ -291,9 +294,10 @@ static void draw_output_info(lv_obj_t *widget, lv_color_t cbuf[], const struct s
                 lv_canvas_draw_text(canvas, xOffset - 8, yOffset - 11, 16, &label_dsc_black, label);
             }
             else {
-                lv_canvas_draw_arc(canvas, xOffset, yOffset, 13, 0, 359, &arc_dsc_thin);
-                lv_canvas_draw_arc(canvas, xOffset, yOffset, 10, 0, 359, &arc_dsc_thin);
-                lv_canvas_draw_text(canvas, xOffset - 8, yOffset - 11, 16, &label_dsc, label);
+                lv_draw_img_dsc_t img_dsc;
+                lv_draw_img_dsc_init(&img_dsc);
+                lv_canvas_draw_img(canvas, xOffset - 14, yOffset - 14, &disconnected_icon, &img_dsc);
+                lv_canvas_draw_text(canvas, xOffset - 8, yOffset - 11, 16, &label_dsc_black, label);
             }
         }
         else {
