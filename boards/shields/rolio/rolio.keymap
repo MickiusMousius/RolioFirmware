@@ -135,7 +135,7 @@
             sensor-bindings = <&bri_adjust &inc_dec_kp LEFT RIGHT>;
             bindings = <
 // ╭───────────────┬───────────────┬───────────────┬───────────────┬───────────────┬────────────────╮                                 ╭───────────────┬───────────────┬───────────────┬───────────────┬───────────────┬───────────────╮
-      &out OUT_TOG     &btkp 0 N1      &btkp 1 N2      &btkp 2 N3      &btkp 3 N4      &btkp 4 N5 /*|                                 |*/   &kp N6         &kp N7          &kp N8          &kp N9          &kp N0          ___
+      &out OUT_TOG     &btkp 0 N1      &btkp 1 N2      &btkp 2 N3      &btkp 3 N4      &btkp 4 N5 /*|                                 |*/   &kp N6         &kp N7          &kp N8          &kp N9          &kp N0          &soft_off
       ___              ___             ___             ___             ___             ___        /*├─────────────╮     ╭─────────────┤*/   ___            &kp N4          &kp N5          &kp N6          ___             ___
       ___              &bl BL_TOG      &btclr_kp X X   &bl BL_DEC      &bl BL_TOG      &bl BL_INC      &bl BL_TOG           ___             ___            &kp N1          &kp N2          &kp N3          ___             ___
 /* ╰───────────────┴───────────────┤*/ ___             &df_win         ___             &df_mac         ___                  ___             ___            &kp N0          ___             ___      //├───────────────┴───────────────╯
