@@ -1,0 +1,78 @@
+{
+  "id": "rolio46",
+  "name": "Rolio46",
+  "layouts": {
+    "default_transform": {
+      "name": "default_transform",
+      "layout": [
+        { "label":      "§", "row": 0, "col":  0, "x":     0, "y": 0.240 },
+        { "label":      "Q", "row": 0, "col":  1, "x":     1, "y": 0.120 },
+        { "label":      "W", "row": 0, "col":  2, "x":     2, "y": 0.000 },
+        { "label":      "E", "row": 0, "col":  3, "x":     3, "y": 0.000 },
+        { "label":      "R", "row": 0, "col":  4, "x":     4, "y": 0.120 },
+        { "label":      "T", "row": 0, "col":  5, "x":     5, "y": 0.240 },
+        { "label":      "Y", "row": 0, "col":  8, "x":     9, "y": 0.240 },
+        { "label":      "U", "row": 0, "col":  9, "x":    10, "y": 0.120 },
+        { "label":      "I", "row": 0, "col": 10, "x":    11, "y": 0.000 },
+        { "label":      "O", "row": 0, "col": 11, "x":    12, "y": 0.000 },
+        { "label":      "P", "row": 0, "col": 12, "x":    13, "y": 0.120 },
+        { "label":   "BSPC", "row": 0, "col": 13, "x":    14, "y": 0.240 },
+
+        { "label":    "TAB", "row": 1, "col":  0, "x":     0, "y": 1.240 },
+        { "label":      "A", "row": 1, "col":  1, "x":     1, "y": 1.120 },
+        { "label":      "S", "row": 1, "col":  2, "x":     2, "y": 1.000 },
+        { "label":      "D", "row": 1, "col":  3, "x":     3, "y": 1.000 },
+        { "label":      "F", "row": 1, "col":  4, "x":     4, "y": 1.120 },
+        { "label":      "G", "row": 1, "col":  5, "x":     5, "y": 1.240 },
+        { "label":      "H", "row": 1, "col":  8, "x":     9, "y": 1.240 },
+        { "label":      "J", "row": 1, "col":  9, "x":    10, "y": 1.120 },
+        { "label":      "K", "row": 1, "col": 10, "x":    11, "y": 1.000 },
+        { "label":      "L", "row": 1, "col": 11, "x":    12, "y": 1.000 },
+        { "label":      "Ö", "row": 1, "col": 12, "x":    13, "y": 1.120 },
+        { "label":      "Ä", "row": 1, "col": 13, "x":    14, "y": 1.240 },
+
+        { "label": "LShift", "row": 2, "col":  0, "x":     0, "y": 2.240 },
+        { "label":      "Z", "row": 2, "col":  1, "x":     1, "y": 2.120 },
+        { "label":      "X", "row": 2, "col":  2, "x":     2, "y": 2.000 },
+        { "label":      "C", "row": 2, "col":  3, "x":     3, "y": 2.000 },
+        { "label":      "V", "row": 2, "col":  4, "x":     4, "y": 2.120 },
+        { "label":      "B", "row": 2, "col":  5, "x":     5, "y": 2.240 },
+        { "label":      "N", "row": 2, "col":  8, "x":     9, "y": 2.240 },
+        { "label":      "M", "row": 2, "col":  9, "x":    10, "y": 2.120 },
+        { "label":      ",", "row": 2, "col": 10, "x":    11, "y": 2.000 },
+        { "label":      ".", "row": 2, "col": 11, "x":    12, "y": 2.000 },
+        { "label":      "-", "row": 2, "col": 12, "x":    13, "y": 2.120 },
+        { "label": "RShift", "row": 2, "col": 13, "x":    14, "y": 2.240 },
+
+        { "label": "Config", "row": 3, "col":  2, "x":  2.00, "y":  3.00 },
+        { "label":   "LGUI", "row": 3, "col":  3, "x":  3.00, "y":  3.00 },
+        { "label":   "LALT", "row": 3, "col":  4, "x":  4.00, "y":  3.12 },
+        { "label":  "LCTRL", "row": 3, "col":  5, "x":  5.00, "y":  3.24 },
+        { "label":  "Enter", "row": 3, "col":  6, "x":  6.24, "y":  3.12, "r":  12, "rx": 6.0, "ry": 3.33 },
+        { "label":  "Space", "row": 3, "col":  7, "x":  7.76, "y":  3.12, "r": -12, "rx": 9.0, "ry": 3.33 },
+        { "label": "Symbol", "row": 3, "col":  9, "x":  9.00, "y":  3.24 },
+        { "label":  "RCTRL", "row": 3, "col": 10, "x": 10.00, "y":  3.12 },
+        { "label":   "RALT", "row": 3, "col": 11, "x": 11.00, "y":  3.00 },
+        { "label":    "DEL", "row": 3, "col": 12, "x": 12.00, "y":  3.00 }
+      ]
+    }
+  },
+  "sensors": [
+    {
+      "ref": "left_encoder",
+      "name": "encoder_left",
+      "identifier": "encoder_left",
+      "compatible": "alps,ec11",
+      "label": "LEFT_ENCODER",
+      "enabled": true
+    },
+    {
+      "ref": "right_encoder",
+      "name": "encoder_right",
+      "identifier": "encoder_right",
+      "compatible": "alps,ec11",
+      "label": "RIGHT_ENCODER",
+      "enabled": true
+    }
+  ]
+}
