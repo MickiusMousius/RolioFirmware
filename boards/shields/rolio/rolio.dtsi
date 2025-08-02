@@ -22,7 +22,7 @@
 
     default_transform: keymap_transform_0 {
         compatible = "zmk,matrix-transform";
-        columns = <16>;
+        columns = <14>;
         rows = <4>;
 // | SW_A0 | SW_B0 | SW_C0 | SW_D0 | SW_E0 | SW_F0 |                   | SW_F0 | SW_E0 | SW_D0 | SW_C0 | SW_B0 | SW_A0 |
 // | SW_A1 | SW_B1 | SW_C1 | SW_D1 | SW_E1 | SW_F1 |                   | SW_F1 | SW_E1 | SW_D1 | SW_C1 | SW_B1 | SW_A1 |
@@ -45,7 +45,6 @@ RC(2,0) RC(2,1) RC(2,2) RC(2,3) RC(2,4) RC(2,5) RC(3,0)   RC(3,11) RC(2,6) RC(2,
             , <&pro_micro 6 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
             , <&pro_micro 7 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
             , <&pro_micro 8 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&pro_micro 9 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
             ;
     };
 
