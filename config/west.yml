@@ -10,7 +10,7 @@ manifest:
     - name: zmk
       import: app/west.yml
       remote: zmkfirmware
-      revision: main
+      revision: d32ffb0a335ece70a9ce3dc3ce014676534ee99b
     - name: zmk-userspace
       remote: elpekenin
       revision: main
