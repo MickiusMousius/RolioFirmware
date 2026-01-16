@@ -13,7 +13,7 @@ manifest:
       revision: d32ffb0a335ece70a9ce3dc3ce014676534ee99b
     - name: zmk-userspace
       remote: elpekenin
-      revision: main
+      revision: fcf2d9c7a9820e9447edfa5b23cd00538a611c8e
     - name: zmk-ls0xxvcom-driver
       remote: MickiusMousius
       revision: main
