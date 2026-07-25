@@ -20,9 +20,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t
 CODE_SUFFIX = """
 };
 const lv_img_dsc_t %s = {
-    .header.cf = LV_IMG_CF_INDEXED_1BIT,
-    .header.always_zero = 0,
-    .header.reserved = 0,
+    .header.cf = LV_COLOR_FORMAT_I1,
     .header.w = %d,
     .header.h = %d,
     .data_size = %d,

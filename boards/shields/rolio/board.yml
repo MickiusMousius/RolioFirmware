@@ -1,0 +1,5 @@
+board:
+  name: rolio
+  vendor: keydio_labs
+  socs:
+    - name: nrf52840

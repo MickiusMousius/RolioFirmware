@@ -7,7 +7,7 @@
 &nice_view_spi {
     status = "okay";
     vista508: ls0xx@0 {
-        compatible = "sharp,ls0xx-vcom";
+        compatible = "sharp,ls0xx";
         spi-max-frequency = <1000000>;
         serial-vcom-inversion;
         serial-vcom-interval = <17>;

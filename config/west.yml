@@ -2,19 +2,14 @@ manifest:
   remotes:
     - name: zmkfirmware
       url-base: https://github.com/zmkfirmware
-    - name: elpekenin
-      url-base: https://github.com/elpekenin
     - name: MickiusMousius
       url-base: https://github.com/MickiusMousius
   projects:
     - name: zmk
       import: app/west.yml
       remote: zmkfirmware
-      revision: f9be3ed9c08b35b1b86df24c0f04913f3b5e50f5
+      revision: main
     - name: zmk-userspace
-      remote: elpekenin
-      revision: fcf2d9c7a9820e9447edfa5b23cd00538a611c8e
-    - name: zmk-ls0xxvcom-driver
       remote: MickiusMousius
       revision: main
   self:
