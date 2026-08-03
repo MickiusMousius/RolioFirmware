@@ -17,5 +17,11 @@ manifest:
     - name: zmk-ls0xxvcom-driver
       remote: MickiusMousius
       revision: main
+    - name: zmk-patch-batterylevel
+      remote: MickiusMousius
+      revision: main
+    - name: zmk-patch-ec11
+      remote: MickiusMousius
+      revision: main
   self:
     path: config
