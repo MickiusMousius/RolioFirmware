@@ -46,3 +46,8 @@ nice_view_spi: &spi0 {
 &pro_micro_i2c {
     status = "disabled";
 };
+
+// Use the LiPo discharge curve module 
+&vbatt {
+    compatible = "zmk,battery-nrf-vddh-curve";
+};
