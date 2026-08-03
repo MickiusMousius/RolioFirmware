@@ -12,5 +12,11 @@ manifest:
     - name: zmk-userspace
       remote: MickiusMousius
       revision: main
+    - name: zmk-patch-batterylevel
+      remote: MickiusMousius
+      revision: main
+    - name: zmk-patch-ec11
+      remote: MickiusMousius
+      revision: main
   self:
     path: config
