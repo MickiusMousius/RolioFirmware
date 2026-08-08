@@ -1,9 +1,8 @@
-from PIL import Image, ImageOps, UnidentifiedImageError
-import sys
 import argparse
 import pathlib
-import os
+import sys
 
+from PIL import Image, ImageOps, UnidentifiedImageError
 
 CODE_PREFIX = """
 // From Image: %s
@@ -17,6 +16,7 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t
         0xff, 0xff, 0xff, 0xff, /*Color of index 1*/
 #endif
 """
+
 CODE_SUFFIX = """
 };
 const lv_img_dsc_t %s = {
@@ -49,175 +49,199 @@ const uint32_t image_count = %d;
 """
 
 
-def ImageToBlackAndWhite(sourceImage, threshold=None):
+def image_to_black_and_white(source_image, threshold=None):
     if threshold:
-        fn = lambda x: 255 if x > threshold else 0
-        return sourceImage.convert('L').point(fn, mode='1')
-    return sourceImage.convert('1')
+        return source_image.convert("L").point(
+            lambda x: 255 if x > threshold else 0, mode="1"
+        )
+    return source_image.convert("1")
 
 
-def ImageToByteArray(sourceImage):
-    BYTE_VALUES = [128, 64, 32, 16, 8, 4, 2, 1]
-    imageByteArray = []
-    currentByte = []
-    for y in range(0, sourceImage.height):
-        for x in range(0, sourceImage.width):
-            if len(currentByte) == 8:
-                pixelsByte = sum(BYTE_VALUES[i] for i in range(0, 8)
-                                 if not currentByte[i])
-                imageByteArray.append(pixelsByte)
-                currentByte = []
-            pixel = sourceImage.getpixel((x, y))
-            currentByte.append(pixel)
-    pixelsByte = sum(BYTE_VALUES[i] for i in range(0, 8) if not currentByte[i])
-    imageByteArray.append(pixelsByte)
-    return imageByteArray
+def image_to_byte_array(source_image):
+    byte_values = [128, 64, 32, 16, 8, 4, 2, 1]
+    image_byte_array = []
+
+    # Extract all pixels sequentially
+    pixels = list(source_image.getdata())
+
+    # Process the pixels in chunks of 8
+    for i in range(0, len(pixels), 8):
+        chunk = pixels[i : i + 8]
+        # Ensure the chunk has 8 elements (pad with 0 if necessary)
+        if len(chunk) < 8:
+            chunk.extend([0] * (8 - len(chunk)))
+
+        pixels_byte = sum(byte_values[j] for j in range(8) if not chunk[j])
+        image_byte_array.append(pixels_byte)
+
+    return image_byte_array
 
 
-def ByteArrayToHexCode(byteArray):
-    # convert to image C code
-    colCounter = 0
-    rowAccumulator = "        "
-    for thisByte in byteArray:
-        hexString = "0x%02x, " % thisByte
-        # 144 pixels, break onto a new line of C (just like teh target image)
-        if colCounter == 18:
-            rowAccumulator = rowAccumulator + "\n        "
-            colCounter = 0
-        rowAccumulator = rowAccumulator + hexString
-        colCounter += 1
-    return rowAccumulator
+def byte_array_to_hex_code(byte_array):
+    # Convert bytes to hex strings
+    hex_strings = [f"0x{b:02x}," for b in byte_array]
+    lines = []
+
+    # 144 pixels, break onto a new line of C (just like the target image)
+    for i in range(0, len(hex_strings), 18):
+        lines.append("        " + " ".join(hex_strings[i : i + 18]))
+
+    return "\n".join(lines)
 
 
-def ImageToCCode(sourceImage, imageName, fileName):
-    imageByteArray = ImageToByteArray(sourceImage)
-    hexCode = ByteArrayToHexCode(imageByteArray)
-    magicBytes = 42 + (sourceImage.width * sourceImage.height / 8)
-    outputCode = CODE_PREFIX % (fileName, imageName)
-    outputCode += hexCode
-    outputCode += CODE_SUFFIX % (imageName,
-                                 sourceImage.width,
-                                 sourceImage.height,
-                                 magicBytes,
-                                 imageName)
-    return outputCode
+def image_to_c_code(source_image, image_name, file_name):
+    image_byte_array = image_to_byte_array(source_image)
+    hex_code = byte_array_to_hex_code(image_byte_array)
+    magic_bytes = int(42 + (source_image.width * source_image.height / 8))
+
+    # C code templates heavily use {}, so we keep the % operator for formatting
+    output_code = CODE_PREFIX % (file_name, image_name)
+    output_code += hex_code
+    output_code += CODE_SUFFIX % (
+        image_name,
+        source_image.width,
+        source_image.height,
+        magic_bytes,
+        image_name,
+    )
+    return output_code
 
 
-def ScaleAndCropImage(sourceImage, blackBackground, algorithm=None):
-    if sourceImage.mode == 'L':
-        background = 255
-        if blackBackground:
-            background = 0
+def scale_and_crop_image(source_image, black_background, algorithm=None):
+    if source_image.mode == "L":
+        background = 0 if black_background else 255
     else:
-        background = (255, 255, 255)
-        if blackBackground:
-            background = (0, 0, 0)
-    # Choose our scalling algoirthm
+        background = (0, 0, 0) if black_background else (255, 255, 255)
+
+    # Choose our scaling algorithm
     algo = Image.Resampling.NEAREST
     if algorithm:
         algo = getattr(Image.Resampling, algorithm)
+
     # Rescale the image to fit on our display
-    tempImage = sourceImage.copy()
-    tempImage.thumbnail((144, 147), algo)
-    # Add padding to fill the whhole screen and ensure things are centered
-    if tempImage.width < 144 or tempImage.height < 144:
-        xPos = (144 - tempImage.width) // 2
-        yPos = (147 - tempImage.height) // 2
-        result = Image.new(tempImage.mode, (144, 147), background)
-        result.paste(tempImage, (xPos, yPos))
+    temp_image = source_image.copy()
+    temp_image.thumbnail((144, 147), algo)
+
+    # Add padding to fill the whole screen and ensure things are centered
+    if temp_image.width < 144 or temp_image.height < 144:
+        x_pos = (144 - temp_image.width) // 2
+        y_pos = (147 - temp_image.height) // 2
+        result = Image.new(temp_image.mode, (144, 147), background)
+        result.paste(temp_image, (x_pos, y_pos))
         return result
-    return tempImage
+
+    return temp_image
 
 
-parser = argparse.ArgumentParser(
-    description='Convert a set of images to an art.c file for the Vista508',
-    allow_abbrev=True)
-parser.add_argument(
-    '--inDir',
-    type=pathlib.Path,
-    required=True,
-    dest='inDir',
-    help='Directory containing te input images')
-parser.add_argument(
-    '--outDir',
-    type=pathlib.Path,
-    required=True,
-    dest='outDir',
-    help='Directory to ouput the sample images and final "art.c" file to')
-parser.add_argument(
-    '--threshold',
-    type=int,
-    required=False,
-    choices=range(0,255),
-    metavar="[0-255]",
-    help="".join(
-        ["Black level threshold for image conversion, ",
-         "if not specified coversion will use dithering to convert greys"
-         ]))
-parser.add_argument(
-    '--scalingAlgorithm',
-    choices=["NEAREST", "BOX", "BILINEAR", "HAMMING", "BICUBIC", "LANCZOS"],
-    type=str,
-    required=False,
-    help='Algorithm to use when shrinking images to fit on the Vista508')
-parser.add_argument(
-    '--invert',
-    required=False,
-    default=False,
-    action='count',
-    help='Make a negative image')
-parser.add_argument(
-    '--blackBackground',
-    required=False,
-    default=False,
-    action='count',
-    help='Use black pixels to fill in the empty canvas')
-args = parser.parse_args()
+def main():
+    parser = argparse.ArgumentParser(
+        description="Convert a set of images to an art.c file for the Vista508",
+        allow_abbrev=True,
+    )
+    parser.add_argument(
+        "--inDir",
+        type=pathlib.Path,
+        required=True,
+        dest="in_dir",
+        help="Directory containing the input images",
+    )
+    parser.add_argument(
+        "--outDir",
+        type=pathlib.Path,
+        required=True,
+        dest="out_dir",
+        help='Directory to output the sample images and final "art.c" file to',
+    )
+    parser.add_argument(
+        "--threshold",
+        type=int,
+        required=False,
+        choices=range(256),
+        metavar="[0-255]",
+        help=(
+            "Black level threshold for image conversion, if not specified "
+            "conversion will use dithering to convert greys"
+        ),
+    )
+    parser.add_argument(
+        "--scalingAlgorithm",
+        choices=["NEAREST", "BOX", "BILINEAR", "HAMMING", "BICUBIC", "LANCZOS"],
+        type=str,
+        required=False,
+        dest="scaling_algorithm",
+        help="Algorithm to use when shrinking images to fit on the Vista508",
+    )
+    parser.add_argument(
+        "--invert",
+        required=False,
+        default=False,
+        action="store_true",
+        help="Make a negative image",
+    )
+    parser.add_argument(
+        "--blackBackground",
+        required=False,
+        default=False,
+        action="store_true",
+        dest="black_background",
+        help="Use black pixels to fill in the empty canvas",
+    )
+    args = parser.parse_args()
 
-# Validate our input paths
-if not os.path.isdir(args.inDir):
-    print("Invalid inoput directory path: %s" % (args.inDir))
-    exit(1)
-if not os.path.isdir(args.outDir):
-    print("Invalid output directory path: %s" % (args.outDir))
-    exit(1)
+    # Validate our input paths
+    if not args.in_dir.is_dir():
+        sys.exit(f"Invalid input directory path: {args.in_dir}")
+    if not args.out_dir.is_dir():
+        sys.exit(f"Invalid output directory path: {args.out_dir}")
 
-imageCounter = 0
-artC = ""
-imageList = ""
-for fName in os.listdir(args.inDir):
-    fullPath = os.path.join(args.inDir, fName)
-    if os.path.isfile(fullPath):
-        print("Converting image: %s" % (fullPath))
-        try:
-            img = Image.open(fullPath)
-        except UnidentifiedImageError:
-            print("    Image invalid skipping...")
-            continue
-        if args.invert:
-            img = ImageOps.invert(img)
-        tempImage = ScaleAndCropImage(img,
-                                      args.blackBackground,
-                                      algorithm=args.scalingAlgorithm)
-        bwImage = ImageToBlackAndWhite(tempImage, threshold=args.threshold)
-        # Write our temporay black and white image to our preview folder
-        previewDir = os.path.join(args.outDir, "previews")
-        if not os.path.exists(previewDir):
-            os.makedirs(previewDir)
-        previewPath = os.path.join(previewDir, fName)
-        print("    Saving preview to: %s" % previewPath)
-        bwImage.save(previewPath)
-        imageName = 'image%d' % imageCounter
-        artC += ImageToCCode(bwImage, imageName, fName)
-        imageList += imageName + ", "
-        imageCounter += 1
+    image_counter = 0
+    art_c = ""
+    image_list = []
 
-completeArtC = ART_C_BODY % (artC, imageCounter, imageList, imageCounter)
+    # Process images
+    for full_path in args.in_dir.iterdir():
+        if full_path.is_file():
+            print(f"Converting image: {full_path}")
+            try:
+                img = Image.open(full_path)
+            except UnidentifiedImageError:
+                print("    Image invalid, skipping...")
+                continue
 
-# Write out the new art.c file
-artPath = os.path.join(args.outDir, "art.c")
-print("Writing art file to: %s" % artPath)
-with open(artPath, 'w') as artOutFile:
-    artOutFile.write(completeArtC)
+            if args.invert:
+                img = ImageOps.invert(img)
 
-exit()
+            temp_image = scale_and_crop_image(
+                img, args.black_background, algorithm=args.scaling_algorithm
+            )
+            bw_image = image_to_black_and_white(temp_image, threshold=args.threshold)
+
+            # Write our temporary black and white image to our preview folder
+            preview_dir = args.out_dir / "previews"
+            preview_dir.mkdir(parents=True, exist_ok=True)
+
+            preview_path = preview_dir / full_path.name
+            print(f"    Saving preview to: {preview_path}")
+            bw_image.save(preview_path)
+
+            image_name = f"image{image_counter}"
+            art_c += image_to_c_code(bw_image, image_name, full_path.name)
+            image_list.append(image_name)
+            image_counter += 1
+
+    complete_art_c = ART_C_BODY % (
+        art_c,
+        image_counter,
+        ", ".join(image_list),
+        image_counter,
+    )
+
+    # Write out the new art.c file
+    art_path = args.out_dir / "art.c"
+    print(f"Writing art file to: {art_path}")
+    with open(art_path, "w") as art_out_file:
+        art_out_file.write(complete_art_c)
+
+
+if __name__ == "__main__":
+    main()
