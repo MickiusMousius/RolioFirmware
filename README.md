@@ -85,11 +85,24 @@ Special behaviours:
   - If you taps the CapsWord key the next word you type will be in all capitals, once you enter a punctuation symbol your keyboard will exit CapsWord.
   - When in CapsWord mode you can also tap the CapsWord key once to disable it.
   - If you hold down the CapsWord key it will behave like a normal shift key.
+- **Settings Key**
+  - Hold the "Settings" key to temporarily use the settings layer.
+  - If you quickly double tap the "Settings" key it will stay in the settings layer, tap it once to exit.
+- **Caps Lock**
+  - Caps Lock can be found on the function keys layer, when it's on the Vista508 will show it in the modifiers view.
 - **Settings Layer**
+  - Select Output
+    - The keys along the top left select USB output, or Bluetooth output to profiles 1 through 5.
+  - Bluetooth Passkey Entry
+    - If your computer asks you to type in a passkey when pairing, type it using the number keys on the settings layer & press "Enter".
+    - The Vista508 will show the passkey as you type it, then whether pairing succeeded.
+  - Display Toggles
+    - "WPM Toggle" cycles the Vista508 between the typing animation, a words per minute graph & the modifiers view.
+    - "Mod Toggle" turns on/off automatically showing the modifiers view while modifier keys are held.
   - Clear Current Bluetooth Profile
     - You will need to hold this button down for 2 seconds to have an effect
     - This will delete the bonding information for the current bluetooth profile & reenter pairing mode
-    - You can see it's worked when the icon at the top right of your display changes to a "gear icon"
+    - You can see it's worked when the profile indicator on your display changes to a "gear icon"
   - Set Profile To Windows Layout
     - Tapping this will cause the currently selected profile (bluetooth number or USB) to use the Windows layout for the main layer & also to use Windows bindings for the various shortcut & utility keys.
     - When switching connections your Rolio will remember the layout you've chosen.
@@ -99,8 +112,50 @@ Special behaviours:
 
 <br/>
 
+# The Vista508 Display
+
+When using the Vista508 display the left side shows:
+
+- **Battery & Connection** - The left side's battery level (with a charging animation when plugged in), along with a tick or cross showing whether the right side is connected. A warning is shown if the right side's battery is critically low.
+- **Multi-View** - A typing animation that speeds up with your words per minute, a words per minute graph, or held modifiers (Shift, Ctrl, Alt, GUI, CapsWord & Caps Lock). It also shows Bluetooth passkey entry & pairing results, along with a large profile number or USB icon whenever you change output.
+- **Output** - Whether output is going to USB or Bluetooth, along with the status of each Bluetooth profile.
+- **Layer** - The name of the current layer.
+
+The right side shows its own battery level, whether it's connected to the left side & some art.
+
+<br/>
+
 # Keymap Diagrams
 
 ![Default layout for the Rolio46](doc/images/keymap.svg)
 
 _NOTE: These layout diagrams were created using a combination of [Keymap Drawer](https://github.com/caksoylar/keymap-drawer-web) and [Inkscape](https://inkscape.org)._
+
+<br/>
+
+# Development
+
+To build the firmware locally see the [Building Guide](doc/building.md), once your [development environment](doc/tools_setup.md) is set up you can build both sides with:
+
+```bash
+/workspaces/zmk-modules/RolioFirmware/tools/build_rolio.sh
+```
+
+This firmware makes use of the following ZMK modules:
+
+- **`zmk-ls0xxvcom-driver`** - Sharp memory LCD driver for the Vista508, with VCOM inversion to prevent image retention.
+- **`zmk-defaultlayer`** - Remembers the default layer (MacOS or Windows) for each Bluetooth profile & USB.
+- **`zmk-ble-passkey`** - Reports Bluetooth passkey entry & pairing results so they can be shown on the display.
+- **`zmk-smart-sleep`** - Keeps the right side awake while it's connected to the left side, but lets it sleep shortly after it disconnects.
+- **`zmk-patch-batterylevel`** - A more accurate battery level curve.
+- **`zmk-patch-ec11`** - A patched rotary encoder driver that doesn't drop pulses.
+
+Repository structure:
+
+- `boards/shields/rolio/` - The Rolio46 shield, keymap & custom behaviours.
+- `boards/shields/vista508/` - The Vista508 display shield & its status screens (`src/` for the left side, `widgets/` for the right side).
+- `config/` - ZMK configuration files (including `west.yml`).
+- `doc/` - Documentation & setup guides.
+- `dts/` - Devicetree bindings for the custom behaviours.
+- `image_converter/` - Tool to generate the right side's display art.
+- `tools/` - Build scripts & utility tools.

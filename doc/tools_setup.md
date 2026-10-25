@@ -4,7 +4,7 @@ Since ZMK main (pre-release) is targeting a different Zephyr version to ZMK 0.3 
 
 The instructions here are intended to help you set up a build environment that is tailored to ZMK 0.3 that won't cause conflicts with the ZMK main setup instructions.
 
-If you wish to stick with ZMK main (pre-release) the [instructions on the ZMK site](https://zmk.dev/docs/development/local-toolchain/setup/container) are really quite good & should be used insteads of these.
+If you wish to stick with ZMK main (pre-release) the [instructions on the ZMK site](https://zmk.dev/docs/development/local-toolchain/setup/container) are really quite good & should be used instead of these instructions.
 
 > ⚠️ **NOTE:** This approach is for [VS Code](https://github.com/microsoft/vscode), not [Code OSS](https://github.com/microsoft/vscode/wiki/Differences-between-the-repository-and-Visual-Studio-Code).
 
@@ -85,6 +85,8 @@ Edit `zmk/.devcontainer/devcontainer.json` to look exactly like this:
 ## 5. Initialize the Container
 
 Open the `zmk` checkout directory in VS Code. Because the repository includes Dev Container configurations, an alert will pop up:
+
+![VS Code prompting to reopen the folder in a Dev Container](images/vscode_devcontainer.png)
 
 Click **Reopen in Container** to launch VS Code inside the running container.
 
