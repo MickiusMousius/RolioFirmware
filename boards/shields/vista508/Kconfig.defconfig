@@ -44,23 +44,12 @@ config VISTA508_SETTINGS_LAYER
     default -1
 
 config VISTA508_CHARGE_FULL_PCT
-    int "Battery level treated as fully charged when no charger IC module is present"
+    int "Battery level treated as fully charged"
     range 1 100
     default 95
     help
-      Without zmk-bq24075, charging is inferred as USB powered and below this level.
+      Charging is inferred as USB powered and below this level.
       Voltage based state of charge reads high while charging, so 100 may never be reached.
-
-config VISTA508_PERIPHERAL_CHARGE_HEURISTIC
-    bool "Infer peripheral charging from rising battery reports"
-    help
-      Without zmk-bq24075, the peripheral's USB state is not relayed to the central.
-      When enabled, consecutive battery level increases are treated as charging.
-
-config VISTA508_PERIPHERAL_CHARGE_TIMEOUT_S
-    int "Seconds without a battery level increase before peripheral charging is cleared"
-    default 600
-    depends on VISTA508_PERIPHERAL_CHARGE_HEURISTIC
 
 if !ZMK_SPLIT || ZMK_SPLIT_ROLE_CENTRAL
 

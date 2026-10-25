@@ -27,15 +27,6 @@ struct zmk_widget_battery_status {
     lv_color_t *cbuf;
     lv_obj_t *warning_art;
 
-#if IS_ENABLED(CONFIG_ZMK_BQ24075)
-    struct {
-        bool is_charging;
-        bool usb_present;
-        uint16_t charge_limit_mv;
-        uint16_t battery_mv;
-    } bq24075_states[2];
-#endif
-
     struct battery_info batteries[2];
 };
 

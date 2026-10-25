@@ -4,14 +4,17 @@
  * SPDX-License-Identifier: MIT
  *
  * @file battery.c
- * @brief Implementation of the battery status widget, displaying battery level and charging state.
- * @details Listens to ZMK battery and USB connection state events. It parses both central and peripheral battery
- * levels, drawing them to a dedicated LVGL canvas along with charging animations when plugged in.
+ * @brief Implementation of the battery status widget, displaying the central's battery level and the peripheral's
+ * connection state.
+ * @details Listens to ZMK battery and USB connection state events, drawing the central's battery level to a dedicated
+ * LVGL canvas along with a charging animation when plugged in. The peripheral has its own display showing its battery,
+ * so only its connection state is shown here, along with a warning should its battery run critically low.
  */
 
 /* ========================================================================= */
 /*                        INCLUDES AND DEPENDENCIES                          */
 /* ========================================================================= */
+#include <zephyr/bluetooth/conn.h>
 #include <zephyr/kernel.h>
 #include <zephyr/logging/log.h>
 LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
@@ -23,11 +26,7 @@ LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 #include <zmk/battery.h>
 #include <zmk/display.h>
 #include <zmk/event_manager.h>
-#include <zmk/events/activity_state_changed.h>
 #include <zmk/events/battery_state_changed.h>
-#if IS_ENABLED(CONFIG_ZMK_BQ24075)
-#include <zmk/events/bq24075_state_changed.h>
-#endif
 #include <zmk/events/usb_conn_state_changed.h>
 #include <zmk/usb.h>
 
@@ -39,7 +38,10 @@ LV_IMG_DECLARE(bolt);
 static sys_slist_t widgets = SYS_SLIST_STATIC_INIT(&widgets);
 static lv_timer_t *battery_anim_timer = NULL;
 static uint32_t battery_anim_tick = 0;
-extern bool board_is_active; /* Exported by status_screen.c */
+
+/* The peripheral's battery level is only meaningful once it has reported one over the split connection */
+static bool peripheral_level_known = false;
+static bool split_connected = false;
 
 struct battery_state {
     uint8_t source;
@@ -48,72 +50,35 @@ struct battery_state {
 };
 
 
-/* ========================================================================= */
-/*                        CHARGE STATE SOURCES                               */
-/* ========================================================================= */
-#if !IS_ENABLED(CONFIG_ZMK_BQ24075) && IS_ENABLED(CONFIG_VISTA508_PERIPHERAL_CHARGE_HEURISTIC)
-#define PERIPHERAL_CHARGE_RISES 2 /* consecutive increases needed to infer charging */
-#define PERIPHERAL_CHARGE_JUMP 3  /* a single increase this large infers charging immediately */
-
-static struct {
-    bool has_level;
-    uint8_t last_level;
-    uint8_t rises;
-    bool charging;
-    int64_t last_rise_ms;
-} peripheral_charge;
-
-static bool peripheral_charge_update(uint8_t level) {
-    int64_t now = k_uptime_get();
-
-    if (!peripheral_charge.has_level) {
-        peripheral_charge.has_level = true;
-    } else if (level > peripheral_charge.last_level) {
-        peripheral_charge.rises++;
-        peripheral_charge.last_rise_ms = now;
-        if (peripheral_charge.rises >= PERIPHERAL_CHARGE_RISES ||
-            level - peripheral_charge.last_level >= PERIPHERAL_CHARGE_JUMP) {
-            peripheral_charge.charging = true;
-        }
-    } else if (level < peripheral_charge.last_level) {
-        peripheral_charge.rises = 0;
-        peripheral_charge.charging = false;
-    }
-    peripheral_charge.last_level = level;
-    return peripheral_charge.charging;
+static bool central_is_charging(const struct zmk_widget_battery_status *widget) {
+    return widget->batteries[0].usb_present && widget->batteries[0].level < CONFIG_VISTA508_CHARGE_FULL_PCT;
 }
 
 
-/* Battery reports only arrive on change, so a stalled charge is detected at draw time */
-static void peripheral_charge_expire(struct zmk_widget_battery_status *widget) {
-    if (peripheral_charge.charging &&
-        k_uptime_get() - peripheral_charge.last_rise_ms > CONFIG_VISTA508_PERIPHERAL_CHARGE_TIMEOUT_S * 1000LL) {
-        peripheral_charge.charging = false;
-        peripheral_charge.rises = 0;
-        widget->batteries[1].usb_present = false;
+/* ========================================================================= */
+/*                         SPLIT CONNECTION STATE                            */
+/* ========================================================================= */
+#if IS_ENABLED(CONFIG_ZMK_SPLIT_BLE) && IS_ENABLED(CONFIG_ZMK_SPLIT_ROLE_CENTRAL)
+/* Connections where we are the BT central are to the split peripheral, host connections are the other way around */
+static void count_split_connection(struct bt_conn *conn, void *data) {
+    struct bt_conn_info info;
+    if (bt_conn_get_info(conn, &info) == 0 && info.role == BT_CONN_ROLE_CENTRAL &&
+        info.state == BT_CONN_STATE_CONNECTED) {
+        (*(int *)data)++;
     }
 }
 
 
-#endif
-
-static bool half_usb_present(const struct zmk_widget_battery_status *widget, int i) {
-#if IS_ENABLED(CONFIG_ZMK_BQ24075)
-    return widget->bq24075_states[i].usb_present;
-#else
-    /* Central: zmk_usb_is_powered(). Peripheral: heuristic, or always false */
-    return widget->batteries[i].usb_present;
-#endif
+static bool split_is_connected(void) {
+    int count = 0;
+    bt_conn_foreach(BT_CONN_TYPE_LE, count_split_connection, &count);
+    return count > 0;
 }
 
 
-static bool half_is_charging(const struct zmk_widget_battery_status *widget, int i) {
-#if IS_ENABLED(CONFIG_ZMK_BQ24075)
-    return widget->bq24075_states[i].is_charging;
 #else
-    return half_usb_present(widget, i) && widget->batteries[i].level < CONFIG_VISTA508_CHARGE_FULL_PCT;
+static bool split_is_connected(void) { return false; }
 #endif
-}
 
 
 /* ========================================================================= */
@@ -153,19 +118,15 @@ static void draw_battery(lv_obj_t *canvas, uint8_t xOffset, struct battery_info 
 static void draw_battery_info(struct zmk_widget_battery_status *widget) {
     lv_obj_t *canvas = widget->canvas;
 
-#if !IS_ENABLED(CONFIG_ZMK_BQ24075) && IS_ENABLED(CONFIG_VISTA508_PERIPHERAL_CHARGE_HEURISTIC)
-    peripheral_charge_expire(widget);
-#endif
-
     lv_canvas_fill_bg(canvas, LVGL_BACKGROUND, LV_OPA_COVER);
 
     char charge_text[6] = {};
 
-    draw_battery(canvas, 0, widget->batteries[0], half_is_charging(widget, 0), half_usb_present(widget, 0));
+    draw_battery(canvas, 0, widget->batteries[0], central_is_charging(widget), widget->batteries[0].usb_present);
     snprintf(charge_text, sizeof(charge_text), "%d", widget->batteries[0].level);
     lv_canvas_draw_text(canvas, 36, 0, 36, &style_label_16_left, charge_text);
 
-    if (widget->batteries[1].level < 2) {
+    if (split_connected && peripheral_level_known && widget->batteries[1].level < 2) {
         if (lv_obj_get_y(widget->warning_art) < 0) {
             lv_obj_align(widget->warning_art, LV_ALIGN_TOP_RIGHT, 0, 0);
             lv_animimg_set_duration(widget->warning_art, 1000);
@@ -185,9 +146,8 @@ static void draw_battery_info(struct zmk_widget_battery_status *widget) {
         }
     }
 
-    draw_battery(canvas, 112, widget->batteries[1], half_is_charging(widget, 1), half_usb_present(widget, 1));
-    snprintf(charge_text, sizeof(charge_text), "%d", widget->batteries[1].level);
-    lv_canvas_draw_text(canvas, DISPLAY_WIDTH / 2, 0, 36, &style_label_16_right, charge_text);
+    lv_canvas_draw_text(canvas, 0, 0, DISPLAY_WIDTH, &style_label_16_right,
+                        split_connected ? LV_SYMBOL_OK : LV_SYMBOL_CLOSE);
 }
 
 
@@ -201,21 +161,18 @@ static void battery_anim_timer_cb(lv_timer_t *timer) {
 static void battery_draw_work_cb(struct k_work *work) {
     struct zmk_widget_battery_status *widget;
     bool central_usb = false;
-    bool peripheral_usb = false;
+
+    split_connected = split_is_connected();
 
     SYS_SLIST_FOR_EACH_CONTAINER(&widgets, widget, node) {
         draw_battery_info(widget);
-        if (half_usb_present(widget, 0))
+        if (widget->batteries[0].usb_present)
             central_usb = true;
-        if (half_usb_present(widget, 1))
-            peripheral_usb = true;
     }
 
-    bool should_run_timer = central_usb || (peripheral_usb && board_is_active);
-
-    if (should_run_timer && battery_anim_timer == NULL) {
+    if (central_usb && battery_anim_timer == NULL) {
         battery_anim_timer = lv_timer_create(battery_anim_timer_cb, 500, NULL);
-    } else if (!should_run_timer && battery_anim_timer != NULL) {
+    } else if (!central_usb && battery_anim_timer != NULL) {
         lv_timer_del(battery_anim_timer);
         battery_anim_timer = NULL;
         battery_anim_tick = 0;
@@ -225,6 +182,13 @@ static void battery_draw_work_cb(struct k_work *work) {
 
 K_WORK_DEFINE(battery_draw_work, battery_draw_work_cb);
 
+static void battery_redraw_async(void) {
+    if (zmk_display_is_initialized()) {
+        k_work_submit_to_queue(zmk_display_work_q(), &battery_draw_work);
+    }
+}
+
+
 /* ========================================================================= */
 /*                    EVENT LISTENERS AND STATE UPDATES                      */
 /* ========================================================================= */
@@ -233,9 +197,7 @@ static void set_battery_status(struct zmk_widget_battery_status *widget, struct 
         return;
     widget->batteries[state.source].level = state.level;
     widget->batteries[state.source].usb_present = state.usb_present;
-    if (zmk_display_is_initialized()) {
-        k_work_submit_to_queue(zmk_display_work_q(), &battery_draw_work);
-    }
+    battery_redraw_async();
 }
 
 
@@ -247,12 +209,10 @@ void battery_status_update_cb(struct battery_state state) {
 
 static struct battery_state peripheral_battery_status_get_state(const zmk_event_t *eh) {
     const struct zmk_peripheral_battery_state_changed *ev = as_zmk_peripheral_battery_state_changed(eh);
+    peripheral_level_known = true;
     return (struct battery_state){
         .source = ev->source + 1,
         .level = ev->state_of_charge,
-#if !IS_ENABLED(CONFIG_ZMK_BQ24075) && IS_ENABLED(CONFIG_VISTA508_PERIPHERAL_CHARGE_HEURISTIC)
-        .usb_present = peripheral_charge_update(ev->state_of_charge),
-#endif
     };
 }
 
@@ -285,41 +245,20 @@ ZMK_SUBSCRIPTION(widget_battery_status, zmk_peripheral_battery_state_changed);
 ZMK_SUBSCRIPTION(widget_battery_status, zmk_battery_state_changed);
 ZMK_SUBSCRIPTION(widget_battery_status, zmk_usb_conn_state_changed);
 
-#if IS_ENABLED(CONFIG_ZMK_BQ24075)
-static int bq24075_redraw_event_handler(const zmk_event_t *eh) {
-    bool dirty = false;
-    struct zmk_widget_battery_status *widget;
-
-    if (as_zmk_bq24075_state_changed(eh) != NULL) {
-        const struct zmk_bq24075_state_changed *ev = as_zmk_bq24075_state_changed(eh);
-        SYS_SLIST_FOR_EACH_CONTAINER(&widgets, widget, node) {
-            widget->bq24075_states[0].is_charging = ev->is_charging;
-            widget->bq24075_states[0].usb_present = ev->usb_present;
-            widget->bq24075_states[0].charge_limit_mv = ev->charge_limit_mv;
-            widget->bq24075_states[0].battery_mv = ev->battery_mv;
-            dirty = true;
-        }
-    } else if (as_zmk_peripheral_bq24075_state_changed(eh) != NULL) {
-        const struct zmk_peripheral_bq24075_state_changed *ev = as_zmk_peripheral_bq24075_state_changed(eh);
-        SYS_SLIST_FOR_EACH_CONTAINER(&widgets, widget, node) {
-            widget->bq24075_states[ev->source + 1].is_charging = ev->is_charging;
-            widget->bq24075_states[ev->source + 1].usb_present = ev->usb_present;
-            widget->bq24075_states[ev->source + 1].charge_limit_mv = ev->charge_limit_mv;
-            widget->bq24075_states[ev->source + 1].battery_mv = ev->battery_mv;
-            dirty = true;
-        }
-    }
-
-    if (dirty && zmk_display_is_initialized()) {
-        k_work_submit_to_queue(zmk_display_work_q(), &battery_draw_work);
-    }
-    return ZMK_EV_EVENT_BUBBLE;
-}
+#if IS_ENABLED(CONFIG_ZMK_SPLIT_BLE) && IS_ENABLED(CONFIG_ZMK_SPLIT_ROLE_CENTRAL)
+/* Called from the Bluetooth stack, so the connection state is read & drawn later on the display work queue */
+static void split_conn_connected(struct bt_conn *conn, uint8_t err) { battery_redraw_async(); }
 
 
-ZMK_LISTENER(widget_bq24075_redraw, bq24075_redraw_event_handler);
-ZMK_SUBSCRIPTION(widget_bq24075_redraw, zmk_bq24075_state_changed);
-ZMK_SUBSCRIPTION(widget_bq24075_redraw, zmk_peripheral_bq24075_state_changed);
+static void split_conn_disconnected(struct bt_conn *conn, uint8_t reason) { battery_redraw_async(); }
+
+
+BT_CONN_CB_DEFINE(widget_battery_split_conn_callbacks) = {
+    .connected = split_conn_connected,
+    .disconnected = split_conn_disconnected,
+};
+
+
 #endif
 
 
@@ -332,6 +271,7 @@ int zmk_widget_battery_status_init(struct zmk_widget_battery_status *widget, lv_
     widget->cbuf = cbuf;
     widget->warning_art = warning_art;
     sys_slist_append(&widgets, &widget->node);
+    split_connected = split_is_connected();
     widget_battery_status_init();
     return 0;
 }
