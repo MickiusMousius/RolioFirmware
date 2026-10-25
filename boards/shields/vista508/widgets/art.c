@@ -7,7 +7,7 @@
 
 // From Image: Untitled 17.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image0_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -193,7 +193,7 @@ const lv_img_dsc_t image0 = {
 
 // From Image: Untitled 16.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image1_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -379,7 +379,7 @@ const lv_img_dsc_t image1 = {
 
 // From Image: Untitled 3.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image2_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -565,7 +565,7 @@ const lv_img_dsc_t image2 = {
 
 // From Image: Untitled 14.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image3_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -750,7 +750,7 @@ const lv_img_dsc_t image3 = {
 
 // From Image: Untitled 29.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image4_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -932,7 +932,7 @@ const lv_img_dsc_t image4 = {
 
 // From Image: Untitled 15.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image5_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -1118,7 +1118,7 @@ const lv_img_dsc_t image5 = {
 
 // From Image: Untitled 11.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image6_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -1302,7 +1302,7 @@ const lv_img_dsc_t image6 = {
 
 // From Image: Untitled 38.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image7_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -1484,7 +1484,7 @@ const lv_img_dsc_t image7 = {
 
 // From Image: Untitled 13.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image8_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -1669,7 +1669,7 @@ const lv_img_dsc_t image8 = {
 
 // From Image: Untitled 4.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image9_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -1855,7 +1855,7 @@ const lv_img_dsc_t image9 = {
 
 // From Image: Untitled 128.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image10_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -2041,7 +2041,7 @@ const lv_img_dsc_t image10 = {
 
 // From Image: Untitled 100.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image11_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -2227,7 +2227,7 @@ const lv_img_dsc_t image11 = {
 
 // From Image: Untitled 114.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image12_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -2413,7 +2413,7 @@ const lv_img_dsc_t image12 = {
 
 // From Image: Untitled 60.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image13_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -2599,7 +2599,7 @@ const lv_img_dsc_t image13 = {
 
 // From Image: Untitled 74.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image14_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -2785,7 +2785,7 @@ const lv_img_dsc_t image14 = {
 
 // From Image: Untitled 48.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image15_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -2967,7 +2967,7 @@ const lv_img_dsc_t image15 = {
 
 // From Image: Untitled 75.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image16_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -3153,7 +3153,7 @@ const lv_img_dsc_t image16 = {
 
 // From Image: Untitled 115.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image17_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -3335,7 +3335,7 @@ const lv_img_dsc_t image17 = {
 
 // From Image: Untitled 101.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image18_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -3517,7 +3517,7 @@ const lv_img_dsc_t image18 = {
 
 // From Image: Untitled 129.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image19_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -3699,7 +3699,7 @@ const lv_img_dsc_t image19 = {
 
 // From Image: Untitled 117.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image20_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -3885,7 +3885,7 @@ const lv_img_dsc_t image20 = {
 
 // From Image: Untitled 103.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image21_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -4071,7 +4071,7 @@ const lv_img_dsc_t image21 = {
 
 // From Image: Untitled 77.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image22_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -4257,7 +4257,7 @@ const lv_img_dsc_t image22 = {
 
 // From Image: Untitled 63.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image23_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -4442,7 +4442,7 @@ const lv_img_dsc_t image23 = {
 
 // From Image: Untitled 88.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image24_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -4628,7 +4628,7 @@ const lv_img_dsc_t image24 = {
 
 // From Image: Untitled 89.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image25_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -4810,7 +4810,7 @@ const lv_img_dsc_t image25 = {
 
 // From Image: Untitled 62.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image26_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -4995,7 +4995,7 @@ const lv_img_dsc_t image26 = {
 
 // From Image: Untitled 76.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image27_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -5181,7 +5181,7 @@ const lv_img_dsc_t image27 = {
 
 // From Image: Untitled 116.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image28_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -5367,7 +5367,7 @@ const lv_img_dsc_t image28 = {
 
 // From Image: Untitled 112.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image29_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -5551,7 +5551,7 @@ const lv_img_dsc_t image29 = {
 
 // From Image: Untitled 106.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image30_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -5737,7 +5737,7 @@ const lv_img_dsc_t image30 = {
 
 // From Image: Untitled 72.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image31_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -5923,7 +5923,7 @@ const lv_img_dsc_t image31 = {
 
 // From Image: Untitled 67.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image32_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -6108,7 +6108,7 @@ const lv_img_dsc_t image32 = {
 
 // From Image: Untitled 73.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image33_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -6294,7 +6294,7 @@ const lv_img_dsc_t image33 = {
 
 // From Image: Untitled 107.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image34_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -6479,7 +6479,7 @@ const lv_img_dsc_t image34 = {
 
 // From Image: Untitled 113.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image35_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -6665,7 +6665,7 @@ const lv_img_dsc_t image35 = {
 
 // From Image: Untitled 105.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image36_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -6851,7 +6851,7 @@ const lv_img_dsc_t image36 = {
 
 // From Image: Untitled 111.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image37_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -7037,7 +7037,7 @@ const lv_img_dsc_t image37 = {
 
 // From Image: Untitled 59.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image38_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -7223,7 +7223,7 @@ const lv_img_dsc_t image38 = {
 
 // From Image: Untitled 65.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image39_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -7409,7 +7409,7 @@ const lv_img_dsc_t image39 = {
 
 // From Image: Untitled 71.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image40_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -7595,7 +7595,7 @@ const lv_img_dsc_t image40 = {
 
 // From Image: Untitled 70.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image41_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -7781,7 +7781,7 @@ const lv_img_dsc_t image41 = {
 
 // From Image: Untitled 64.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image42_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -7967,7 +7967,7 @@ const lv_img_dsc_t image42 = {
 
 // From Image: Untitled 58.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image43_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -8153,7 +8153,7 @@ const lv_img_dsc_t image43 = {
 
 // From Image: Untitled 110.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image44_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -8339,7 +8339,7 @@ const lv_img_dsc_t image44 = {
 
 // From Image: Untitled 104.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image45_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -8525,7 +8525,7 @@ const lv_img_dsc_t image45 = {
 
 // From Image: Untitled 109.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image46_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -8711,7 +8711,7 @@ const lv_img_dsc_t image46 = {
 
 // From Image: Untitled 121.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image47_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -8897,7 +8897,7 @@ const lv_img_dsc_t image47 = {
 
 // From Image: Untitled 41.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image48_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -9081,7 +9081,7 @@ const lv_img_dsc_t image48 = {
 
 // From Image: Untitled 69.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image49_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -9267,7 +9267,7 @@ const lv_img_dsc_t image49 = {
 
 // From Image: Untitled 82.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image50_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -9453,7 +9453,7 @@ const lv_img_dsc_t image50 = {
 
 // From Image: Untitled 83.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image51_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -9639,7 +9639,7 @@ const lv_img_dsc_t image51 = {
 
 // From Image: Untitled 68.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image52_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -9825,7 +9825,7 @@ const lv_img_dsc_t image52 = {
 
 // From Image: Untitled 40.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image53_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -10011,7 +10011,7 @@ const lv_img_dsc_t image53 = {
 
 // From Image: Untitled 120.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image54_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -10197,7 +10197,7 @@ const lv_img_dsc_t image54 = {
 
 // From Image: Untitled 108.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image55_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -10383,7 +10383,7 @@ const lv_img_dsc_t image55 = {
 
 // From Image: Untitled 122.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image56_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -10569,7 +10569,7 @@ const lv_img_dsc_t image56 = {
 
 // From Image: Untitled 56.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image57_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -10755,7 +10755,7 @@ const lv_img_dsc_t image57 = {
 
 // From Image: Untitled 80.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image58_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -10941,7 +10941,7 @@ const lv_img_dsc_t image58 = {
 
 // From Image: Untitled 57.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image59_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -11127,7 +11127,7 @@ const lv_img_dsc_t image59 = {
 
 // From Image: Untitled 123.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image60_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -11313,7 +11313,7 @@ const lv_img_dsc_t image60 = {
 
 // From Image: Untitled 127.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image61_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -11499,7 +11499,7 @@ const lv_img_dsc_t image61 = {
 
 // From Image: Untitled 47.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image62_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -11685,7 +11685,7 @@ const lv_img_dsc_t image62 = {
 
 // From Image: Untitled 90.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image63_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -11871,7 +11871,7 @@ const lv_img_dsc_t image63 = {
 
 // From Image: Untitled 85.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image64_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -12057,7 +12057,7 @@ const lv_img_dsc_t image64 = {
 
 // From Image: Untitled 91.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image65_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -12243,7 +12243,7 @@ const lv_img_dsc_t image65 = {
 
 // From Image: Untitled 46.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image66_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -12429,7 +12429,7 @@ const lv_img_dsc_t image66 = {
 
 // From Image: Untitled 126.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image67_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -12615,7 +12615,7 @@ const lv_img_dsc_t image67 = {
 
 // From Image: Untitled 132.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image68_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -12801,7 +12801,7 @@ const lv_img_dsc_t image68 = {
 
 // From Image: Untitled 124.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image69_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -12987,7 +12987,7 @@ const lv_img_dsc_t image69 = {
 
 // From Image: Untitled 130.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image70_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -13173,7 +13173,7 @@ const lv_img_dsc_t image70 = {
 
 // From Image: Untitled 118.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image71_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -13355,7 +13355,7 @@ const lv_img_dsc_t image71 = {
 
 // From Image: Untitled 78.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image72_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -13541,7 +13541,7 @@ const lv_img_dsc_t image72 = {
 
 // From Image: Untitled 50.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image73_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -13727,7 +13727,7 @@ const lv_img_dsc_t image73 = {
 
 // From Image: Untitled 87.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image74_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -13911,7 +13911,7 @@ const lv_img_dsc_t image74 = {
 
 // From Image: Untitled 93.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image75_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -14097,7 +14097,7 @@ const lv_img_dsc_t image75 = {
 
 // From Image: Untitled 92.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image76_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -14283,7 +14283,7 @@ const lv_img_dsc_t image76 = {
 
 // From Image: Untitled 86.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image77_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -14469,7 +14469,7 @@ const lv_img_dsc_t image77 = {
 
 // From Image: Untitled 51.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image78_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -14651,7 +14651,7 @@ const lv_img_dsc_t image78 = {
 
 // From Image: Untitled 45.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image79_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -14837,7 +14837,7 @@ const lv_img_dsc_t image79 = {
 
 // From Image: Untitled 79.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image80_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -15023,7 +15023,7 @@ const lv_img_dsc_t image80 = {
 
 // From Image: Untitled 119.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image81_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -15205,7 +15205,7 @@ const lv_img_dsc_t image81 = {
 
 // From Image: Untitled 131.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image82_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -15387,7 +15387,7 @@ const lv_img_dsc_t image82 = {
 
 // From Image: Untitled 125.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image83_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -15573,7 +15573,7 @@ const lv_img_dsc_t image83 = {
 
 // From Image: Untitled 36.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image84_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -15759,7 +15759,7 @@ const lv_img_dsc_t image84 = {
 
 // From Image: Untitled 30.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image85_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -15945,7 +15945,7 @@ const lv_img_dsc_t image85 = {
 
 // From Image: Untitled 31.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image86_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else
@@ -16131,7 +16131,7 @@ const lv_img_dsc_t image86 = {
 
 // From Image: Untitled 32.png
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST uint8_t image87_map[] = {
-#if CONFIG_NICE_VIEW_WIDGET_INVERTED
+#if CONFIG_VISTA508_WIDGET_INVERTED
     0xff, 0xff, 0xff, 0xff, /*Color of index 0*/
     0x00, 0x00, 0x00, 0xff, /*Color of index 1*/
 #else

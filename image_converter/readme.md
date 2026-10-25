@@ -24,7 +24,7 @@ This will generate a new art.c file and previews of what the converted results w
 
 The converted images in the "previews" folder can be used as inputs too.
 
-To use the generated "art.c" file copy it into the "boards/vista508/widgets" folder of the firmware repository, commit the change and push it to GitHub. A GitHub action should then rebuild your firmware with your newly selected images.
+To use the generated "art.c" file copy it into the "boards/shields/vista508/widgets" folder of the firmware repository, commit the change and push it to GitHub. A GitHub action should then rebuild your firmware with your newly selected images.
 
 Some tips to help with converting your art:
  * Use grey scale art that has strong contrast
