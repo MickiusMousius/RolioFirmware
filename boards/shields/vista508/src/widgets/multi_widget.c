@@ -80,7 +80,13 @@ static void draw_multi_widget(struct zmk_widget_multi_status *widget) {
         return;
     }
 
-    /* 4. Handle settings layer notifications (WPM mode toggle) */
+    /* 4. Handle output / Bluetooth profile changes */
+    if (profile_changed_is_active()) {
+        draw_profile_changed(canvas);
+        return;
+    }
+
+    /* 5. Handle settings layer notifications (WPM mode toggle) */
     bool is_settings_layer = (widget->layer_index == CONFIG_VISTA508_SETTINGS_LAYER);
 
     if (wpm_mode_text_active && is_settings_layer) {
@@ -88,7 +94,7 @@ static void draw_multi_widget(struct zmk_widget_multi_status *widget) {
         return;
     }
 
-    /* 5. Default view: WPM Chart or Typing Animation */
+    /* 6. Default view: WPM Chart or Typing Animation */
     if (display_mode == MULTI_WIDGET_MODE_WPM_GRAPH) {
         draw_wpm_chart(canvas);
     } else {

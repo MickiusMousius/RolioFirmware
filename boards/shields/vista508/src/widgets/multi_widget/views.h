@@ -24,6 +24,9 @@ void draw_sleep_image(lv_obj_t *canvas);
 void draw_wpm_chart(lv_obj_t *canvas);
 void draw_wpm_text_notification(lv_obj_t *canvas, int display_mode);
 
+bool profile_changed_is_active(void);
+void draw_profile_changed(lv_obj_t *canvas);
+
 void hello_animation_init(void);
 bool hello_animation_is_active(void);
 void hello_animation_stop(void);
