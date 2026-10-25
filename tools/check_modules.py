@@ -34,6 +34,15 @@ def get_bash_modules(script_path):
     return modules
 
 
+def get_base_repo(script_path):
+    """Extracts the base/manifest repo folder name from the BASE_DIR in the bash script."""
+    with open(script_path, "r") as f:
+        content = f.read()
+
+    match = re.search(r'BASE_DIR="/workspaces/zmk-modules/([a-zA-Z0-9_-]+)"', content)
+    return {match.group(1)} if match else set()
+
+
 def get_yaml_modules(yaml_path):
     """Extracts expected directory paths from west.yml."""
     modules = set()
@@ -84,8 +93,8 @@ def main():
     missing_in_yaml = bash_modules - yaml_modules
     missing_in_bash = yaml_modules - bash_modules
 
-    # Repos in Bash script, but normal to be missing from YAML
-    EXPECTED_MISSING_FROM_YAML = {"RolioFirmware"}
+    # Repos in Bash script, but normal to be missing from YAML (the base/manifest repo itself)
+    EXPECTED_MISSING_FROM_YAML = get_base_repo(args.build_script)
 
     # Repos in YAML, but normal to be missing from Bash's EXTRA_MODULES
     EXPECTED_MISSING_FROM_BASH = {"zmk", "zephyr"}
