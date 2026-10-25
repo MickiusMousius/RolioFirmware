@@ -80,7 +80,27 @@ static void draw_multi_widget(struct zmk_widget_multi_status *widget) {
         return;
     }
 
-    /* 4. Handle output / Bluetooth profile changes */
+    /* 4. Handle Bluetooth pairing and profile states */
+    if (pairing_celebration_is_active()) {
+        draw_dance_animation(canvas);
+        return;
+    }
+    if (pairing_is_active()) {
+        draw_pairing_passkey(canvas);
+        return;
+    }
+    if (pairing_failed_is_active()) {
+        draw_pairing_failed(canvas);
+        return;
+    }
+    if (profile_cleared_is_active()) {
+        draw_profile_cleared(canvas);
+        return;
+    }
+    if (profile_disconnected_is_active()) {
+        draw_profile_disconnected(canvas);
+        return;
+    }
     if (profile_changed_is_active()) {
         draw_profile_changed(canvas);
         return;
@@ -211,6 +231,7 @@ bool zmk_widget_multi_is_wpm_chart_active(void) { return display_mode == MULTI_W
 void zmk_widget_multi_halt_animations(void) {
     typing_animation_stop();
     hello_animation_stop();
+    pairing_animations_stop();
 }
 
 
@@ -220,6 +241,7 @@ int zmk_widget_multi_status_init(struct zmk_widget_multi_status *widget, lv_obj_
     sys_slist_append(&widgets, &widget->node);
 
     hello_animation_init();
+    pairing_init();
     typing_animation_init();
 
     draw_multi_widget(widget);

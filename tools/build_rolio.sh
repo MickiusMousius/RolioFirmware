@@ -95,6 +95,7 @@ SHARED_MODULES=(
     "/workspaces/zmk-modules/zmk-patch-batterylevel"
     "/workspaces/zmk-modules/zmk-patch-ec11"
     "/workspaces/zmk-modules/zmk-smart-sleep"
+    "/workspaces/zmk-modules/zmk-ble-passkey"
 )
 
 # Modules used ONLY by the left half

@@ -24,6 +24,18 @@ void draw_sleep_image(lv_obj_t *canvas);
 void draw_wpm_chart(lv_obj_t *canvas);
 void draw_wpm_text_notification(lv_obj_t *canvas, int display_mode);
 
+void pairing_init(void);
+void pairing_animations_stop(void);
+bool pairing_celebration_is_active(void);
+void draw_dance_animation(lv_obj_t *canvas);
+bool pairing_is_active(void);
+void draw_pairing_passkey(lv_obj_t *canvas);
+bool pairing_failed_is_active(void);
+void draw_pairing_failed(lv_obj_t *canvas);
+bool profile_cleared_is_active(void);
+void draw_profile_cleared(lv_obj_t *canvas);
+bool profile_disconnected_is_active(void);
+void draw_profile_disconnected(lv_obj_t *canvas);
 bool profile_changed_is_active(void);
 void draw_profile_changed(lv_obj_t *canvas);
 

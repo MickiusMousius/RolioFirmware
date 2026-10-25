@@ -30,5 +30,9 @@ manifest:
       remote: MickiusMousius
       revision: main
       clone-depth: 1
+    - name: zmk-ble-passkey
+      remote: MickiusMousius
+      revision: main
+      clone-depth: 1
   self:
     path: config
