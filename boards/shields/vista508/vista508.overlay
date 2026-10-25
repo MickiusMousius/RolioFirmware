@@ -8,9 +8,10 @@
     status = "okay";
     vista508: ls0xx@0 {
         compatible = "sharp,ls0xx-vcom";
-        spi-max-frequency = <1000000>;
+        spi-max-frequency = <2000000>;
         serial-vcom-inversion;
         serial-vcom-interval = <17>;
+        dma-mode;
         reg = <0>;
         width = <144>;
         height = <168>;

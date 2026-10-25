@@ -28,10 +28,6 @@ config LV_Z_MEM_POOL_SIZE
     default 4096 if ZMK_DISPLAY_STATUS_SCREEN_CUSTOM
 
 config ZMK_DISPLAY_STATUS_SCREEN_CUSTOM
-    imply VISTA508_WIDGET_STATUS
-
-config VISTA508_WIDGET_STATUS
-    bool "Custom Vista508 status widget"
     select LV_FONT_MONTSERRAT_16
     select LV_USE_IMG
     select LV_USE_CANVAS
@@ -39,13 +35,38 @@ config VISTA508_WIDGET_STATUS
 config VISTA508_WIDGET_INVERTED
     bool "Invert custom status widget colors"
 
+config VISTA508_MESSAGE_DISPLAY_MS
+    int "General Message Display Duration (ms)"
+    default 5000
+
+config VISTA508_SETTINGS_LAYER
+    int "Layer index of the settings layer, display setting change notifications are shown while it is active"
+    default -1
+
+config VISTA508_CHARGE_FULL_PCT
+    int "Battery level treated as fully charged when no charger IC module is present"
+    range 1 100
+    default 95
+    help
+      Without zmk-bq24075, charging is inferred as USB powered and below this level.
+      Voltage based state of charge reads high while charging, so 100 may never be reached.
+
+config VISTA508_PERIPHERAL_CHARGE_HEURISTIC
+    bool "Infer peripheral charging from rising battery reports"
+    help
+      Without zmk-bq24075, the peripheral's USB state is not relayed to the central.
+      When enabled, consecutive battery level increases are treated as charging.
+
+config VISTA508_PERIPHERAL_CHARGE_TIMEOUT_S
+    int "Seconds without a battery level increase before peripheral charging is cleared"
+    default 600
+    depends on VISTA508_PERIPHERAL_CHARGE_HEURISTIC
+
 if !ZMK_SPLIT || ZMK_SPLIT_ROLE_CENTRAL
 
-config VISTA508_WIDGET_STATUS
-    select LV_FONT_MONTSERRAT_28
+config ZMK_DISPLAY_STATUS_SCREEN_CUSTOM
     select LV_FONT_MONTSERRAT_18
-    select LV_FONT_MONTSERRAT_16
-    select LV_FONT_MONTSERRAT_12
+    select LV_USE_ANIMIMG
     select ZMK_WPM
 
 endif # !ZMK_SPLIT || ZMK_SPLIT_ROLE_CENTRAL
