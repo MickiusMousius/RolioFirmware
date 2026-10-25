@@ -16,16 +16,22 @@
             tapping-term-ms = <300>;
             bindings = <&mo W_SYMBOLS>, <&tog NUMPAD>;
         };
+        // Hold for the config layer, double tap to toggle it
+        td2_config: Toggle_Config {
+            display-name = "Temporary or Toggle Config Layer";
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <300>;
+            bindings = <&mo KB_CONFIG>, <&tog KB_CONFIG>;
+        };
         //Backlight Brightness
         bri_adjust: Brightness_Scroller {
-            label = "Scroller Brightness Adjust";
             compatible = "zmk,behavior-sensor-rotate";
             #sensor-binding-cells = <0>;
             bindings = <&bl BL_INC>, <&bl BL_DEC>;
         };
         // Encoder to Mouse Scroll
         scroll_up_down: Mouse_Scroller {
-            label = "Scroller As Mouse Wheel";
             compatible = "zmk,behavior-sensor-rotate";
             #sensor-binding-cells = <0>;
             bindings = <&msc SCRL_UP>, <&msc SCRL_DOWN>;
@@ -64,7 +70,6 @@
         };
         // Small volume steps for MacOS
         mac_vol: Mac_Volume_Scroller {
-            label = "Scroller MacOS Small Volume Steps";
             compatible = "zmk,behavior-sensor-rotate";
             #sensor-binding-cells = <0>;
             bindings = <&kp LS(LA(C_VOL_UP))>, <&kp LS(LA(C_VOL_DN))>;
@@ -86,6 +91,18 @@
             flavor = "hold-preferred";
             tapping-term-ms = <200>;
             bindings = <&kp>, <&caps_word>;
+        };
+        // Cycle the Vista508 WPM widget between Steve, the WPM graph & modifiers
+        wpm_tog: behavior_wpm_tog {
+            display-name = "Display WPM Mode Toggle";
+            compatible = "zmk,behavior-wpm-tog";
+            #binding-cells = <0>;
+        };
+        // Toggle the Vista508 automatically showing modifiers while they are held
+        mod_tog: behavior_mod_tog {
+            display-name = "Display Auto-Show Modifiers Toggle";
+            compatible = "zmk,behavior-mod-tog";
+            #binding-cells = <0>;
         };
     };
 

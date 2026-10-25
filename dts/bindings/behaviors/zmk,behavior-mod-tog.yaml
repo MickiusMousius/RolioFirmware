@@ -1,0 +1,9 @@
+description: Auto-Show Modifiers Toggle
+compatible: "zmk,behavior-mod-tog"
+
+include: zero_param.yaml
+
+properties:
+  "#binding-cells":
+    type: int
+    const: 0

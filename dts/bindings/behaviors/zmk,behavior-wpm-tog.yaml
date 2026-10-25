@@ -1,0 +1,9 @@
+description: WPM Widget Mode Toggle
+compatible: "zmk,behavior-wpm-tog"
+
+include: zero_param.yaml
+
+properties:
+  "#binding-cells":
+    type: int
+    const: 0

@@ -9,6 +9,22 @@
             bindings = <&macro_param_1to2>
                 , <&bt BT_SEL MACRO_PLACEHOLDER>;
         };
+        // Force output to USB
+        output_usb: output_usb {
+            display-name = "Output USB";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&out OUT_USB>;
+        };
+        // Force output to BLE and select profile
+        output_bt: output_bt {
+            display-name = "Output Bluetooth Profile Select";
+            compatible = "zmk,behavior-macro-one-param";
+            #binding-cells = <1>;
+            bindings = <&out OUT_BLE>
+                , <&macro_param_1to2>
+                , <&bt BT_SEL MACRO_PLACEHOLDER>;
+        };
         // Select bluetooth profile helper  for behaviours
         btclrmacro: btclrmacro {
             display-name = "Bluetooth Profile Clear";
