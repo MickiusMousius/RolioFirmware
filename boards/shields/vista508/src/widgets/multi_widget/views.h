@@ -23,6 +23,11 @@
 void draw_sleep_image(lv_obj_t *canvas);
 void draw_wpm_chart(lv_obj_t *canvas);
 void draw_wpm_text_notification(lv_obj_t *canvas, int display_mode);
+void draw_mod_auto_text_notification(lv_obj_t *canvas, bool enabled);
+
+void modifier_indicator_init(void);
+void draw_modifier_indicator(lv_obj_t *canvas);
+bool modifier_indicator_is_active(void);
 
 void pairing_init(void);
 void pairing_animations_stop(void);

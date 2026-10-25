@@ -49,3 +49,13 @@ void draw_wpm_text_notification(lv_obj_t *canvas, int display_mode) {
         lv_canvas_draw_text(canvas, 0, yOffset + 20, DISPLAY_WIDTH, &style_label_18_center, "Show\nWPM Steve");
     }
 }
+
+
+void draw_mod_auto_text_notification(lv_obj_t *canvas, bool enabled) {
+    const uint8_t yOffset = 0;
+    if (enabled) {
+        lv_canvas_draw_text(canvas, 0, yOffset + 20, DISPLAY_WIDTH, &style_label_18_center, "Auto Mod\nON");
+    } else {
+        lv_canvas_draw_text(canvas, 0, yOffset + 20, DISPLAY_WIDTH, &style_label_18_center, "Auto Mod\nOFF");
+    }
+}

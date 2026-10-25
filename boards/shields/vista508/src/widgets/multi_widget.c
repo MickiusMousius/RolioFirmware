@@ -55,7 +55,15 @@ K_WORK_DELAYABLE_DEFINE(wpm_mode_text_timeout_work, wpm_mode_text_timeout_handle
 #if IS_ENABLED(CONFIG_SETTINGS)
 static void wpm_mode_save_work_fn(struct k_work *_work);
 static K_WORK_DELAYABLE_DEFINE(wpm_mode_save_work, wpm_mode_save_work_fn);
+
+static void mod_auto_save_work_fn(struct k_work *_work);
+static K_WORK_DELAYABLE_DEFINE(mod_auto_save_work, mod_auto_save_work_fn);
 #endif
+
+static bool mod_auto_show = true;
+static bool mod_auto_text_active = false;
+static void mod_auto_text_timeout_handler(struct k_work *work);
+K_WORK_DELAYABLE_DEFINE(mod_auto_text_timeout_work, mod_auto_text_timeout_handler);
 
 /* ========================================================================= */
 /*                         UI RENDERING AND DRAWING                          */
@@ -106,17 +114,26 @@ static void draw_multi_widget(struct zmk_widget_multi_status *widget) {
         return;
     }
 
-    /* 5. Handle settings layer notifications (WPM mode toggle) */
+    /* 5. Handle settings layer notifications (WPM mode & modifier auto show toggles) */
     bool is_settings_layer = (widget->layer_index == CONFIG_VISTA508_SETTINGS_LAYER);
 
     if (wpm_mode_text_active && is_settings_layer) {
         draw_wpm_text_notification(canvas, display_mode);
         return;
     }
+    if (mod_auto_text_active && is_settings_layer) {
+        draw_mod_auto_text_notification(canvas, mod_auto_show);
+        return;
+    }
 
-    /* 6. Default view: WPM Chart or Typing Animation */
-    if (display_mode == MULTI_WIDGET_MODE_WPM_GRAPH) {
+    /* 6. Default view: WPM Chart, Modifiers or Typing Animation */
+    bool show_mods_auto = mod_auto_show && modifier_indicator_is_active();
+
+    if (display_mode == MULTI_WIDGET_MODE_WPM_GRAPH && !show_mods_auto) {
         draw_wpm_chart(canvas);
+    } else if (display_mode == MULTI_WIDGET_MODE_MODIFIERS || show_mods_auto) {
+        lv_canvas_fill_bg(canvas, LVGL_BACKGROUND, LV_OPA_COVER);
+        draw_modifier_indicator(canvas);
     } else {
         draw_typing_animation(canvas);
     }
@@ -179,6 +196,30 @@ static void wpm_mode_text_timeout_handler(struct k_work *work) {
 }
 
 
+void vista508_mod_auto_show_toggle(void) {
+    mod_auto_show = !mod_auto_show;
+
+    struct zmk_widget_multi_status *widget;
+    SYS_SLIST_FOR_EACH_CONTAINER(&widgets, widget, node) {
+        if (widget->layer_index == CONFIG_VISTA508_SETTINGS_LAYER) {
+            mod_auto_text_active = true;
+            k_work_reschedule(&mod_auto_text_timeout_work, K_MSEC(CONFIG_VISTA508_MESSAGE_DISPLAY_MS));
+        }
+    }
+    zmk_widget_multi_status_update_async();
+
+#if IS_ENABLED(CONFIG_SETTINGS)
+    k_work_reschedule(&mod_auto_save_work, K_MSEC(500));
+#endif
+}
+
+
+static void mod_auto_text_timeout_handler(struct k_work *work) {
+    mod_auto_text_active = false;
+    zmk_widget_multi_status_update_async();
+}
+
+
 #if IS_ENABLED(CONFIG_SETTINGS)
 static int wpm_mode_settings_set(const char *name, size_t len, settings_read_cb read_cb, void *cb_arg) {
     const char *next;
@@ -191,10 +232,27 @@ static int wpm_mode_settings_set(const char *name, size_t len, settings_read_cb 
 }
 
 
+static int mod_auto_settings_set(const char *name, size_t len, settings_read_cb read_cb, void *cb_arg) {
+    const char *next;
+    if (settings_name_steq(name, "auto", &next) && !next) {
+        if (len != sizeof(mod_auto_show))
+            return -EINVAL;
+        return read_cb(cb_arg, &mod_auto_show, sizeof(mod_auto_show));
+    }
+    return -ENOENT;
+}
+
+
 SETTINGS_STATIC_HANDLER_DEFINE(vista508_wpm_mode, "vista508/wpm_mode", NULL, wpm_mode_settings_set, NULL, NULL);
+SETTINGS_STATIC_HANDLER_DEFINE(vista508_mod_auto, "vista508/mod_auto", NULL, mod_auto_settings_set, NULL, NULL);
 
 static void wpm_mode_save_work_fn(struct k_work *_work) {
     settings_save_one("vista508/wpm_mode/graph", &display_mode, sizeof(display_mode));
+}
+
+
+static void mod_auto_save_work_fn(struct k_work *_work) {
+    settings_save_one("vista508/mod_auto/auto", &mod_auto_show, sizeof(mod_auto_show));
 }
 
 
@@ -219,7 +277,19 @@ void zmk_widget_multi_status_update_async(void) {
 sys_slist_t *zmk_widget_multi_get_list(void) { return &widgets; }
 
 
-bool zmk_widget_multi_is_wpm_chart_active(void) { return display_mode == MULTI_WIDGET_MODE_WPM_GRAPH; }
+bool zmk_widget_multi_is_wpm_chart_active(void) {
+    bool show_mods_auto = mod_auto_show && modifier_indicator_is_active();
+    return display_mode == MULTI_WIDGET_MODE_WPM_GRAPH && !show_mods_auto;
+}
+
+
+bool zmk_widget_multi_should_redraw_for_modifiers(void) {
+    if (display_mode == MULTI_WIDGET_MODE_MODIFIERS)
+        return true;
+    if (mod_auto_show)
+        return true;
+    return false;
+}
 
 
 /*
@@ -243,6 +313,7 @@ int zmk_widget_multi_status_init(struct zmk_widget_multi_status *widget, lv_obj_
     hello_animation_init();
     pairing_init();
     typing_animation_init();
+    modifier_indicator_init();
 
     draw_multi_widget(widget);
 

@@ -39,7 +39,9 @@ void zmk_widget_multi_status_update_async(void);
 sys_slist_t *zmk_widget_multi_get_list(void);
 
 bool zmk_widget_multi_is_wpm_chart_active(void);
+bool zmk_widget_multi_should_redraw_for_modifiers(void);
 
 void zmk_widget_multi_halt_animations(void);
 
 void vista508_wpm_mode_toggle(void);
+void vista508_mod_auto_show_toggle(void);
