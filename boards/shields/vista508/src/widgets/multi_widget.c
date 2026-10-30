@@ -47,7 +47,7 @@ enum multi_widget_display_mode {
 };
 
 
-static enum multi_widget_display_mode display_mode = MULTI_WIDGET_MODE_WPM_STEVE;
+static enum multi_widget_display_mode display_mode = MULTI_WIDGET_MODE_WPM_GRAPH;
 static bool wpm_mode_text_active = false;
 static void wpm_mode_text_timeout_handler(struct k_work *work);
 K_WORK_DELAYABLE_DEFINE(wpm_mode_text_timeout_work, wpm_mode_text_timeout_handler);
