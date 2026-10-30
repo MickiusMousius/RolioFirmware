@@ -141,14 +141,18 @@ To build the firmware locally see the [Building Guide](doc/building.md), once yo
 /workspaces/zmk-modules/RolioFirmware/tools/build_rolio.sh
 ```
 
+_To build only a specific side pass `left` or `right` to the script, see the [Building Guide](doc/building.md) for the other options._
+
+Locally built firmware can be found in the `build/zmk/` folder, named after the controller, display & side it was built for (e.g. `rolio_nice_nano_v2-vista508_left.uf2`). It's flashed the same way as the firmware from a release.
+
 This firmware makes use of the following ZMK modules:
 
-- **`zmk-ls0xxvcom-driver`** - Sharp memory LCD driver for the Vista508, with VCOM inversion to prevent image retention.
-- **`zmk-defaultlayer`** - Remembers the default layer (MacOS or Windows) for each Bluetooth profile & USB.
+- **`zmk-ls0xxvcom-driver`** - Sharp memory LCD driver for the Vista508, with regular VCOM inversion to prevent DC bias damage & image retention.
+- **`zmk-defaultlayer`** - Remembers the default layer (MacOS or Windows) across reboots, for each Bluetooth profile & USB.
 - **`zmk-ble-passkey`** - Reports Bluetooth passkey entry & pairing results so they can be shown on the display.
 - **`zmk-smart-sleep`** - Keeps the right side awake while it's connected to the left side, but lets it sleep shortly after it disconnects.
-- **`zmk-patch-batterylevel`** - A more accurate battery level curve.
-- **`zmk-patch-ec11`** - A patched rotary encoder driver that doesn't drop pulses.
+- **`zmk-patch-batterylevel`** - A 21 point LiPo discharge curve & median of three sampling for an accurate battery level without jitter.
+- **`zmk-patch-ec11`** - A patched rotary encoder driver that changes the interrupt logic so rotational pulses aren't dropped.
 
 Repository structure:
 

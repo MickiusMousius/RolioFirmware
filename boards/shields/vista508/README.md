@@ -6,7 +6,7 @@ This shield requires that an `&nice_view_spi` labeled SPI bus is provided with _
 
 ## Disable custom widget
 
-The Vista508 shield includes a custom widget. To use the built-in ZMK one, add the following item to your `.conf` file:
+The Vista508 shield includes a custom widget (the status screen on the left side & the art on the right side). To use the built-in ZMK one instead, add the following items to your `.conf` file:
 
 ```
 CONFIG_ZMK_DISPLAY_STATUS_SCREEN_BUILT_IN=y
@@ -15,6 +15,7 @@ CONFIG_LV_FONT_DEFAULT_MONTSERRAT_20=y
 CONFIG_ZMK_WIDGET_BATTERY_STATUS_SHOW_PERCENTAGE=y
 CONFIG_ZMK_WIDGET_WPM_STATUS=y
 ```
+
 # Attribution
 
 Significant portions of the code in this directory came from the original ZMK nice!view code.
