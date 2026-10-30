@@ -27,10 +27,17 @@ extern const lv_img_dsc_t image_list[];
 extern const uint32_t image_count;
 
 static sys_slist_t widgets = SYS_SLIST_STATIC_INIT(&widgets);
+static lv_timer_t *battery_anim_timer = NULL;
+static uint32_t battery_anim_tick = 0;
 
 struct peripheral_status_state {
     bool connected;
 };
+
+
+static bool is_charging(const struct status_state *state) {
+    return state->usb_present && state->battery < CONFIG_VISTA508_CHARGE_FULL_PCT;
+}
 
 
 static void draw_top(lv_obj_t *widget, lv_color_t cbuf[], const struct status_state *state) {
@@ -44,17 +51,29 @@ static void draw_top(lv_obj_t *widget, lv_color_t cbuf[], const struct status_st
     // Fill background
     lv_canvas_draw_rect(canvas, 0, 0, CANVAS_SIZE, CANVAS_SIZE, &rect_black_dsc);
 
-    // Draw battery
-    draw_battery(canvas, state);
+    // Draw battery, filling it up in steps while charging
+    uint8_t fill_level = state->battery;
+    if (is_charging(state)) {
+        uint8_t frames = (100 - state->battery + 9) / 10;
+        fill_level = MIN(state->battery + (battery_anim_tick % (frames + 1)) * 10, 100);
+    }
+    draw_battery(canvas, state, fill_level);
 
     // Draw output status
     lv_canvas_draw_text(canvas, 0, 0, CANVAS_SIZE, &label_dsc, state->connected ? LV_SYMBOL_OK : LV_SYMBOL_CLOSE);
 }
 
 
+static void battery_anim_timer_cb(lv_timer_t *timer) {
+    battery_anim_tick++;
+    struct zmk_widget_status *widget;
+    SYS_SLIST_FOR_EACH_CONTAINER(&widgets, widget, node) { draw_top(widget->obj, widget->cbuf, &widget->state); }
+}
+
+
 static void set_battery_status(struct zmk_widget_status *widget, struct battery_status_state state) {
 #if IS_ENABLED(CONFIG_USB_DEVICE_STACK)
-    widget->state.charging = state.usb_present;
+    widget->state.usb_present = state.usb_present;
 #endif /* IS_ENABLED(CONFIG_USB_DEVICE_STACK) */
     widget->state.battery = state.level;
     draw_top(widget->obj, widget->cbuf, &widget->state);
@@ -63,7 +82,20 @@ static void set_battery_status(struct zmk_widget_status *widget, struct battery_
 
 static void battery_status_update_cb(struct battery_status_state state) {
     struct zmk_widget_status *widget;
-    SYS_SLIST_FOR_EACH_CONTAINER(&widgets, widget, node) { set_battery_status(widget, state); }
+    bool charging = false;
+    SYS_SLIST_FOR_EACH_CONTAINER(&widgets, widget, node) {
+        set_battery_status(widget, state);
+        charging |= is_charging(&widget->state);
+    }
+
+    // Only animate while charging, this runs on the display thread like the timer itself
+    if (charging && battery_anim_timer == NULL) {
+        battery_anim_timer = lv_timer_create(battery_anim_timer_cb, 500, NULL);
+    } else if (!charging && battery_anim_timer != NULL) {
+        lv_timer_del(battery_anim_timer);
+        battery_anim_timer = NULL;
+        battery_anim_tick = 0;
+    }
 }
 
 
