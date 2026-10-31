@@ -129,13 +129,15 @@ The right side shows its own battery level, whether it's connected to the left s
 
 ![Default layout for the Rolio46](doc/images/keymap.svg)
 
-_NOTE: These layout diagrams were created using a combination of [Keymap Drawer](https://github.com/caksoylar/keymap-drawer-web) and [Inkscape](https://inkscape.org)._
+_NOTE: These layout diagrams are drawn from the keymap using [Keymap Drawer](https://github.com/caksoylar/keymap-drawer), after changing the keymap run `tools/draw_keymap.sh` to redraw them._
 
 <br/>
 
 # Development
 
-To build the firmware locally see the [Building Guide](doc/building.md), once your [development environment](doc/tools_setup.md) is set up you can build both sides with:
+Go here to setup your [development environment](doc/tools_setup.md).
+
+To build the firmware locally see the [Building Guide](doc/building.md), or you can build both sides with:
 
 ```bash
 /workspaces/zmk-modules/RolioFirmware/tools/build_rolio.sh
